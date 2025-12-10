@@ -86,17 +86,12 @@
             padding: 40px 30px;
             text-align: center;
             transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
             background-color: #f8f9fa;
         }
         
         .role-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            text-decoration: none;
-            color: inherit;
         }
         
         .role-card.estudiante {
@@ -190,24 +185,24 @@
             
             <div class="roles-container">
                 <!-- Tarjeta Estudiante -->
-                <a href="/seleccionar-perfil?perfil=estudiante" class="role-card estudiante">
+                <div class="role-card estudiante">
                     <i class="fas fa-user-graduate"></i>
                     <h3>Estudiante</h3>
-                    <p>Realiza y gestiona tus prácticas profesionales</p>
-                    <span class="badge">
+                    <p>Realiza y gestiona tus prácticas profesionales ulises.contreras@estudiante.cl / password123</p>
+                    <a href="/seleccionar-perfil?perfil=estudiante" class="badge" style="text-decoration: none; cursor: pointer;">
                         <i class="fas fa-arrow-right"></i> Acceder
-                    </span>
-                </a>
+                    </a>
+                </div>
                 
                 <!-- Tarjeta Profesor -->
-                <a href="/seleccionar-perfil?perfil=profesor" class="role-card profesor">
+                <div class="role-card profesor">
                     <i class="fas fa-chalkboard-user"></i>
                     <h3>Profesor</h3>
-                    <p>Supervisa y gestiona las prácticas de estudiantes</p>
-                    <span class="badge">
+                    <p>Supervisa y gestiona las prácticas de estudiantes carlos.fernandez@universidad.cl / password123</p>
+                    <a href="/seleccionar-perfil?perfil=profesor" class="badge" style="text-decoration: none; cursor: pointer;">
                         <i class="fas fa-arrow-right"></i> Acceder
-                    </span>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

@@ -32,6 +32,7 @@ public class ProfesorDashboardController {
         if (usuario.isPresent() && usuario.get().getProfesor() != null) {
             model.addAttribute("profesor", usuario.get().getProfesor());
             model.addAttribute("practicas", practicaService.obtenerPracticasPorProfesor(usuario.get().getProfesor().getId()));
+            model.addAttribute("todasLasPracticas", practicaService.obtenerTodasLasPracticas());
             return "profesor/dashboard";
         }
         

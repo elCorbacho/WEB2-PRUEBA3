@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cl.web2.prueba3.prueba3.models.Practica;
 import cl.web2.prueba3.prueba3.repository.PracticaRepository;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,30 @@ public class PracticaService {
     
     @Autowired
     private PracticaRepository practicaRepository;
+    
+    /**
+     * Verificar si el estudiante tiene una práctica en curso
+     */
+    public boolean tienePracticaEnCurso(Long estudianteId) {
+        LocalDate hoy = LocalDate.now();
+        List<Practica> practicas = practicaRepository.findByEstudianteId(estudianteId);
+        
+        return practicas.stream().anyMatch(p -> 
+            !p.getFechaInicio().isAfter(hoy) && !p.getFechaFin().isBefore(hoy)
+        );
+    }
+    
+    /**
+     * Obtener práctica en curso del estudiante
+     */
+    public Optional<Practica> obtenerPracticaEnCurso(Long estudianteId) {
+        LocalDate hoy = LocalDate.now();
+        List<Practica> practicas = practicaRepository.findByEstudianteId(estudianteId);
+        
+        return practicas.stream().filter(p -> 
+            !p.getFechaInicio().isAfter(hoy) && !p.getFechaFin().isBefore(hoy)
+        ).findFirst();
+    }
     
     public Practica crearPractica(Practica practica) {
         return practicaRepository.save(practica);
@@ -23,6 +48,10 @@ public class PracticaService {
     
     public List<Practica> obtenerTodasLasPracticas() {
         return (List<Practica>) practicaRepository.findAll();
+    }
+    
+    public List<Practica> obtenerPracticasPorEstudiante(Long estudianteId) {
+        return practicaRepository.findByEstudianteId(estudianteId);
     }
     
     public Practica actualizarPractica(Long id, Practica practicaActualizada) {
@@ -46,10 +75,6 @@ public class PracticaService {
             return true;
         }
         return false;
-    }
-    
-    public List<Practica> obtenerPracticasPorEstudiante(Long estudianteId) {
-        return practicaRepository.findByEstudianteId(estudianteId);
     }
     
     public List<Practica> obtenerPracticasPorEmpresa(Long empresaId) {

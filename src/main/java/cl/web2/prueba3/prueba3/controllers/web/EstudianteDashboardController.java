@@ -30,8 +30,10 @@ public class EstudianteDashboardController {
         
         Optional<Usuario> usuario = usuarioService.obtenerUsuario(usuarioId);
         if (usuario.isPresent() && usuario.get().getEstudiante() != null) {
+            Long estudianteId = usuario.get().getEstudiante().getId();
             model.addAttribute("estudiante", usuario.get().getEstudiante());
-            model.addAttribute("practicas", practicaService.obtenerPracticasPorEstudiante(usuario.get().getEstudiante().getId()));
+            model.addAttribute("practicas", practicaService.obtenerPracticasPorEstudiante(estudianteId));
+            model.addAttribute("tienePracticaEnCurso", practicaService.tienePracticaEnCurso(estudianteId));
             return "estudiante/dashboard";
         }
         

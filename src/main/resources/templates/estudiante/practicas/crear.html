@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Práctica Profesional</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px 15px 0 0 !important;
+            color: white;
+            padding: 1.5rem;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            padding: 0.75rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .info-student {
+            background-color: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .btn-crear {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .btn-crear:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+        
+        .btn-volver {
+            background-color: #6c757d;
+            border: none;
+            color: white;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .btn-volver:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 700px;">
+        <!-- Breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb" style="background-color: transparent;">
+                <li class="breadcrumb-item"><a href="/estudiante/dashboard" class="text-white">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/practicas/mis-practicas" class="text-white">Mis Prácticas</a></li>
+                <li class="breadcrumb-item active text-white">Crear Práctica</li>
+            </ol>
+        </nav>
+
+        <!-- Card Principal -->
+        <div class="card">
+            <!-- Header -->
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i class="fas fa-plus-circle"></i> Crear Nueva Práctica Profesional
+                </h4>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body p-4">
+                <!-- Información del estudiante -->
+                <div class="info-student">
+                    <h6 class="mb-2"><i class="fas fa-user"></i> Información del Estudiante</h6>
+                    <p class="mb-0">
+                        <strong th:text="${estudiante.nombre} + ' ' + ${estudiante.apellido}"></strong>
+                        <br>
+                        <small class="text-muted" th:text="${estudiante.email}"></small>
+                    </p>
+                </div>
+
+                <!-- Mensajes de alerta -->
+                <div th:if="${mensaje}" th:classappend="${tipo == 'success'} ? 'alert-success' : 'alert-danger'" class="alert" role="alert">
+                    <i th:class="${tipo == 'success'} ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'"></i>
+                    <span th:text="${mensaje}"></span>
+                </div>
+
+                <!-- Formulario -->
+                <form th:action="@{/practicas/guardar}" method="post" novalidate>
+                    <!-- Empresa -->
+                    <div class="mb-3">
+                        <label for="empresa" class="form-label">
+                            <i class="fas fa-building"></i> Empresa
+                        </label>
+                        <select class="form-select" id="empresa" name="empresa.id" required>
+                            <option value="">-- Selecciona una empresa --</option>
+                            <option th:each="emp : ${empresas}" 
+                                    th:value="${emp.id}" 
+                                    th:text="${emp.nombre}">
+                            </option>
+                        </select>
+                        <small class="text-muted">Selecciona la empresa donde realizarás la práctica</small>
+                    </div>
+
+                    <!-- Profesor Guía -->
+                    <div class="mb-3">
+                        <label for="profesor" class="form-label">
+                            <i class="fas fa-chalkboard-user"></i> Profesor Guía
+                        </label>
+                        <select class="form-select" id="profesor" name="profesor.id" required>
+                            <option value="">-- Selecciona un profesor --</option>
+                            <option th:each="prof : ${profesores}" 
+                                    th:value="${prof.id}" 
+                                    th:text="${prof.nombres} + ' ' + ${prof.apellidos}">
+                            </option>
+                        </select>
+                        <small class="text-muted">Tu profesor guía será quien supervise tu práctica</small>
+                    </div>
+
+                    <!-- Fecha Inicio -->
+                    <div class="mb-3">
+                        <label for="fechaInicio" class="form-label">
+                            <i class="fas fa-calendar-alt"></i> Fecha de Inicio
+                        </label>
+                        <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" required>
+                        <small class="text-muted">Fecha en que comenzarás tu práctica</small>
+                    </div>
+
+                    <!-- Fecha Fin -->
+                    <div class="mb-3">
+                        <label for="fechaFin" class="form-label">
+                            <i class="fas fa-calendar-alt"></i> Fecha de Finalización
+                        </label>
+                        <input type="date" class="form-control" id="fechaFin" name="fechaFin" required>
+                        <small class="text-muted">Fecha en que terminarás tu práctica</small>
+                    </div>
+
+                    <!-- Actividades -->
+                    <div class="mb-4">
+                        <label for="actividades" class="form-label">
+                            <i class="fas fa-tasks"></i> Actividades Planeadas
+                        </label>
+                        <textarea class="form-control" id="actividades" name="actividades" rows="4" placeholder="Describe las actividades que realizarás durante tu práctica..."></textarea>
+                        <small class="text-muted">Detalla las actividades principales que desarrollarás</small>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-crear">
+                            <i class="fas fa-save"></i> Crear Práctica
+                        </button>
+                        <a href="/estudiante/dashboard" class="btn btn-volver">
+                            <i class="fas fa-arrow-left"></i> Volver
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Validación de fechas
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const fechaInicio = new Date(document.getElementById('fechaInicio').value);
+            const fechaFin = new Date(document.getElementById('fechaFin').value);
+            
+            if (fechaInicio >= fechaFin) {
+                e.preventDefault();
+                alert('La fecha de inicio debe ser anterior a la fecha de fin');
+            }
+        });
+    </script>
+</body>
+</html>

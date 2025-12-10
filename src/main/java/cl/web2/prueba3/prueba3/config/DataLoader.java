@@ -128,6 +128,13 @@ public class DataLoader {
             estudiante3.setEmail("diego.vargas@estudiante.cl");
             estudiante3.setCarrera(carrera3);
             estudiante3 = estudianteService.crearEstudiante(estudiante3);
+
+            Estudiante estudiante4 = new Estudiante();
+            estudiante4.setNombre("Ulises");
+            estudiante4.setApellido("Contreras Perez");
+            estudiante4.setEmail("ulises.contreras@estudiante.cl");
+            estudiante4.setCarrera(carrera3);
+            estudiante4 = estudianteService.crearEstudiante(estudiante4);
             
             // ============================================================
             // 6. Crear Usuarios
@@ -179,6 +186,14 @@ public class DataLoader {
             usuarioProfesor3.setActivo(true);
             usuarioProfesor3.setProfesor(profesor3);
             usuarioService.crearUsuario(usuarioProfesor3);
+
+            Usuario usuarioEstudiante4 = new Usuario();
+            usuarioEstudiante4.setEmail("ulises.contreras@estudiante.cl");
+            usuarioEstudiante4.setPassword("password123");
+            usuarioEstudiante4.setRol(Rol.ESTUDIANTE);
+            usuarioEstudiante4.setActivo(true);
+            usuarioEstudiante4.setEstudiante(estudiante4);
+            usuarioService.crearUsuario(usuarioEstudiante4);
             
             // ============================================================
             // 7. Crear Prácticas Profesionales
@@ -196,7 +211,7 @@ public class DataLoader {
             practica2.setEstudiante(estudiante2);
             practica2.setEmpresa(empresa2);
             practica2.setFechaInicio(LocalDate.of(2025, 2, 1));
-            practica2.setFechaFin(LocalDate.of(2025, 4, 1));
+            practica2.setFechaFin(LocalDate.of(2026, 4, 1));
             practica2.setActividades("Análisis de requisitos, diseño de base de datos, implementación de API REST");
             practica2.setProfesor(profesor2);
             practicaService.crearPractica(practica2);
@@ -205,7 +220,7 @@ public class DataLoader {
             practica3.setEstudiante(estudiante3);
             practica3.setEmpresa(empresa3);
             practica3.setFechaInicio(LocalDate.of(2025, 1, 20));
-            practica3.setFechaFin(LocalDate.of(2025, 3, 20));
+            practica3.setFechaFin(LocalDate.of(2026, 3, 20));
             practica3.setActividades("Consultoría en gestión de proyectos, análisis de procesos, mejora de eficiencia operacional");
             practica3.setProfesor(profesor3);
             practicaService.crearPractica(practica3);
