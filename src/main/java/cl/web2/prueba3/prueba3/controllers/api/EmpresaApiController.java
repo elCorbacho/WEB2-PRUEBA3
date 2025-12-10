@@ -1,4 +1,4 @@
-package cl.web2.prueba3.prueba3.controllers;
+package cl.web2.prueba3.prueba3.controllers.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/empresas")
-public class EmpresaController {
+public class EmpresaApiController {
     
     @Autowired
     private EmpresaService empresaService;
