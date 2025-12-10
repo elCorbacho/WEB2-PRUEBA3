@@ -107,14 +107,8 @@
                                         <tr th:each="practica : ${practicas}">
                                             <td>
                                                 <strong th:text="${practica.estudiante.nombre + ' ' + practica.estudiante.apellido}"></strong>
-                                                <br>
-                                                <small class="text-muted" th:text="${practica.estudiante.email}"></small>
                                             </td>
-                                            <td>
-                                                <strong th:text="${practica.empresa.nombre}"></strong>
-                                                <br>
-                                                <small class="text-muted" th:text="${practica.empresa.email}"></small>
-                                            </td>
+                                            <td th:text="${practica.empresa.nombre}"></td>
                                             <td th:text="${practica.estudiante.carrera.nombreCarrera}"></td>
                                             <td th:text="${#temporals.format(practica.fechaInicio, 'dd/MM/yyyy')}"></td>
                                             <td th:text="${#temporals.format(practica.fechaFin, 'dd/MM/yyyy')}"></td>
@@ -131,21 +125,6 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
-
-                            <!-- Detalles de Actividades -->
-                            <div th:each="practica : ${practicas}" class="mt-4">
-                                <div class="card">
-                                    <div class="card-header bg-light">
-                                        <h6 class="mb-0">
-                                            <i class="fas fa-tasks me-2"></i>
-                                            <span th:text="${practica.estudiante.nombre + ' - ' + practica.empresa.nombre}"></span>
-                                        </h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <p th:text="${practica.actividades}"></p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -186,15 +165,9 @@
                                         <tr th:each="practica : ${todasLasPracticas}">
                                             <td>
                                                 <strong th:text="${practica.estudiante.nombre + ' ' + practica.estudiante.apellido}"></strong>
-                                                <br>
-                                                <small class="text-muted" th:text="${practica.estudiante.email}"></small>
                                             </td>
                                             <td th:text="${practica.estudiante.carrera.nombreCarrera}"></td>
-                                            <td>
-                                                <strong th:text="${practica.empresa.nombre}"></strong>
-                                                <br>
-                                                <small class="text-muted" th:text="${practica.empresa.email}"></small>
-                                            </td>
+                                            <td th:text="${practica.empresa.nombre}"></td>
                                             <td th:text="${practica.profesor.nombres + ' ' + practica.profesor.apellidos}"></td>
                                             <td th:text="${#temporals.format(practica.fechaInicio, 'dd/MM/yyyy')}"></td>
                                             <td th:text="${#temporals.format(practica.fechaFin, 'dd/MM/yyyy')}"></td>
