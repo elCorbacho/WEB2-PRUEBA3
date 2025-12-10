@@ -39,7 +39,7 @@
                 <span class="text-white me-3">
                     <i class="fas fa-user me-2"></i><span th:text="${profesor.nombres + ' ' + profesor.apellidos}"></span>
                 </span>
-                <a href="/logout" class="btn btn-light btn-sm">
+                <a th:href="@{/logout}" class="btn btn-light btn-sm">
                     <i class="fas fa-sign-out-alt me-2"></i>Salir
                 </a>
             </div>
@@ -110,8 +110,8 @@
                                                 <small class="text-muted" th:text="${practica.empresa.email}"></small>
                                             </td>
                                             <td th:text="${practica.estudiante.carrera.nombreCarrera}"></td>
-                                            <td th:text="${#dates.format(practica.fechaInicio, 'dd/MM/yyyy')}"></td>
-                                            <td th:text="${#dates.format(practica.fechaFin, 'dd/MM/yyyy')}"></td>
+                                            <td th:text="${#temporals.format(practica.fechaInicio, 'dd/MM/yyyy')}"></td>
+                                            <td th:text="${#temporals.format(practica.fechaFin, 'dd/MM/yyyy')}"></td>
                                         </tr>
                                     </tbody>
                                 </table>

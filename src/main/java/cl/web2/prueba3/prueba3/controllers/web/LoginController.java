@@ -38,31 +38,59 @@ public class LoginController {
                                 @RequestParam String perfil,
                                 HttpSession session,
                                 Model model) {
-        if (usuarioService.validarCredenciales(email, password, perfil)) {
-            Optional<Usuario> usuario = usuarioService.buscarPorEmail(email);
-            if (usuario.isPresent() && usuario.get().getRol().name().equals(perfil.toUpperCase())) {
-                session.setAttribute("usuarioId", usuario.get().getId());
-                session.setAttribute("usuarioEmail", usuario.get().getEmail());
-                session.setAttribute("rol", usuario.get().getRol());
-                
-                // Redirigir según rol
-                switch (usuario.get().getRol()) {
-                    case ESTUDIANTE:
-                        return "redirect:/estudiante/dashboard";
-                    case PROFESOR:
-                        return "redirect:/profesor/dashboard";
-                    default:
-                        return "redirect:/";
-                }
+        Optional<Usuario> usuarioOpt = usuarioService.buscarPorEmail(email);
+        
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
+            
+            if (!usuario.getPassword().equals(password)) {
+                model.addAttribute("error", "Contraseña incorrecta");
+                model.addAttribute("perfil", perfil);
+                return "login";
+            }
+            
+            Rol rolEsperado = perfil.equalsIgnoreCase("estudiante") ? Rol.ESTUDIANTE : Rol.PROFESOR;
+            if (usuario.getRol() != rolEsperado) {
+                model.addAttribute("error", "Este usuario no es " + perfil);
+                model.addAttribute("perfil", perfil);
+                return "login";
+            }
+            
+            if (!usuario.isActivo()) {
+                model.addAttribute("error", "Usuario inactivo");
+                model.addAttribute("perfil", perfil);
+                return "login";
+            }
+            
+            session.setAttribute("usuarioId", usuario.getId());
+            session.setAttribute("usuarioEmail", usuario.getEmail());
+            session.setAttribute("rol", usuario.getRol());
+            session.setAttribute("perfil", perfil);
+            
+            if (usuario.getEstudiante() != null) {
+                session.setAttribute("estudianteId", usuario.getEstudiante().getId());
+            }
+            if (usuario.getProfesor() != null) {
+                session.setAttribute("profesorId", usuario.getProfesor().getId());
+            }
+            
+            switch (usuario.getRol()) {
+                case ESTUDIANTE:
+                    return "redirect:/estudiante/dashboard";
+                case PROFESOR:
+                    return "redirect:/profesor/dashboard";
+                default:
+                    return "redirect:/";
             }
         }
-        model.addAttribute("error", "Email o contraseña inválidos para " + perfil);
+        
+        model.addAttribute("error", "Email no encontrado");
         model.addAttribute("perfil", perfil);
         return "login";
     }
     
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
+    public String logoutGet(HttpSession session) {
         session.invalidate();
         return "redirect:/";
     }

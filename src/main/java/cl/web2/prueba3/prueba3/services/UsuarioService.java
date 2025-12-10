@@ -50,21 +50,4 @@ public class UsuarioService {
         }
         return false;
     }
-    
-    public boolean validarCredenciales(String email, String password, String perfil) {
-        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
-        if (usuario.isPresent() && usuario.get().isActivo()) {
-            Rol rolEsperado = perfil.equalsIgnoreCase("estudiante") ? Rol.ESTUDIANTE : Rol.PROFESOR;
-            return usuario.get().getPassword().equals(password) && usuario.get().getRol() == rolEsperado;
-        }
-        return false;
-    }
-    
-    public boolean validarCredenciales(String email, String password) {
-        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
-        if (usuario.isPresent() && usuario.get().isActivo()) {
-            return usuario.get().getPassword().equals(password);
-        }
-        return false;
-    }
 }
