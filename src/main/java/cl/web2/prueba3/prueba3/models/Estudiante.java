@@ -23,7 +23,7 @@ public class Estudiante {
     @Column(name = "apellido", length = 100, nullable = false)
     private String apellido;
     
-    @Column(name = "email", length = 150, unique = true, nullable = false)
+    @Column(name = "mail_estudiante", length = 150, unique = true, nullable = false)
     private String email;
     
     @ManyToOne(fetch = FetchType.LAZY)

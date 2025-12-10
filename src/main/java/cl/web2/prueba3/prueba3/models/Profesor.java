@@ -23,7 +23,7 @@ public class Profesor {
     @Column(name = "apellidos", length = 100, nullable = false)
     private String apellidos;
     
-    @Column(name = "correo_electronico", length = 150, unique = true, nullable = false)
+    @Column(name = "mail_profesor", length = 150, unique = true, nullable = false)
     private String correoElectronico;
     
     @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL, orphanRemoval = true)
