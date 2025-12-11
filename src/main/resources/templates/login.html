@@ -10,7 +10,7 @@
     <style>
         /* Login Page Specific Styles */
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #f5f5f5;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -20,319 +20,169 @@
 
         .login-wrapper {
             width: 100%;
-            max-width: 500px;
+            max-width: 420px;
             padding: 20px;
         }
 
         .login-card {
             background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             border: none;
-            animation: slideIn 0.5s ease-out;
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Header with gradient based on role */
+        /* Header */
         .login-header {
-            padding: 40px 30px;
+            padding: 30px;
             text-align: center;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .login-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 20px 20px;
-            animation: moveGradient 20s linear infinite;
-        }
-
-        @keyframes moveGradient {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(20px, 20px); }
-        }
-
-        .login-header.estudiante {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-        }
-
-        .login-header.profesor {
-            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 1;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
         }
 
         .login-header i {
-            font-size: 50px;
-            margin-bottom: 15px;
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            font-size: 40px;
+            color: #667eea;
+            margin-bottom: 10px;
+            display: block;
         }
 
         .login-header h2 {
-            font-size: 28px;
-            font-weight: 700;
-            margin: 15px 0 5px 0;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+            color: #2c3e50;
         }
 
         .login-header p {
             font-size: 14px;
-            opacity: 0.9;
-            margin: 0;
+            color: #7f8c8d;
+            margin: 5px 0 0 0;
         }
 
         /* Form Body */
         .login-body {
-            padding: 40px 35px;
+            padding: 30px;
         }
 
         .form-group {
-            margin-bottom: 25px;
-            position: relative;
+            margin-bottom: 20px;
         }
 
         .form-group label {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
+            display: block;
+            margin-bottom: 8px;
             color: #2c3e50;
-            font-weight: 600;
+            font-weight: 500;
             font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .form-group label i {
-            margin-right: 8px;
-            width: 18px;
         }
 
         .form-control {
-            padding: 14px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            background-color: #f8f9fa;
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
         }
 
         .form-control:focus {
-            background-color: #fff;
             border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
             outline: none;
-        }
-
-        .form-control::placeholder {
-            color: #b0bec5;
-            font-style: italic;
-        }
-
-        /* Password toggle */
-        .password-toggle {
-            position: absolute;
-            right: 14px;
-            top: 44px;
-            cursor: pointer;
-            color: #667eea;
-            transition: color 0.3s;
-            z-index: 10;
-        }
-
-        .password-toggle:hover {
-            color: #764ba2;
         }
 
         /* Alerts */
         .alert {
             border: none;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            padding: 14px 16px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 12px 14px;
             font-size: 14px;
-            animation: slideIn 0.3s ease-out;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
+            gap: 10px;
         }
 
         .alert i {
-            margin-right: 10px;
-            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 2px;
         }
 
         .alert-danger {
-            background-color: #fee;
-            color: #c33;
-            border-left: 4px solid #dc3545;
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 3px solid #f5c6cb;
         }
 
         .alert-info {
-            background-color: #e3f2fd;
-            color: #1565c0;
-            border-left: 4px solid #2196f3;
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border-left: 3px solid #bee5eb;
         }
 
         /* Submit Button */
         .btn-login {
             width: 100%;
-            padding: 14px;
+            padding: 11px;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 5px;
+            font-size: 15px;
             font-weight: 600;
             color: white;
+            background-color: #667eea;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-            margin-top: 10px;
-        }
-
-        .btn-login::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: left 0.3s ease;
-        }
-
-        .btn-login:hover::before {
-            left: 100%;
-        }
-
-        .btn-login.estudiante {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-        }
-
-        .btn-login.profesor {
-            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            transition: background-color 0.3s ease;
+            margin-top: 5px;
         }
 
         .btn-login:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            background-color: #5568d3;
         }
 
         .btn-login:active {
-            transform: translateY(-1px);
+            background-color: #4a5cbf;
         }
 
         .btn-login:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-login i {
-            margin-right: 8px;
         }
 
         /* Footer */
         .login-footer {
-            padding: 20px 35px;
+            padding: 15px 30px;
             text-align: center;
-            background: linear-gradient(to right, #f8f9fa, #ffffff);
-            border-top: 1px solid #e0e0e0;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
         }
 
         .login-footer a {
             color: #667eea;
             text-decoration: none;
             font-weight: 500;
-            font-size: 14px;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .login-footer a i {
-            margin-right: 6px;
-            transition: transform 0.3s;
+            font-size: 13px;
+            transition: color 0.3s;
         }
 
         .login-footer a:hover {
-            color: #764ba2;
+            color: #5568d3;
         }
 
-        .login-footer a:hover i {
-            transform: translateX(-3px);
-        }
-
-        /* Divider */
-        .divider {
-            text-align: center;
-            margin: 20px 0;
-            color: #b0bec5;
-            font-size: 13px;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            display: inline-block;
-            width: 40%;
-            height: 1px;
-            background: #e0e0e0;
-            vertical-align: middle;
-        }
-
-        .divider::before {
-            margin-right: 10px;
-        }
-
-        .divider::after {
-            margin-left: 10px;
+        .login-footer i {
+            margin-right: 4px;
         }
 
         /* Help text */
         .help-text {
-            font-size: 13px;
-            color: #b0bec5;
-            margin-top: 8px;
-            display: flex;
-            align-items: center;
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 6px;
         }
 
         .help-text i {
-            margin-right: 5px;
+            margin-right: 4px;
         }
 
         /* Responsive */
@@ -342,25 +192,23 @@
             }
 
             .login-body {
-                padding: 30px 25px;
+                padding: 25px;
             }
 
             .login-footer {
-                padding: 15px 25px;
+                padding: 12px 25px;
             }
 
             .login-header {
-                padding: 30px 25px;
+                padding: 25px;
             }
 
             .login-header i {
-                width: 70px;
-                height: 70px;
                 font-size: 35px;
             }
 
             .login-header h2 {
-                font-size: 24px;
+                font-size: 22px;
             }
         }
     </style>
@@ -369,7 +217,7 @@
     <div class="login-wrapper">
         <div class="login-card">
             <!-- Header -->
-            <div th:classappend="${perfil == 'estudiante'} ? 'estudiante' : 'profesor'" class="login-header">
+            <div class="login-header">
                 <div class="header-content">
                     <i th:if="${perfil == 'estudiante'}" class="fas fa-user-graduate"></i>
                     <i th:if="${perfil == 'profesor'}" class="fas fa-chalkboard-user"></i>
@@ -427,8 +275,7 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <button th:classappend="${perfil == 'estudiante'} ? 'estudiante' : 'profesor'" 
-                            type="submit" class="btn-login">
+                    <button type="submit" class="btn-login">
                         <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
                     </button>
                 </form>

@@ -14,208 +14,104 @@
         }
 
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #f5f5f5;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);
-            pointer-events: none;
         }
 
         .container-main {
             width: 100%;
-            max-width: 1100px;
+            max-width: 900px;
             padding: 20px;
-            position: relative;
-            z-index: 1;
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .header-section {
-            background: rgba(44, 62, 80, 0.95);
-            backdrop-filter: blur(10px);
-            color: white;
-            padding: 60px 40px;
-            border-radius: 20px;
+            background-color: white;
+            color: #2c3e50;
+            padding: 40px;
+            border-radius: 8px;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            margin-bottom: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
         }
 
         .header-section i {
-            font-size: 60px;
-            margin-bottom: 20px;
+            font-size: 48px;
+            margin-bottom: 15px;
             color: #667eea;
-            display: inline-block;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            display: block;
         }
 
         .header-section h1 {
-            font-size: 42px;
-            font-weight: 800;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
         }
 
         .header-section p {
-            font-size: 18px;
-            color: #ecf0f1;
+            font-size: 16px;
+            color: #7f8c8d;
             margin: 0;
-            font-weight: 300;
-            letter-spacing: 0.5px;
         }
 
         .content-section {
-            background: white;
-            padding: 50px 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .content-section h2 {
             color: #2c3e50;
-            font-size: 32px;
-            margin-bottom: 12px;
-            font-weight: 700;
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
         .content-section > p {
             color: #7f8c8d;
-            font-size: 16px;
-            margin-bottom: 35px;
-            font-weight: 400;
+            font-size: 15px;
+            margin-bottom: 30px;
         }
 
         .roles-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 35px;
-            margin-top: 30px;
+            gap: 25px;
+            margin-top: 20px;
         }
 
         .role-card {
-            border: 2px solid #ecf0f1;
-            border-radius: 15px;
-            padding: 40px 30px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 35px 25px;
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            background-color: #f8f9fa;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s ease;
+            background-color: #fafafa;
             cursor: pointer;
         }
 
-        .role-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.3) 100%);
-            opacity: 0;
-            transition: opacity 0.4s;
-            pointer-events: none;
-        }
-
         .role-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .role-card:hover::before {
-            opacity: 1;
-        }
-
-        .role-card.estudiante {
-            border-color: #f39c12;
-            background: linear-gradient(135deg, #fffbf0 0%, #fff8e7 100%);
-        }
-
-        .role-card.estudiante:hover {
-            border-color: #e67e22;
-            box-shadow: 0 20px 40px rgba(243, 156, 18, 0.25);
-        }
-
-        .role-card.profesor {
-            border-color: #27ae60;
-            background: linear-gradient(135deg, #f0fdf4 0%, #e8f5e9 100%);
-        }
-
-        .role-card.profesor:hover {
-            border-color: #229954;
-            box-shadow: 0 20px 40px rgba(39, 174, 96, 0.25);
-        }
-
-        .role-card-content {
-            position: relative;
-            z-index: 2;
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
         }
 
         .role-card i {
-            font-size: 70px;
-            margin-bottom: 20px;
-            display: inline-block;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .role-card.estudiante i {
-            color: #f39c12;
-        }
-
-        .role-card.estudiante:hover i {
-            transform: rotateY(360deg) scale(1.1);
-            color: #e67e22;
-        }
-
-        .role-card.profesor i {
-            color: #27ae60;
-        }
-
-        .role-card.profesor:hover i {
-            transform: rotateY(360deg) scale(1.1);
-            color: #229954;
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+            color: #667eea;
         }
 
         .role-card h3 {
-            font-size: 26px;
-            font-weight: 700;
-            margin: 20px 0 15px 0;
+            font-size: 22px;
+            font-weight: 600;
+            margin: 15px 0 10px 0;
             color: #2c3e50;
         }
 
@@ -223,67 +119,48 @@
             color: #7f8c8d;
             font-size: 14px;
             margin-bottom: 20px;
-            line-height: 1.6;
-            font-weight: 400;
+            line-height: 1.5;
         }
 
-        .role-card .badge-link {
+        .badge-link {
             display: inline-block;
-            padding: 12px 28px;
-            border-radius: 25px;
-            font-size: 14px;
+            padding: 10px 24px;
+            border-radius: 5px;
+            font-size: 13px;
             font-weight: 600;
             text-decoration: none;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             border: none;
-        }
-
-        .role-card.estudiante .badge-link {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            background-color: #667eea;
             color: white;
         }
 
-        .role-card.estudiante:hover .badge-link {
-            box-shadow: 0 10px 25px rgba(243, 156, 18, 0.4);
-            transform: translateY(-3px);
-        }
-
-        .role-card.profesor .badge-link {
-            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
-            color: white;
-        }
-
-        .role-card.profesor:hover .badge-link {
-            box-shadow: 0 10px 25px rgba(39, 174, 96, 0.4);
-            transform: translateY(-3px);
+        .badge-link:hover {
+            background-color: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
         }
 
         .badge-link i {
-            margin-right: 8px;
-            font-size: 14px;
-            transition: transform 0.3s;
-        }
-
-        .badge-link:hover i {
-            transform: translateX(3px);
+            margin-right: 6px;
+            font-size: 13px;
         }
 
         .info-box {
-            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
+            background-color: #e3f2fd;
+            border-left: 3px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 25px;
             font-size: 13px;
-            color: #555;
+            color: #1565c0;
         }
 
         .info-box i {
-            margin-right: 8px;
-            color: #667eea;
+            margin-right: 6px;
         }
 
         @media (max-width: 768px) {
@@ -292,15 +169,15 @@
             }
 
             .header-section {
-                padding: 40px 25px;
+                padding: 30px 25px;
             }
 
             .header-section h1 {
-                font-size: 32px;
+                font-size: 28px;
             }
 
             .content-section {
-                padding: 35px 25px;
+                padding: 30px 25px;
             }
 
             .content-section h2 {
@@ -308,19 +185,15 @@
             }
 
             .role-card {
-                padding: 30px 25px;
+                padding: 25px 20px;
             }
 
             .role-card i {
-                font-size: 50px;
+                font-size: 40px;
             }
 
             .role-card h3 {
-                font-size: 22px;
-            }
-
-            .role-card:hover {
-                transform: translateY(-10px) scale(1.01);
+                font-size: 20px;
             }
         }
     </style>
@@ -341,27 +214,23 @@
 
             <div class="roles-container">
                 <!-- Tarjeta Estudiante -->
-                <div class="role-card estudiante">
-                    <div class="role-card-content">
-                        <i class="fas fa-user-graduate"></i>
-                        <h3>Estudiante</h3>
-                        <p>Realiza y gestiona tus prácticas profesionales de forma segura y eficiente</p>
-                        <a href="/seleccionar-perfil?perfil=estudiante" class="badge-link">
-                            <i class="fas fa-arrow-right"></i> Acceder
-                        </a>
-                    </div>
+                <div class="role-card">
+                    <i class="fas fa-user-graduate"></i>
+                    <h3>Estudiante</h3>
+                    <p>Realiza y gestiona tus prácticas profesionales de forma segura y eficiente</p>
+                    <a href="/seleccionar-perfil?perfil=estudiante" class="badge-link">
+                        <i class="fas fa-arrow-right"></i> Acceder
+                    </a>
                 </div>
 
                 <!-- Tarjeta Profesor -->
-                <div class="role-card profesor">
-                    <div class="role-card-content">
-                        <i class="fas fa-chalkboard-user"></i>
-                        <h3>Profesor</h3>
-                        <p>Supervisa y gestiona las prácticas de los estudiantes bajo tu responsabilidad</p>
-                        <a href="/seleccionar-perfil?perfil=profesor" class="badge-link">
-                            <i class="fas fa-arrow-right"></i> Acceder
-                        </a>
-                    </div>
+                <div class="role-card">
+                    <i class="fas fa-chalkboard-user"></i>
+                    <h3>Profesor</h3>
+                    <p>Supervisa y gestiona las prácticas de los estudiantes bajo tu responsabilidad</p>
+                    <a href="/seleccionar-perfil?perfil=profesor" class="badge-link">
+                        <i class="fas fa-arrow-right"></i> Acceder
+                    </a>
                 </div>
             </div>
 
