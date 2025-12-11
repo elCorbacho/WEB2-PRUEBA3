@@ -1,11 +1,11 @@
 meta {
-  name: post practica
+  name: post practica estudiante
   type: http
   seq: 4
 }
 
 post {
-  url: http://localhost:8080/api/estudiantes/4/practicas
+  url: http://localhost:8080/api/estudiantes/2/practicas
   body: json
   auth: inherit
 }
@@ -129,7 +129,7 @@ example {
   request: {
     url: http://localhost:8080/api/estudiantes/4/practicas
     method: POST
-    mode: json
+    mode: text
     body:json: {
       {
         "fechaInicio": "2025-02-01",

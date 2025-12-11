@@ -7,8 +7,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.lang.NonNull;
 import cl.web2.prueba3.prueba3.models.Profesor;
 import cl.web2.prueba3.prueba3.models.Practica;
+import cl.web2.prueba3.prueba3.models.Estudiante;
+import cl.web2.prueba3.prueba3.models.Empresa;
 import cl.web2.prueba3.prueba3.services.ProfesorService;
 import cl.web2.prueba3.prueba3.services.PracticaService;
+import cl.web2.prueba3.prueba3.services.EstudianteService;
+import cl.web2.prueba3.prueba3.services.EmpresaService;
+import cl.web2.prueba3.prueba3.responses.ApiResponse;
+import cl.web2.prueba3.prueba3.dtos.PracticaDTO;
+import cl.web2.prueba3.prueba3.mappers.PracticaMapper;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,23 +31,68 @@ public class ProfesorApiController {
     @Autowired
     private PracticaService practicaService;
     
+    @Autowired
+    private EstudianteService estudianteService;
+    
+    @Autowired
+    private EmpresaService empresaService;
+    
+    @Autowired
+    private PracticaMapper practicaMapper;
+    
     /**
      * Obtener todos los profesores
      */
     @GetMapping
-    public ResponseEntity<List<Profesor>> obtenerTodos() {
-        List<Profesor> profesores = profesorService.obtenerTodosLosProfesores();
-        return ResponseEntity.ok(profesores);
+    public ResponseEntity<ApiResponse<List<Profesor>>> obtenerTodos() {
+        try {
+            List<Profesor> profesores = profesorService.obtenerTodosLosProfesores();
+            return ResponseEntity.ok(
+                ApiResponse.<List<Profesor>>builder()
+                    .status(200)
+                    .message("Profesores obtenidos correctamente")
+                    .data(profesores)
+                    .timestamp(LocalDateTime.now())
+                    .build()
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                ApiResponse.<List<Profesor>>builder()
+                    .status(500)
+                    .message("Error al obtener profesores")
+                    .error(e.getMessage())
+                    .timestamp(LocalDateTime.now())
+                    .build()
+            );
+        }
     }
     
     /**
      * Obtener profesor por ID
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Profesor> obtenerPorId(@NonNull @PathVariable Long id) {
-        Optional<Profesor> profesor = profesorService.obtenerProfesor(id);
-        return profesor.map(ResponseEntity::ok)
-                      .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ApiResponse<Profesor>> obtenerPorId(@PathVariable Long id) {
+        try {
+            Profesor profesor = profesorService.obtenerProfesor(id)
+                .orElseThrow(() -> new RuntimeException("Profesor no encontrado"));
+            return ResponseEntity.ok(
+                ApiResponse.<Profesor>builder()
+                    .status(200)
+                    .message("Profesor encontrado")
+                    .data(profesor)
+                    .timestamp(LocalDateTime.now())
+                    .build()
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(
+                ApiResponse.<Profesor>builder()
+                    .status(404)
+                    .message("Profesor no encontrado")
+                    .error(e.getMessage())
+                    .timestamp(LocalDateTime.now())
+                    .build()
+            );
+        }
     }
     
 
@@ -50,17 +103,35 @@ public class ProfesorApiController {
      * GET: Obtener todas las prácticas del profesor
      */
     @GetMapping("/{profesorId}/practicas")
-    public ResponseEntity<List<Practica>> obtenerMisPracticas(@NonNull @PathVariable Long profesorId) {
-        if (profesorId == null || profesorId <= 0) {
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<ApiResponse<List<PracticaDTO>>> obtenerMisPracticas(@PathVariable Long profesorId) {
+        try {
+            profesorService.obtenerProfesor(profesorId)
+                .orElseThrow(() -> new RuntimeException("Profesor no encontrado"));
+            
+            List<PracticaDTO> practicasDTO = practicaService
+                .obtenerPracticasPorProfesor(profesorId)
+                .stream()
+                .map(practicaMapper::toPracticaDTO)
+                .toList();
+            
+            return ResponseEntity.ok(
+                ApiResponse.<List<PracticaDTO>>builder()
+                    .status(200)
+                    .message("Prácticas obtenidas correctamente")
+                    .data(practicasDTO)
+                    .timestamp(LocalDateTime.now())
+                    .build()
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                ApiResponse.<List<PracticaDTO>>builder()
+                    .status(500)
+                    .message("Error al obtener prácticas")
+                    .error(e.getMessage())
+                    .timestamp(LocalDateTime.now())
+                    .build()
+            );
         }
-        // Validar que el profesor existe
-        Optional<Profesor> profesor = profesorService.obtenerProfesor(profesorId);
-        if (!profesor.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        List<Practica> practicas = practicaService.obtenerPracticasPorProfesor(profesorId);
-        return ResponseEntity.ok(practicas);
     }
     
 
@@ -69,32 +140,41 @@ public class ProfesorApiController {
      * POST: Crear una nueva práctica
      */
     @PostMapping("/{profesorId}/practicas")
-    public ResponseEntity<Practica> crearPractica(@NonNull @PathVariable Long profesorId,
-                                                  @NonNull @RequestBody Practica practica) {
-        if (profesorId == null || profesorId <= 0 || practica == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        
-        // Validar que el profesor exista
-        Optional<Profesor> profesor = profesorService.obtenerProfesor(profesorId);
-        if (!profesor.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        
-        // Validar datos requeridos de la práctica
-        if (practica.getEstudiante() == null || practica.getEmpresa() == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        
+    public ResponseEntity<ApiResponse<PracticaDTO>> crearPractica(
+            @PathVariable Long profesorId,
+            @RequestBody Practica practica) {
         try {
-            // Asignar el profesor a la práctica
-            practica.setProfesor(profesor.get());
+            Profesor profesor = profesorService.obtenerProfesor(profesorId)
+                .orElseThrow(() -> new RuntimeException("Profesor no encontrado"));
             
-            // Crear la práctica
+            Estudiante estudiante = estudianteService.obtenerEstudiante(practica.getEstudiante().getId())
+                .orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
+            
+            Empresa empresa = empresaService.obtenerEmpresa(practica.getEmpresa().getId())
+                .orElseThrow(() -> new RuntimeException("Empresa no encontrada"));
+            
+            practica.setProfesor(profesor);
+            practica.setEstudiante(estudiante);
+            practica.setEmpresa(empresa);
+            
             Practica nuevaPractica = practicaService.crearPractica(practica);
-            return ResponseEntity.status(HttpStatus.CREATED).body(nuevaPractica);
+            
+            return ResponseEntity.status(HttpStatus.CREATED).body(
+                ApiResponse.<PracticaDTO>builder()
+                    .status(201)
+                    .message("Práctica creada correctamente")
+                    .data(practicaMapper.toPracticaDTO(nuevaPractica))
+                    .timestamp(LocalDateTime.now())
+                    .build()
+            );
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                ApiResponse.<PracticaDTO>builder()
+                    .status(500)
+                    .message("Error al crear la práctica: " + e.getMessage())
+                    .timestamp(LocalDateTime.now())
+                    .build()
+            );
         }
     }
     
