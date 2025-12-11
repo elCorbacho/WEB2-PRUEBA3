@@ -18,4 +18,6 @@ public class PracticaDTO {
     private String profesorApellidos;
     private String jefeNombre;
     private String jefeApellidos;
+    private String estudianteNombre;
+    private String estudianteApellido;
 }

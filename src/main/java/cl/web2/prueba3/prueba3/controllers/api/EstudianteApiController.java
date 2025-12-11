@@ -107,7 +107,9 @@ public class EstudianteApiController {
                     practica.getProfesor().getNombres(),
                     practica.getProfesor().getApellidos(),
                     practica.getEmpresa().getJefe().getNombre(),
-                    practica.getEmpresa().getJefe().getApellidos()
+                    practica.getEmpresa().getJefe().getApellidos(),
+                    practica.getEstudiante().getNombre(),
+                    practica.getEstudiante().getApellido()
                 ))
                 .toList();
             
@@ -223,7 +225,9 @@ public class EstudianteApiController {
                 nuevaPractica.getProfesor().getNombres(),
                 nuevaPractica.getProfesor().getApellidos(),
                 nuevaPractica.getEmpresa().getJefe().getNombre(),
-                nuevaPractica.getEmpresa().getJefe().getApellidos()
+                nuevaPractica.getEmpresa().getJefe().getApellidos(),
+                nuevaPractica.getEstudiante().getNombre(),
+                nuevaPractica.getEstudiante().getApellido()
             );
             
             return ResponseEntity.status(HttpStatus.CREATED).body(
