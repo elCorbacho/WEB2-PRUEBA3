@@ -2,6 +2,7 @@ package cl.web2.prueba3.prueba3.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import cl.web2.prueba3.prueba3.models.Jefe_empresa;
@@ -10,11 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 public class JefeEmpresaService {
     
     @Autowired
     private JefeEmpresaRepository jefeEmpresaRepository;
     
+    @Transactional
     public Jefe_empresa crearJefeEmpresa(@NonNull Jefe_empresa jefe) {
         return jefeEmpresaRepository.save(jefe);
     }
@@ -27,6 +30,7 @@ public class JefeEmpresaService {
         return (List<Jefe_empresa>) jefeEmpresaRepository.findAll();
     }
     
+    @Transactional
     public Jefe_empresa actualizarJefeEmpresa(@NonNull Long id, @NonNull Jefe_empresa jefeActualizado) {
         Optional<Jefe_empresa> jefeExistente = jefeEmpresaRepository.findById(id);
         if (jefeExistente.isPresent()) {
@@ -39,6 +43,7 @@ public class JefeEmpresaService {
         return null;
     }
     
+    @Transactional
     public boolean eliminarJefeEmpresa(@NonNull Long id) {
         if (jefeEmpresaRepository.existsById(id)) {
             jefeEmpresaRepository.deleteById(id);

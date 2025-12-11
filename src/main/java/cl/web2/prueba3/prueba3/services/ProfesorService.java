@@ -2,6 +2,7 @@ package cl.web2.prueba3.prueba3.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import cl.web2.prueba3.prueba3.models.Profesor;
@@ -10,11 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 public class ProfesorService {
     
     @Autowired
     private ProfesorRepository profesorRepository;
     
+    @Transactional
     public Profesor crearProfesor(@NonNull Profesor profesor) {
         return profesorRepository.save(profesor);
     }
@@ -27,6 +30,7 @@ public class ProfesorService {
         return (List<Profesor>) profesorRepository.findAll();
     }
     
+    @Transactional
     public Profesor actualizarProfesor(@NonNull Long id, @NonNull Profesor profesorActualizado) {
         Optional<Profesor> profesorExistente = profesorRepository.findById(id);
         if (profesorExistente.isPresent()) {
@@ -39,6 +43,7 @@ public class ProfesorService {
         return null;
     }
     
+    @Transactional
     public boolean eliminarProfesor(@NonNull Long id) {
         if (profesorRepository.existsById(id)) {
             profesorRepository.deleteById(id);

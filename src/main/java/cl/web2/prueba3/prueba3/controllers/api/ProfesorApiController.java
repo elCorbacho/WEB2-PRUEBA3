@@ -137,6 +137,7 @@ public class ProfesorApiController {
     //
     //post crear practica
     @PostMapping("/{profesorId}/practicas")
+    @Transactional
     public ResponseEntity<ApiResponse<PracticaDTO>> crearPractica(
             @PathVariable Long profesorId,
             @RequestBody Practica practica) {
@@ -149,6 +150,17 @@ public class ProfesorApiController {
             
             Empresa empresa = empresaService.obtenerEmpresa(practica.getEmpresa().getId())
                 .orElseThrow(() -> new RuntimeException("Empresa no encontrada"));
+            
+            // Validar fechas
+            if (practica.getFechaInicio().isAfter(practica.getFechaFin())) {
+                return ResponseEntity.badRequest().body(
+                    ApiResponse.<PracticaDTO>builder()
+                        .status(400)
+                        .message("La fecha de inicio debe ser anterior a la fecha de fin")
+                        .timestamp(LocalDateTime.now())
+                        .build()
+                );
+            }
             
             practica.setProfesor(profesor);
             practica.setEstudiante(estudiante);
@@ -180,29 +192,62 @@ public class ProfesorApiController {
     //
     // put actualizar practica
     @PutMapping("/{profesorId}/practicas/{practicaId}")
-    public ResponseEntity<Practica> actualizarPractica
+    @Transactional
+    public ResponseEntity<ApiResponse<PracticaDTO>> actualizarPractica
         (@NonNull @PathVariable Long profesorId,
             @NonNull @PathVariable Long practicaId,
             @NonNull @RequestBody Practica practica) {
         if (profesorId == null || practicaId == null || practica == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        
-        Optional<Practica> practicaExistente = practicaService.obtenerPractica(practicaId);
-        if (!practicaExistente.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        
-        // Validar que la práctica pertenezca al profesor
-        if (!practicaExistente.get().getProfesor().getId().equals(profesorId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            return ResponseEntity.badRequest().body(
+                ApiResponse.<PracticaDTO>builder()
+                    .status(400)
+                    .message("Datos inválidos")
+                    .timestamp(LocalDateTime.now())
+                    .build()
+            );
         }
         
         try {
+            Optional<Practica> practicaExistente = practicaService.obtenerPractica(practicaId);
+            if (!practicaExistente.isPresent()) {
+                return ResponseEntity.status(404).body(
+                    ApiResponse.<PracticaDTO>builder()
+                        .status(404)
+                        .message("Práctica no encontrada")
+                        .timestamp(LocalDateTime.now())
+                        .build()
+                );
+            }
+            
+            // Validar que la práctica pertenezca al profesor
+            if (!practicaExistente.get().getProfesor().getId().equals(profesorId)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
+                    ApiResponse.<PracticaDTO>builder()
+                        .status(403)
+                        .message("No tienes permiso para editar esta práctica")
+                        .timestamp(LocalDateTime.now())
+                        .build()
+                );
+            }
+            
             Practica practicaActualizada = practicaService.actualizarPractica(practicaId, practica);
-            return ResponseEntity.ok(practicaActualizada);
+            return ResponseEntity.ok(
+                ApiResponse.<PracticaDTO>builder()
+                    .status(200)
+                    .message("Práctica actualizada correctamente")
+                    .data(practicaMapper.toPracticaDTO(practicaActualizada))
+                    .timestamp(LocalDateTime.now())
+                    .build()
+            );
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                ApiResponse.<PracticaDTO>builder()
+                    .status(500)
+                    .message("Error al actualizar la práctica")
+                    .error(e.getMessage())
+                    .timestamp(LocalDateTime.now())
+                    .build()
+            );
         }
     }
     //

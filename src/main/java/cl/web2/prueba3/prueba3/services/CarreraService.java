@@ -2,6 +2,7 @@ package cl.web2.prueba3.prueba3.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import cl.web2.prueba3.prueba3.models.Carrera;
@@ -10,11 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 public class CarreraService {
     
     @Autowired
     private CarreraRepository carreraRepository;
     
+    @Transactional
     public Carrera crearCarrera(@NonNull Carrera carrera) {
         return carreraRepository.save(carrera);
     }
@@ -27,6 +30,7 @@ public class CarreraService {
         return (List<Carrera>) carreraRepository.findAll();
     }
     
+    @Transactional
     public Carrera actualizarCarrera(@NonNull Long id, @NonNull Carrera carreraActualizada) {
         Optional<Carrera> carreraExistente = carreraRepository.findById(id);
         if (carreraExistente.isPresent()) {
@@ -37,6 +41,7 @@ public class CarreraService {
         return null;
     }
     
+    @Transactional
     public boolean eliminarCarrera(@NonNull Long id) {
         if (carreraRepository.existsById(id)) {
             carreraRepository.deleteById(id);

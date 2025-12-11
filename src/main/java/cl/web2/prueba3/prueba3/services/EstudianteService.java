@@ -2,6 +2,7 @@ package cl.web2.prueba3.prueba3.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import cl.web2.prueba3.prueba3.models.Estudiante;
@@ -10,11 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 public class EstudianteService {
     
     @Autowired
     private EstudianteRepository estudianteRepository;
     
+    @Transactional
     public Estudiante crearEstudiante(@NonNull Estudiante estudiante) {
         return estudianteRepository.save(estudiante);
     }
@@ -27,6 +30,7 @@ public class EstudianteService {
         return (List<Estudiante>) estudianteRepository.findAll();
     }
     
+    @Transactional
     public Estudiante actualizarEstudiante(@NonNull Long id, @NonNull Estudiante estudianteActualizado) {
         Optional<Estudiante> estudianteExistente = estudianteRepository.findById(id);
         if (estudianteExistente.isPresent()) {
@@ -40,6 +44,7 @@ public class EstudianteService {
         return null;
     }
     
+    @Transactional
     public boolean eliminarEstudiante(@NonNull Long id) {
         if (estudianteRepository.existsById(id)) {
             estudianteRepository.deleteById(id);
