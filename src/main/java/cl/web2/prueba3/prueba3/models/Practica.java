@@ -21,28 +21,28 @@ public class Practica {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estudiante_id", nullable = false)
-    @JsonIgnore
+    @JsonProperty("estudiante")
     private Estudiante estudiante;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "empresa_id", nullable = false)
-    @JsonProperty("empresa")  // ← AGREGA ESTO
+    @JsonProperty("empresa")
     private Empresa empresa;
     
     @Column(name = "fecha_inicio", nullable = false)
-    @JsonProperty("fechaInicio")  // ← AGREGA ESTO
+    @JsonProperty("fechaInicio")
     private LocalDate fechaInicio;
     
     @Column(name = "fecha_fin", nullable = false)
-    @JsonProperty("fechaFin")  // ← AGREGA ESTO
+    @JsonProperty("fechaFin")
     private LocalDate fechaFin;
     
     @Column(name = "actividades", columnDefinition = "TEXT")
-    @JsonProperty("actividades")  // ← AGREGA ESTO
+    @JsonProperty("actividades")
     private String actividades;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "profesor_id", nullable = false)
-    @JsonProperty("profesor")  // ← AGREGA ESTO
+    @JsonProperty("profesor")
     private Profesor profesor;
 }

@@ -1,0 +1,59 @@
+meta {
+  name: delete practica profesor
+  type: http
+  seq: 9
+}
+
+delete {
+  url: http://localhost:8080/api/profesores/1/practicas/3
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: example
+  
+  request: {
+    url: http://localhost:8080/api/profesores/1/practicas/3
+    method: DELETE
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 03:51:22 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 200,
+          "message": "Práctica eliminada correctamente",
+          "data": "ID: 3",
+          "timestamp": "2025-12-11T00:51:22.883936"
+        }
+      '''
+    }
+  }
+}

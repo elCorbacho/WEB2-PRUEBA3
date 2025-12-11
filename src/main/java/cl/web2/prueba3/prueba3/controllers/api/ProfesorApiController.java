@@ -40,9 +40,7 @@ public class ProfesorApiController {
     @Autowired
     private PracticaMapper practicaMapper;
     
-    /**
-     * Obtener todos los profesores
-     */
+    // get profesores
     @GetMapping
     public ResponseEntity<ApiResponse<List<Profesor>>> obtenerTodos() {
         try {
@@ -66,10 +64,11 @@ public class ProfesorApiController {
             );
         }
     }
-    
-    /**
-     * Obtener profesor por ID
-     */
+    //
+    //
+    //
+    //
+    //get profesor por id
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Profesor>> obtenerPorId(@PathVariable Long id) {
         try {
@@ -94,14 +93,11 @@ public class ProfesorApiController {
             );
         }
     }
-    
-
-    
-    // ============ ENDPOINTS DE PRÁCTICAS PARA PROFESORES ============
-    
-    /**
-     * GET: Obtener todas las prácticas del profesor
-     */
+    //
+    //
+    //
+    //
+    // get practicas por profesor
     @GetMapping("/{profesorId}/practicas")
     public ResponseEntity<ApiResponse<List<PracticaDTO>>> obtenerMisPracticas(@PathVariable Long profesorId) {
         try {
@@ -133,12 +129,11 @@ public class ProfesorApiController {
             );
         }
     }
-    
-
-    
-    /**
-     * POST: Crear una nueva práctica
-     */
+    //
+    //
+    //
+    //
+    //post crear practica
     @PostMapping("/{profesorId}/practicas")
     public ResponseEntity<ApiResponse<PracticaDTO>> crearPractica(
             @PathVariable Long profesorId,
@@ -177,10 +172,11 @@ public class ProfesorApiController {
             );
         }
     }
-    
-    /**
-     * PUT: Actualizar una práctica
-     */
+    //
+    //
+    //
+    //
+    // put actualizar practica
     @PutMapping("/{profesorId}/practicas/{practicaId}")
     public ResponseEntity<Practica> actualizarPractica(@NonNull @PathVariable Long profesorId,
                                                        @NonNull @PathVariable Long practicaId,
@@ -206,32 +202,54 @@ public class ProfesorApiController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
-    /**
-     * DELETE: Eliminar una práctica
-     */
+    //
+    //
+    //
+    //
+    // delete eliminar practica
     @DeleteMapping("/{profesorId}/practicas/{practicaId}")
-    public ResponseEntity<Void> eliminarPractica(@NonNull @PathVariable Long profesorId,
-                                                 @NonNull @PathVariable Long practicaId) {
+    public ResponseEntity<ApiResponse<String>> eliminarPractica(@NonNull @PathVariable Long profesorId,
+                                                                @NonNull @PathVariable Long practicaId) {
         if (profesorId == null || practicaId == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        
-        Optional<Practica> practica = practicaService.obtenerPractica(practicaId);
-        if (!practica.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        
-        // Validar que la práctica pertenezca al profesor
-        if (!practica.get().getProfesor().getId().equals(profesorId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            return ResponseEntity.badRequest().body(
+                ApiResponse.<String>builder()
+                    .status(400)
+                    .message("El ID del profesor y la práctica son requeridos")
+                    .timestamp(LocalDateTime.now())
+                    .build()
+            );
         }
         
         try {
+            Optional<Practica> practica = practicaService.obtenerPractica(practicaId);
+            if (!practica.isPresent()) {
+                return ResponseEntity.status(404).body(
+                    ApiResponse.<String>builder()
+                        .status(404)
+                        .message("Práctica no encontrada")
+                        .timestamp(LocalDateTime.now())
+                        .build()
+                );
+            }
+            
             practicaService.eliminarPractica(practicaId);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(
+                ApiResponse.<String>builder()
+                    .status(200)
+                    .message("Práctica eliminada correctamente")
+                    .data("ID: " + practicaId)
+                    .timestamp(LocalDateTime.now())
+                    .build()
+            );
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                ApiResponse.<String>builder()
+                    .status(500)
+                    .message("Error al eliminar la práctica")
+                    .error(e.getMessage())
+                    .timestamp(LocalDateTime.now())
+                    .build()
+            );
         }
     }
 }

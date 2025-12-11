@@ -14,3 +14,74 @@ settings {
   encodeUrl: true
   timeout: 0
 }
+
+example {
+  name: example
+  
+  request: {
+    url: http://localhost:8080/api/profesores
+    method: GET
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 03:34:53 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 200,
+          "message": "Profesores obtenidos correctamente",
+          "data": [
+            {
+              "id": 1,
+              "nombres": "Juan",
+              "apellidos": "García López",
+              "correoElectronico": "juan.garcia@universidad.cl",
+              "email": "juan.garcia@universidad.cl",
+              "password": "$2a$10$5F0aUutV/jxCia2PTghQEuHlTwJez4HZlcosoM8xe6sedr5VAL.Sq",
+              "activo": true
+            },
+            {
+              "id": 2,
+              "nombres": "María",
+              "apellidos": "Rodríguez Martínez",
+              "correoElectronico": "maria.rodriguez@universidad.cl",
+              "email": "maria.rodriguez@universidad.cl",
+              "password": "$2a$10$wuGKcHZYe8EM3oQF0FotPOhH6DW9k5yZsGu9kYB7T98wLgl2.q0v6",
+              "activo": true
+            },
+            {
+              "id": 3,
+              "nombres": "Carlos",
+              "apellidos": "Fernández Silva",
+              "correoElectronico": "carlos.fernandez@universidad.cl",
+              "email": "carlos.fernandez@universidad.cl",
+              "password": "$2a$10$tYsiGwLop3AL05j8KiwPEeuy9NKt5.4TbG8OIpZ8Syifh7SYJWm3C",
+              "activo": true
+            }
+          ],
+          "timestamp": "2025-12-11T00:34:53.3012611"
+        }
+      '''
+    }
+  }
+}
