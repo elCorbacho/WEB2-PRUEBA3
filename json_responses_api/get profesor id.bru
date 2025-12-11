@@ -1,0 +1,118 @@
+meta {
+  name: get profesor id
+  type: http
+  seq: 6
+}
+
+get {
+  url: http://localhost:8080/api/profesores/1
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: example
+  
+  request: {
+    url: http://localhost:8080/api/profesores/1
+    method: GET
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 03:35:44 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 200,
+          "message": "Profesor encontrado",
+          "data": {
+            "id": 1,
+            "nombres": "Juan",
+            "apellidos": "García López",
+            "correoElectronico": "juan.garcia@universidad.cl",
+            "email": "juan.garcia@universidad.cl",
+            "password": "$2a$10$5F0aUutV/jxCia2PTghQEuHlTwJez4HZlcosoM8xe6sedr5VAL.Sq",
+            "activo": true
+          },
+          "timestamp": "2025-12-11T00:35:44.5128564"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: example (1)
+  
+  request: {
+    url: http://localhost:8080/api/profesores/1
+    method: GET
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 04:42:14 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 200,
+          "message": "Profesor encontrado",
+          "data": {
+            "id": 1,
+            "nombres": "Juan",
+            "apellidos": "García López",
+            "correoElectronico": "juan.garcia@universidad.cl",
+            "email": "juan.garcia@universidad.cl",
+            "password": "$2a$10$9wxe/6/dSLlB0otKRv1.luqqQMBGdb9EmPFxIvFxot7KupoV.cnEa",
+            "activo": true
+          },
+          "timestamp": "2025-12-11T01:42:14.0377346"
+        }
+      '''
+    }
+  }
+}

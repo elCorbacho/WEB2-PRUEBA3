@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Prácticas Profesionales</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container-main {
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+        }
+
+        .header-section {
+            background-color: white;
+            color: #2c3e50;
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .header-section i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #667eea;
+            display: block;
+        }
+
+        .header-section h1 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .header-section p {
+            font-size: 16px;
+            color: #7f8c8d;
+            margin: 0;
+        }
+
+        .content-section {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-section h2 {
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .content-section > p {
+            color: #7f8c8d;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        .roles-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .role-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 35px 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background-color: #fafafa;
+            cursor: pointer;
+        }
+
+        .role-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .role-card i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+            color: #667eea;
+        }
+
+        .role-card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 15px 0 10px 0;
+            color: #2c3e50;
+        }
+
+        .role-card p {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .badge-link {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            background-color: #667eea;
+            color: white;
+        }
+
+        .badge-link:hover {
+            background-color: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .badge-link i {
+            margin-right: 6px;
+            font-size: 13px;
+        }
+
+        .info-box {
+            background-color: #e3f2fd;
+            border-left: 3px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 25px;
+            font-size: 13px;
+            color: #1565c0;
+        }
+
+        .info-box i {
+            margin-right: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .roles-container {
+                grid-template-columns: 1fr;
+            }
+
+            .header-section {
+                padding: 30px 25px;
+            }
+
+            .header-section h1 {
+                font-size: 28px;
+            }
+
+            .content-section {
+                padding: 30px 25px;
+            }
+
+            .content-section h2 {
+                font-size: 24px;
+            }
+
+            .role-card {
+                padding: 25px 20px;
+            }
+
+            .role-card i {
+                font-size: 40px;
+            }
+
+            .role-card h3 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-main">
+        <!-- Header -->
+        <div class="header-section">
+            <i class="fas fa-graduation-cap"></i>
+            <h1>¡Bienvenido!</h1>
+            <p>Sistema de Gestión de Prácticas Profesionales</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content-section">
+            <h2>¿Cómo deseas ingresar?</h2>
+            <p>Selecciona tu rol para acceder al sistema</p>
+
+            <div class="roles-container">
+                <!-- Tarjeta Estudiante -->
+                <div class="role-card">
+                    <i class="fas fa-user-graduate"></i>
+                    <h3>Estudiante</h3>
+                    <p>Realiza y gestiona tus prácticas profesionales de forma segura y eficiente</p>
+                    <a href="/login?perfil=estudiante" class="badge-link">
+                        <i class="fas fa-arrow-right"></i> Acceder
+                    </a>
+                </div>
+
+                <!-- Tarjeta Profesor -->
+                <div class="role-card">
+                    <i class="fas fa-chalkboard-user"></i>
+                    <h3>Profesor</h3>
+                    <p>Supervisa y gestiona las prácticas de los estudiantes bajo tu responsabilidad</p>
+                    <a href="/login?perfil=profesor" class="badge-link">
+                        <i class="fas fa-arrow-right"></i> Acceder
+                    </a>
+                </div>
+            </div>
+
+            <!-- Info Box -->
+            <div class="info-box">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Tip:</strong> Usa las credenciales de prueba disponibles en el login para explorar el sistema
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

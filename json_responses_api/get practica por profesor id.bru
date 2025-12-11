@@ -1,0 +1,278 @@
+meta {
+  name: get practica por profesor id
+  type: http
+  seq: 7
+}
+
+get {
+  url: http://localhost:8080/api/profesores/1/practicas
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: example
+  
+  request: {
+    url: http://localhost:8080/api/profesores/2/practicas
+    method: GET
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 03:38:33 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 200,
+          "message": "Prácticas obtenidas correctamente",
+          "data": [
+            {
+              "id": 2,
+              "fechaInicio": "2025-02-01",
+              "fechaFin": "2026-04-01",
+              "actividades": "Análisis de requisitos, diseño de base de datos, implementación de API REST",
+              "empresaNombre": "Innovatech Chile",
+              "profesorNombres": "María",
+              "profesorApellidos": "Rodríguez Martínez",
+              "jefeNombre": "Ana",
+              "jefeApellidos": "López Martínez",
+              "estudianteNombre": "Francisca",
+              "estudianteApellido": "Díaz Gutiérrez"
+            }
+          ],
+          "timestamp": "2025-12-11T00:38:33.8349591"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: example (1)
+  
+  request: {
+    url: http://localhost:8080/api/profesores/1/practicas
+    method: GET
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 03:39:14 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 200,
+          "message": "Prácticas obtenidas correctamente",
+          "data": [
+            {
+              "id": 1,
+              "fechaInicio": "2025-01-15",
+              "fechaFin": "2025-03-15",
+              "actividades": "Desarrollo de módulo de autenticación, pruebas unitarias, documentación de código",
+              "empresaNombre": "TechSoft Solutions",
+              "profesorNombres": "Juan",
+              "profesorApellidos": "García López",
+              "jefeNombre": "Pedro",
+              "jefeApellidos": "González Hernández",
+              "estudianteNombre": "Luis",
+              "estudianteApellido": "Morales Castillo"
+            },
+            {
+              "id": 4,
+              "fechaInicio": "2025-02-01",
+              "fechaFin": "2025-04-30",
+              "actividades": "Desarrollo backend, pruebas, documentación",
+              "empresaNombre": "TechSoft Solutions",
+              "profesorNombres": "Juan",
+              "profesorApellidos": "García López",
+              "jefeNombre": "Pedro",
+              "jefeApellidos": "González Hernández",
+              "estudianteNombre": "Francisca",
+              "estudianteApellido": "Díaz Gutiérrez"
+            },
+            {
+              "id": 5,
+              "fechaInicio": "2025-02-01",
+              "fechaFin": "2025-04-30",
+              "actividades": "Desarrollo backend, pruebas, documentación",
+              "empresaNombre": "TechSoft Solutions",
+              "profesorNombres": "Juan",
+              "profesorApellidos": "García López",
+              "jefeNombre": "Pedro",
+              "jefeApellidos": "González Hernández",
+              "estudianteNombre": "Francisca",
+              "estudianteApellido": "Díaz Gutiérrez"
+            },
+            {
+              "id": 6,
+              "fechaInicio": "2025-02-01",
+              "fechaFin": "2025-04-30",
+              "actividades": "Desarrollo backend, pruebas, documentación",
+              "empresaNombre": "TechSoft Solutions",
+              "profesorNombres": "Juan",
+              "profesorApellidos": "García López",
+              "jefeNombre": "Pedro",
+              "jefeApellidos": "González Hernández",
+              "estudianteNombre": "Francisca",
+              "estudianteApellido": "Díaz Gutiérrez"
+            }
+          ],
+          "timestamp": "2025-12-11T00:39:14.7349706"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: example (2)
+  
+  request: {
+    url: http://localhost:8080/api/profesores/1/practicas
+    method: GET
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 04:42:16 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 200,
+          "message": "Prácticas obtenidas correctamente",
+          "data": [
+            {
+              "id": 1,
+              "fechaInicio": "2025-01-15",
+              "fechaFin": "2025-03-15",
+              "actividades": "Desarrollo de módulo de autenticación, pruebas unitarias, documentación de código",
+              "empresaNombre": "TechSoft Solutions",
+              "profesorNombres": "Juan",
+              "profesorApellidos": "García López",
+              "jefeNombre": "Pedro",
+              "jefeApellidos": "González Hernández",
+              "estudianteNombre": "Luis",
+              "estudianteApellido": "Morales Castillo"
+            },
+            {
+              "id": 4,
+              "fechaInicio": "2025-02-01",
+              "fechaFin": "2025-04-30",
+              "actividades": "Desarrollo backend, pruebas, documentación",
+              "empresaNombre": "TechSoft Solutions",
+              "profesorNombres": "Juan",
+              "profesorApellidos": "García López",
+              "jefeNombre": "Pedro",
+              "jefeApellidos": "González Hernández",
+              "estudianteNombre": "Francisca",
+              "estudianteApellido": "Díaz Gutiérrez"
+            },
+            {
+              "id": 5,
+              "fechaInicio": "2025-02-01",
+              "fechaFin": "2025-04-30",
+              "actividades": "Desarrollo backend, pruebas, documentación",
+              "empresaNombre": "TechSoft Solutions",
+              "profesorNombres": "Juan",
+              "profesorApellidos": "García López",
+              "jefeNombre": "Pedro",
+              "jefeApellidos": "González Hernández",
+              "estudianteNombre": "Francisca",
+              "estudianteApellido": "Díaz Gutiérrez"
+            },
+            {
+              "id": 6,
+              "fechaInicio": "2025-02-01",
+              "fechaFin": "2025-04-30",
+              "actividades": "Desarrollo backend, pruebas, documentación",
+              "empresaNombre": "TechSoft Solutions",
+              "profesorNombres": "Juan",
+              "profesorApellidos": "García López",
+              "jefeNombre": "Pedro",
+              "jefeApellidos": "González Hernández",
+              "estudianteNombre": "Francisca",
+              "estudianteApellido": "Díaz Gutiérrez"
+            },
+            {
+              "id": 7,
+              "fechaInicio": "2025-02-01",
+              "fechaFin": "2025-04-30",
+              "actividades": "Desarrollo backend, pruebas, documentación",
+              "empresaNombre": "TechSoft Solutions",
+              "profesorNombres": "Juan",
+              "profesorApellidos": "García López",
+              "jefeNombre": "Pedro",
+              "jefeApellidos": "González Hernández",
+              "estudianteNombre": "Francisca",
+              "estudianteApellido": "Díaz Gutiérrez"
+            }
+          ],
+          "timestamp": "2025-12-11T01:42:16.0265578"
+        }
+      '''
+    }
+  }
+}

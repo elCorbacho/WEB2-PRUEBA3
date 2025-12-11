@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}">
+<head>
+    <title th:text="'Dashboard Profesor'"></title>
+</head>
+<body>
+    <main layout:fragment="content">
+        <!-- Información del Profesor -->
+        <div class="row mb-3 mb-md-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-id-card me-2"></i>Información Personal
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <p class="mb-2"><strong>Nombres:</strong> <span th:text="${profesor.nombres}"></span></p>
+                                <p class="mb-2"><strong>Apellidos:</strong> <span th:text="${profesor.apellidos}"></span></p>
+                            </div>
+                            <div class="col-lg-6">
+                                <p class="mb-2"><strong>Correo Electrónico:</strong> <span th:text="${profesor.correoElectronico}" class="text-truncate d-inline-block" style="max-width: 100%;"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Todas las Prácticas del Sistema -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2">
+                            <h5 class="mb-0">
+                                <i class="fas fa-list me-2"></i>Todas las Prácticas del Sistema
+                            </h5>
+                            <a href="/profesor/practicas/agregar" class="btn btn-primary btn-sm">
+                                <i class="fas fa-plus me-1"></i><span class="d-none d-md-inline">Agregar Práctica</span><span class="d-md-none">Agregar</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body p-0 p-md-3">
+                        <div th:if="${todasLasPracticas.isEmpty()}" class="alert alert-warning">
+                            <i class="fas fa-exclamation-circle me-2"></i>No hay prácticas registradas en el sistema.
+                        </div>
+
+                        <div th:unless="${todasLasPracticas.isEmpty()}">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Estudiante</th>
+                                            <th class="d-none d-md-table-cell">Carrera</th>
+                                            <th class="d-none d-lg-table-cell">Empresa</th>
+                                            <th class="d-none d-lg-table-cell">Profesor</th>
+                                            <th class="d-none d-xl-table-cell">Fecha Inicio</th>
+                                            <th class="d-none d-xl-table-cell">Fecha Fin</th>
+                                            <th class="d-none d-md-table-cell">Estado</th>
+                                            <th class="text-center">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="practica : ${todasLasPracticas}">
+                                            <td>
+                                                <div><strong th:text="|${practica.estudiante?.nombre} ${practica.estudiante?.apellido}|"></strong></div>
+                                                <small class="d-md-none text-muted">-</small>
+                                            </td>
+                                            <td class="d-none d-md-table-cell">-</td>
+                                            <td class="d-none d-lg-table-cell" th:text="${practica.empresa?.nombre}"></td>
+                                            <td class="d-none d-lg-table-cell" th:text="|${practica.profesor?.nombres} ${practica.profesor?.apellidos}|"></td>
+                                            <td class="d-none d-xl-table-cell" th:text="${#temporals.format(practica.fechaInicio, 'dd/MM/yyyy')}"></td>
+                                            <td class="d-none d-xl-table-cell" th:text="${#temporals.format(practica.fechaFin, 'dd/MM/yyyy')}"></td>
+                                            <td class="d-none d-md-table-cell">
+                                                <span th:class="${practica.fechaInicio <= T(java.time.LocalDate).now() && practica.fechaFin >= T(java.time.LocalDate).now()} ? 'badge bg-success' : 'badge bg-secondary'">
+                                                    <span th:if="${practica.fechaInicio <= T(java.time.LocalDate).now() && practica.fechaFin >= T(java.time.LocalDate).now()}">En Curso</span>
+                                                    <span th:unless="${practica.fechaInicio <= T(java.time.LocalDate).now() && practica.fechaFin >= T(java.time.LocalDate).now()}">Finalizada</span>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-info btn-sm me-2" data-bs-toggle="modal" th:data-bs-target="@{'#viewModal' + ${practica.id}}" title="Ver">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <a th:href="@{/profesor/practicas/editar/{id}(id=${practica.id})}" class="btn btn-warning btn-sm me-2" title="Editar">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="@{'#deleteModal' + ${practica.id}}" title="Eliminar">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modales de Vista para Todas las Prácticas -->
+        <div th:each="practica : ${todasLasPracticas}">
+            <div class="modal fade" th:id="@{'viewModal' + ${practica.id}}" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header" style="border-bottom: 2px solid #667eea;">
+                            <h5 class="modal-title" id="viewModalLabel">
+                                <i class="fas fa-briefcase me-2"></i>Detalles de la Práctica
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <p><strong><i class="fas fa-user-graduate me-2"></i>Estudiante:</strong></p>
+                                        <p th:text="|${practica.estudiante?.nombre} ${practica.estudiante?.apellido}|"></p>
+                                        <p class="text-muted" th:text="${practica.estudiante?.email}"></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong><i class="fas fa-building me-2"></i>Empresa:</strong></p>
+                                        <p th:text="${practica.empresa?.nombre}"></p>
+                                        <p class="text-muted" th:text="${practica.empresa?.email}"></p>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <p><strong><i class="fas fa-graduation-cap me-2"></i>Carrera:</strong></p>
+                                        <p>-</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong><i class="fas fa-chalkboard-user me-2"></i>Profesor:</strong></p>
+                                        <p th:text="|${practica.profesor?.nombres} ${practica.profesor?.apellidos}|"></p>
+                                    </div>
+                                </div>                            <hr>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <p><strong><i class="fas fa-calendar-alt me-2"></i>Fecha de Inicio:</strong></p>
+                                    <p th:text="${#temporals.format(practica.fechaInicio, 'dd/MM/yyyy')}"></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong><i class="fas fa-calendar-alt me-2"></i>Fecha de Fin:</strong></p>
+                                    <p th:text="${#temporals.format(practica.fechaFin, 'dd/MM/yyyy')}"></p>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="mb-3">
+                                <p><strong><i class="fas fa-tasks me-2"></i>Actividades:</strong></p>
+                                <p th:text="${practica.actividades}" class="bg-light p-3 rounded"></p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                <i class="fas fa-times me-2"></i>Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modales de Confirmación de Eliminación -->
+        <div th:each="practica : ${todasLasPracticas}">
+            <div class="modal fade" th:id="@{'deleteModal' + ${practica.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header" style="border-bottom: 2px solid #dc3545;">
+                            <h5 class="modal-title" id="deleteModalLabel">
+                                <i class="fas fa-exclamation-triangle me-2"></i>Confirmar Eliminación
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p th:text="|¿Estás seguro de que deseas eliminar la práctica de ${practica.estudiante?.nombre} ${practica.estudiante?.apellido}?|"></p>
+                            <p class="text-muted mb-0">Esta acción no se puede deshacer.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                <i class="fas fa-times me-2"></i>Cancelar
+                            </button>
+                            <a th:href="@{/profesor/practicas/eliminar/{id}(id=${practica.id})}" class="btn btn-danger">
+                                <i class="fas fa-trash me-2"></i>Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,168 @@
+meta {
+  name: get estudiantes
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:8080/api/estudiantes
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: example
+  
+  request: {
+    url: http://localhost:8080/api/estudiantes
+    method: GET
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 02:41:06 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 200,
+          "message": "Estudiantes obtenidos correctamente",
+          "data": [
+            {
+              "id": 1,
+              "nombre": "Luis",
+              "apellido": "Morales Castillo",
+              "email": "luis.morales@estudiante.cl",
+              "password": "$2a$10$RtG82zFtXi/2wrhRD1dJPO/jepHUuiz405EQbHjLFU1LXogFMLhBW",
+              "activo": true
+            },
+            {
+              "id": 2,
+              "nombre": "Francisca",
+              "apellido": "Díaz Gutiérrez",
+              "email": "francisca.diaz@estudiante.cl",
+              "password": "$2a$10$EUrs2a8pYGVtkrD6Yllgg.E1dn2cicPEPDxV0m8ramubMi5s1379W",
+              "activo": true
+            },
+            {
+              "id": 3,
+              "nombre": "Diego",
+              "apellido": "Vargas Riquelme",
+              "email": "diego.vargas@estudiante.cl",
+              "password": "$2a$10$Q92hK6iwIctTU0nN/8V7g.Nmg/MvBgoW3t/DRFh9HoeIVJNC0gEs6",
+              "activo": true
+            },
+            {
+              "id": 4,
+              "nombre": "Ulises",
+              "apellido": "Contreras Perez",
+              "email": "ulises.contreras@estudiante.cl",
+              "password": "$2a$10$5cjnD4oK8RS3Il9txtUnee7pSsC8/GJS6N4IJhkofaptUHZCmogVu",
+              "activo": true
+            }
+          ],
+          "timestamp": "2025-12-10T23:41:06.4641401"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: example (1)
+  
+  request: {
+    url: http://localhost:8080/api/estudiantes
+    method: GET
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 04:42:02 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 200,
+          "message": "Estudiantes obtenidos correctamente",
+          "data": [
+            {
+              "id": 1,
+              "nombre": "Luis",
+              "apellido": "Morales Castillo",
+              "email": "luis.morales@estudiante.cl",
+              "password": "$2a$10$DdxkQuLe9UQiL0.ptUHetu6CTAUDDPTxA2GWbHtOjtBCtBJTLwlxS",
+              "activo": true
+            },
+            {
+              "id": 2,
+              "nombre": "Francisca",
+              "apellido": "Díaz Gutiérrez",
+              "email": "francisca.diaz@estudiante.cl",
+              "password": "$2a$10$FEtcB6y38z7gagBqeXWIX.2W8X5JxL69N5FJJfTGkSeRisIN12dEC",
+              "activo": true
+            },
+            {
+              "id": 3,
+              "nombre": "Diego",
+              "apellido": "Vargas Riquelme",
+              "email": "diego.vargas@estudiante.cl",
+              "password": "$2a$10$iK94YbGpi/5xs263wnjB5ea9vK15mYwbzz/nlVQjFHrZdXsIMutHe",
+              "activo": true
+            },
+            {
+              "id": 4,
+              "nombre": "Ulises",
+              "apellido": "Contreras Perez",
+              "email": "ulises.contreras@estudiante.cl",
+              "password": "$2a$10$.eR7Xm1J5WRGYdD/dvH9Ye25db0WTnEVFYBEU6lWXDBE72tQXIppK",
+              "activo": true
+            }
+          ],
+          "timestamp": "2025-12-11T01:42:02.5094195"
+        }
+      '''
+    }
+  }
+}

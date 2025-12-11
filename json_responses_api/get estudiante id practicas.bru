@@ -1,0 +1,128 @@
+meta {
+  name: get estudiante id practicas
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:8080/api/estudiantes/1/practicas
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: example
+  
+  request: {
+    url: http://localhost:8080/api/estudiantes/1/practicas
+    method: GET
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 03:01:41 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 200,
+          "message": "Prácticas obtenidas correctamente",
+          "data": [
+            {
+              "id": 1,
+              "fechaInicio": "2025-01-15",
+              "fechaFin": "2025-03-15",
+              "actividades": "Desarrollo de módulo de autenticación, pruebas unitarias, documentación de código",
+              "empresaNombre": "TechSoft Solutions",
+              "profesorNombres": "Juan",
+              "profesorApellidos": "García López",
+              "jefeNombre": "Pedro",
+              "jefeApellidos": "González Hernández"
+            }
+          ],
+          "timestamp": "2025-12-11T00:01:41.3855459"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: example (1)
+  
+  request: {
+    url: http://localhost:8080/api/estudiantes/1/practicas
+    method: GET
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 04:42:06 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 200,
+          "message": "Prácticas obtenidas correctamente",
+          "data": [
+            {
+              "id": 1,
+              "fechaInicio": "2025-01-15",
+              "fechaFin": "2025-03-15",
+              "actividades": "Desarrollo de módulo de autenticación, pruebas unitarias, documentación de código",
+              "empresaNombre": "TechSoft Solutions",
+              "profesorNombres": "Juan",
+              "profesorApellidos": "García López",
+              "jefeNombre": "Pedro",
+              "jefeApellidos": "González Hernández",
+              "estudianteNombre": "Luis",
+              "estudianteApellido": "Morales Castillo"
+            }
+          ],
+          "timestamp": "2025-12-11T01:42:06.9896447"
+        }
+      '''
+    }
+  }
+}

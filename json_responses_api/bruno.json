@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "WEB2-PRUERBA3",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

@@ -1,0 +1,288 @@
+meta {
+  name: post practica estudiante
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:8080/api/estudiantes/2/practicas
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "fechaInicio": "2025-02-01",
+    "fechaFin": "2025-04-30",
+    "actividades": "Desarrollo backend, pruebas, documentación",
+    "empresa": {
+      "id": 1
+    },
+    "profesor": {
+      "id": 1
+    }
+  }
+}
+
+body:text {
+  {
+    "fechaInicio": "2025-02-01",
+    "fechaFin": "2025-04-30",
+    "actividades": "Desarrollo backend, pruebas, documentación",
+    "empresa": {
+      "id": 1
+    },
+    "profesor": {
+      "id": 1
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: example
+  
+  request: {
+    url: http://localhost:8080/api/estudiantes/4/practicas
+    method: POST
+    mode: text
+    body:json: {
+      {
+        "fechaInicio": "2025-02-01",
+        "fechaFin": "2025-04-30",
+        "actividades": "Desarrollo backend, pruebas, documentación",
+        "empresa": {
+          "id": 1
+        },
+        "profesor": {
+          "id": 1
+        }
+      }
+    }
+  
+    body:text: {
+      {
+        "fechaInicio": "2025-02-01",
+        "fechaFin": "2025-04-30",
+        "actividades": "Desarrollo backend, pruebas, documentación",
+        "empresa": {
+          "id": 1
+        },
+        "profesor": {
+          "id": 1
+        }
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 03:15:32 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 201,
+          "message": "Práctica creada correctamente",
+          "data": {
+            "id": 4,
+            "fechaInicio": "2025-02-01",
+            "fechaFin": "2025-04-30",
+            "actividades": "Desarrollo backend, pruebas, documentación",
+            "empresaNombre": "TechSoft Solutions",
+            "profesorNombres": "Juan",
+            "profesorApellidos": "García López",
+            "jefeNombre": "Pedro",
+            "jefeApellidos": "González Hernández"
+          },
+          "timestamp": "2025-12-11T00:15:32.0764883"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: example (1)
+  
+  request: {
+    url: http://localhost:8080/api/estudiantes/4/practicas
+    method: POST
+    mode: text
+    body:json: {
+      {
+        "fechaInicio": "2025-02-01",
+        "fechaFin": "2025-04-30",
+        "actividades": "Desarrollo backend, pruebas, documentación",
+        "empresa": {
+          "id": 1
+        },
+        "profesor": {
+          "id": 1
+        }
+      }
+    }
+  
+    body:text: {
+      {
+        "fechaInicio": "2025-02-01",
+        "fechaFin": "2025-04-30",
+        "actividades": "Desarrollo backend, pruebas, documentación",
+        "empresa": {
+          "id": 1
+        },
+        "profesor": {
+          "id": 1
+        }
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 03:18:02 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 201,
+          "message": "Práctica creada correctamente",
+          "data": {
+            "id": 5,
+            "fechaInicio": "2025-02-01",
+            "fechaFin": "2025-04-30",
+            "actividades": "Desarrollo backend, pruebas, documentación",
+            "empresaNombre": "TechSoft Solutions",
+            "profesorNombres": "Juan",
+            "profesorApellidos": "García López",
+            "jefeNombre": "Pedro",
+            "jefeApellidos": "González Hernández",
+            "estudianteNombre": "Ulises",
+            "estudianteApellido": "Contreras Perez"
+          },
+          "timestamp": "2025-12-11T00:18:02.9230263"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: example (2)
+  
+  request: {
+    url: http://localhost:8080/api/estudiantes/2/practicas
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "fechaInicio": "2025-02-01",
+        "fechaFin": "2025-04-30",
+        "actividades": "Desarrollo backend, pruebas, documentación",
+        "empresa": {
+          "id": 1
+        },
+        "profesor": {
+          "id": 1
+        }
+      }
+    }
+  
+    body:text: {
+      {
+        "fechaInicio": "2025-02-01",
+        "fechaFin": "2025-04-30",
+        "actividades": "Desarrollo backend, pruebas, documentación",
+        "empresa": {
+          "id": 1
+        },
+        "profesor": {
+          "id": 1
+        }
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 04:42:09 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 201,
+          "message": "Práctica creada correctamente",
+          "data": {
+            "id": 7,
+            "fechaInicio": "2025-02-01",
+            "fechaFin": "2025-04-30",
+            "actividades": "Desarrollo backend, pruebas, documentación",
+            "empresaNombre": "TechSoft Solutions",
+            "profesorNombres": "Juan",
+            "profesorApellidos": "García López",
+            "jefeNombre": "Pedro",
+            "jefeApellidos": "González Hernández",
+            "estudianteNombre": "Francisca",
+            "estudianteApellido": "Díaz Gutiérrez"
+          },
+          "timestamp": "2025-12-11T01:42:09.8957521"
+        }
+      '''
+    }
+  }
+}

@@ -1,0 +1,166 @@
+meta {
+  name: post practica
+  type: http
+  seq: 8
+}
+
+post {
+  url: http://localhost:8080/api/profesores/1/practicas
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "fechaInicio": "2025-02-15",
+    "fechaFin": "2025-05-15",
+    "actividades": "Supervisión de proyecto de desarrollo web, evaluación de avances, asesoría técnica",
+    "estudiante": {
+      "id": 1
+    },
+    "empresa": {
+      "id": 1
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+example {
+  name: example
+  
+  request: {
+    url: http://localhost:8080/api/profesores/1/practicas
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "fechaInicio": "2025-02-15",
+        "fechaFin": "2025-05-15",
+        "actividades": "Supervisión de proyecto de desarrollo web, evaluación de avances, asesoría técnica",
+        "estudiante": {
+          "id": 1
+        },
+        "empresa": {
+          "id": 1
+        }
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 03:44:38 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 201,
+          "message": "Práctica creada correctamente",
+          "data": {
+            "id": 9,
+            "fechaInicio": "2025-02-15",
+            "fechaFin": "2025-05-15",
+            "actividades": "Supervisión de proyecto de desarrollo web, evaluación de avances, asesoría técnica",
+            "empresaNombre": "TechSoft Solutions",
+            "profesorNombres": "Juan",
+            "profesorApellidos": "García López",
+            "jefeNombre": "Pedro",
+            "jefeApellidos": "González Hernández",
+            "estudianteNombre": "Luis",
+            "estudianteApellido": "Morales Castillo"
+          },
+          "timestamp": "2025-12-11T00:44:38.1785334"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: example (1)
+  
+  request: {
+    url: http://localhost:8080/api/profesores/1/practicas
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "fechaInicio": "2025-02-15",
+        "fechaFin": "2025-05-15",
+        "actividades": "Supervisión de proyecto de desarrollo web, evaluación de avances, asesoría técnica",
+        "estudiante": {
+          "id": 1
+        },
+        "empresa": {
+          "id": 1
+        }
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 04:42:19 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 201,
+          "message": "Práctica creada correctamente",
+          "data": {
+            "id": 11,
+            "fechaInicio": "2025-02-15",
+            "fechaFin": "2025-05-15",
+            "actividades": "Supervisión de proyecto de desarrollo web, evaluación de avances, asesoría técnica",
+            "empresaNombre": "TechSoft Solutions",
+            "profesorNombres": "Juan",
+            "profesorApellidos": "García López",
+            "jefeNombre": "Pedro",
+            "jefeApellidos": "González Hernández",
+            "estudianteNombre": "Luis",
+            "estudianteApellido": "Morales Castillo"
+          },
+          "timestamp": "2025-12-11T01:42:19.3541203"
+        }
+      '''
+    }
+  }
+}
