@@ -1,0 +1,16 @@
+meta {
+  name: get estudiante id practicas
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:8080/api/estudiantes/1/practicas
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
