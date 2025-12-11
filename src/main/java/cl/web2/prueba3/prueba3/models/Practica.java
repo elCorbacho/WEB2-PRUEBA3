@@ -45,7 +45,6 @@ public class Practica {
     @JsonProperty("actividades")
     private String actividades;
     
-    @NotNull(message = "El profesor es obligatorio")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "profesor_id", nullable = false)
     @JsonProperty("profesor")
