@@ -178,9 +178,10 @@ public class ProfesorApiController {
     //
     // put actualizar practica
     @PutMapping("/{profesorId}/practicas/{practicaId}")
-    public ResponseEntity<Practica> actualizarPractica(@NonNull @PathVariable Long profesorId,
-                                                       @NonNull @PathVariable Long practicaId,
-                                                       @NonNull @RequestBody Practica practica) {
+    public ResponseEntity<Practica> actualizarPractica
+        (@NonNull @PathVariable Long profesorId,
+            @NonNull @PathVariable Long practicaId,
+            @NonNull @RequestBody Practica practica) {
         if (profesorId == null || practicaId == null || practica == null) {
             return ResponseEntity.badRequest().build();
         }
