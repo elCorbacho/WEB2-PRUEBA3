@@ -4,10 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 
 @Entity
-@Table(name = "profesor")
+@Table(name = "profesores")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,10 +24,10 @@ public class Profesor {
     @Column(name = "apellidos", length = 100, nullable = false)
     private String apellidos;
     
-    @Column(name = "mail_profesor", length = 150, unique = true, nullable = false)
+    @Column(name = "correo_electronico", length = 150, unique = true, nullable = false)
     private String correoElectronico;
     
-    @Column(unique = true, nullable = false, length = 150)
+    @Column(name = "email", length = 150, unique = true, nullable = false)
     private String email;
     
     @Column(nullable = false)
@@ -34,11 +35,13 @@ public class Profesor {
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tipo_usuario_id", nullable = false)
+    @JsonIgnore
     private TipoUsuario tipoUsuario;
     
     @Column(nullable = false)
     private boolean activo = true;
     
-    @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "profesor")
+    @JsonIgnore
     private List<Practica> practicas;
 }
