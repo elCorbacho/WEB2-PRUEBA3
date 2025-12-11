@@ -6,15 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
 import cl.web2.prueba3.prueba3.models.Estudiante;
-import cl.web2.prueba3.prueba3.services.EstudianteService;
 import cl.web2.prueba3.prueba3.services.PracticaService;
 
 @Controller
 @RequestMapping("/estudiante")
 public class EstudianteDashboardController {
-    
-    @Autowired
-    private EstudianteService estudianteService;
     
     @Autowired
     private PracticaService practicaService;

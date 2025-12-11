@@ -2,6 +2,8 @@ package cl.web2.prueba3.prueba3.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import cl.web2.prueba3.prueba3.models.Jefe_empresa;
 import cl.web2.prueba3.prueba3.repository.JefeEmpresaRepository;
 import java.util.List;
@@ -13,11 +15,11 @@ public class JefeEmpresaService {
     @Autowired
     private JefeEmpresaRepository jefeEmpresaRepository;
     
-    public Jefe_empresa crearJefeEmpresa(Jefe_empresa jefe) {
+    public Jefe_empresa crearJefeEmpresa(@NonNull Jefe_empresa jefe) {
         return jefeEmpresaRepository.save(jefe);
     }
     
-    public Optional<Jefe_empresa> obtenerJefeEmpresa(Long id) {
+    public Optional<Jefe_empresa> obtenerJefeEmpresa(@NonNull Long id) {
         return jefeEmpresaRepository.findById(id);
     }
     
@@ -25,7 +27,7 @@ public class JefeEmpresaService {
         return (List<Jefe_empresa>) jefeEmpresaRepository.findAll();
     }
     
-    public Jefe_empresa actualizarJefeEmpresa(Long id, Jefe_empresa jefeActualizado) {
+    public Jefe_empresa actualizarJefeEmpresa(@NonNull Long id, @NonNull Jefe_empresa jefeActualizado) {
         Optional<Jefe_empresa> jefeExistente = jefeEmpresaRepository.findById(id);
         if (jefeExistente.isPresent()) {
             Jefe_empresa jefe = jefeExistente.get();
@@ -37,7 +39,7 @@ public class JefeEmpresaService {
         return null;
     }
     
-    public boolean eliminarJefeEmpresa(Long id) {
+    public boolean eliminarJefeEmpresa(@NonNull Long id) {
         if (jefeEmpresaRepository.existsById(id)) {
             jefeEmpresaRepository.deleteById(id);
             return true;
@@ -45,7 +47,8 @@ public class JefeEmpresaService {
         return false;
     }
     
-    public Jefe_empresa obtenerJefePorMail(String mail) {
+    @Nullable
+    public Jefe_empresa obtenerJefePorMail(@NonNull String mail) {
         return jefeEmpresaRepository.findByMail(mail);
     }
 }

@@ -20,8 +20,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf().disable()
-            .logout().disable()
+            .csrf(csrf -> csrf.disable())
+            .logout(logout -> logout.disable())
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("/").permitAll()
@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .requestMatchers("/practica/**").permitAll()
                 .anyRequest().permitAll()
             )
-            .headers().frameOptions().disable();
+            .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
         
         return http.build();
     }

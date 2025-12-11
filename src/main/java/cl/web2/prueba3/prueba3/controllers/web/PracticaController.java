@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpSession;
 import cl.web2.prueba3.prueba3.models.Practica;
 import cl.web2.prueba3.prueba3.models.Estudiante;
 import cl.web2.prueba3.prueba3.services.PracticaService;
-import cl.web2.prueba3.prueba3.services.EstudianteService;
 import cl.web2.prueba3.prueba3.services.EmpresaService;
 import cl.web2.prueba3.prueba3.services.ProfesorService;
 import java.util.Optional;
@@ -20,9 +19,6 @@ public class PracticaController {
     
     @Autowired
     private PracticaService practicaService;
-    
-    @Autowired
-    private EstudianteService estudianteService;
     
     @Autowired
     private EmpresaService empresaService;
@@ -120,9 +116,10 @@ public class PracticaController {
             return "redirect:/";
         }
         
-        model.addAttribute("practicas", practicaService.obtenerPracticasPorEstudiante(estudiante.getId()));
+        Long estudianteId = estudiante.getId();
+        model.addAttribute("practicas", practicaService.obtenerPracticasPorEstudiante(estudianteId));
         model.addAttribute("estudiante", estudiante);
-        model.addAttribute("tienePracticaEnCurso", practicaService.tienePracticaEnCurso(estudiante.getId()));
+        model.addAttribute("tienePracticaEnCurso", practicaService.tienePracticaEnCurso(estudianteId));
         
         return "estudiante/practicas/lista";
     }

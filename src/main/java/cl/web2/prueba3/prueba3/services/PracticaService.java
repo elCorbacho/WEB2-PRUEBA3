@@ -2,6 +2,7 @@ package cl.web2.prueba3.prueba3.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.lang.NonNull;
 import cl.web2.prueba3.prueba3.models.Practica;
 import cl.web2.prueba3.prueba3.repository.PracticaRepository;
 import java.time.LocalDate;
@@ -38,11 +39,11 @@ public class PracticaService {
         ).findFirst();
     }
     
-    public Practica crearPractica(Practica practica) {
+    public Practica crearPractica(@NonNull Practica practica) {
         return practicaRepository.save(practica);
     }
     
-    public Optional<Practica> obtenerPractica(Long id) {
+    public Optional<Practica> obtenerPractica(@NonNull Long id) {
         return practicaRepository.findById(id);
     }
     
@@ -50,11 +51,11 @@ public class PracticaService {
         return (List<Practica>) practicaRepository.findAll();
     }
     
-    public List<Practica> obtenerPracticasPorEstudiante(Long estudianteId) {
+    public List<Practica> obtenerPracticasPorEstudiante(@NonNull Long estudianteId) {
         return practicaRepository.findByEstudianteId(estudianteId);
     }
     
-    public Practica actualizarPractica(Long id, Practica practicaActualizada) {
+    public Practica actualizarPractica(@NonNull Long id, @NonNull Practica practicaActualizada) {
         Optional<Practica> practicaExistente = practicaRepository.findById(id);
         if (practicaExistente.isPresent()) {
             Practica practica = practicaExistente.get();
@@ -69,7 +70,7 @@ public class PracticaService {
         return null;
     }
     
-    public boolean eliminarPractica(Long id) {
+    public boolean eliminarPractica(@NonNull Long id) {
         if (practicaRepository.existsById(id)) {
             practicaRepository.deleteById(id);
             return true;

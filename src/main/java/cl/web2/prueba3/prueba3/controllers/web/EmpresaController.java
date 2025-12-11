@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.lang.NonNull;
 import cl.web2.prueba3.prueba3.models.Empresa;
 import cl.web2.prueba3.prueba3.services.EmpresaService;
 import cl.web2.prueba3.prueba3.services.JefeEmpresaService;
@@ -33,8 +34,10 @@ public class EmpresaController {
     }
     
     @PostMapping("/guardar")
-    public String guardar(@ModelAttribute Empresa empresa) {
-        empresaService.crearEmpresa(empresa);
+    public String guardar(@NonNull @ModelAttribute Empresa empresa) {
+        if (empresa != null) {
+            empresaService.crearEmpresa(empresa);
+        }
         return "redirect:/empresas";
     }
     
@@ -50,14 +53,18 @@ public class EmpresaController {
     }
     
     @PostMapping("/actualizar/{id}")
-    public String actualizar(@PathVariable Long id, @ModelAttribute Empresa empresa) {
-        empresaService.actualizarEmpresa(id, empresa);
+    public String actualizar(@NonNull @PathVariable Long id, @NonNull @ModelAttribute Empresa empresa) {
+        if (id != null && empresa != null) {
+            empresaService.actualizarEmpresa(id, empresa);
+        }
         return "redirect:/empresas";
     }
     
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Long id) {
-        empresaService.eliminarEmpresa(id);
+    public String eliminar(@NonNull @PathVariable Long id) {
+        if (id != null) {
+            empresaService.eliminarEmpresa(id);
+        }
         return "redirect:/empresas";
     }
 }

@@ -2,6 +2,8 @@ package cl.web2.prueba3.prueba3.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import cl.web2.prueba3.prueba3.models.Estudiante;
 import cl.web2.prueba3.prueba3.repository.EstudianteRepository;
 import java.util.List;
@@ -13,11 +15,11 @@ public class EstudianteService {
     @Autowired
     private EstudianteRepository estudianteRepository;
     
-    public Estudiante crearEstudiante(Estudiante estudiante) {
+    public Estudiante crearEstudiante(@NonNull Estudiante estudiante) {
         return estudianteRepository.save(estudiante);
     }
     
-    public Optional<Estudiante> obtenerEstudiante(Long id) {
+    public Optional<Estudiante> obtenerEstudiante(@NonNull Long id) {
         return estudianteRepository.findById(id);
     }
     
@@ -25,7 +27,7 @@ public class EstudianteService {
         return (List<Estudiante>) estudianteRepository.findAll();
     }
     
-    public Estudiante actualizarEstudiante(Long id, Estudiante estudianteActualizado) {
+    public Estudiante actualizarEstudiante(@NonNull Long id, @NonNull Estudiante estudianteActualizado) {
         Optional<Estudiante> estudianteExistente = estudianteRepository.findById(id);
         if (estudianteExistente.isPresent()) {
             Estudiante estudiante = estudianteExistente.get();
@@ -38,7 +40,7 @@ public class EstudianteService {
         return null;
     }
     
-    public boolean eliminarEstudiante(Long id) {
+    public boolean eliminarEstudiante(@NonNull Long id) {
         if (estudianteRepository.existsById(id)) {
             estudianteRepository.deleteById(id);
             return true;
@@ -46,7 +48,8 @@ public class EstudianteService {
         return false;
     }
     
-    public Estudiante obtenerEstudiantePorEmail(String email) {
+    @Nullable
+    public Estudiante obtenerEstudiantePorEmail(@NonNull String email) {
         return estudianteRepository.findByEmail(email).orElse(null);
     }
     

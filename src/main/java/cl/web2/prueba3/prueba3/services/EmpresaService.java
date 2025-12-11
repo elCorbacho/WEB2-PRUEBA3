@@ -2,6 +2,8 @@ package cl.web2.prueba3.prueba3.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import cl.web2.prueba3.prueba3.models.Empresa;
 import cl.web2.prueba3.prueba3.repository.EmpresaRepository;
 import java.util.List;
@@ -13,11 +15,11 @@ public class EmpresaService {
     @Autowired
     private EmpresaRepository empresaRepository;
     
-    public Empresa crearEmpresa(Empresa empresa) {
+    public Empresa crearEmpresa(@NonNull Empresa empresa) {
         return empresaRepository.save(empresa);
     }
     
-    public Optional<Empresa> obtenerEmpresa(Long id) {
+    public Optional<Empresa> obtenerEmpresa(@NonNull Long id) {
         return empresaRepository.findById(id);
     }
     
@@ -25,7 +27,7 @@ public class EmpresaService {
         return (List<Empresa>) empresaRepository.findAll();
     }
     
-    public Empresa actualizarEmpresa(Long id, Empresa empresaActualizada) {
+    public Empresa actualizarEmpresa(@NonNull Long id, @NonNull Empresa empresaActualizada) {
         Optional<Empresa> empresaExistente = empresaRepository.findById(id);
         if (empresaExistente.isPresent()) {
             Empresa empresa = empresaExistente.get();
@@ -39,7 +41,7 @@ public class EmpresaService {
         return null;
     }
     
-    public boolean eliminarEmpresa(Long id) {
+    public boolean eliminarEmpresa(@NonNull Long id) {
         if (empresaRepository.existsById(id)) {
             empresaRepository.deleteById(id);
             return true;
@@ -47,7 +49,8 @@ public class EmpresaService {
         return false;
     }
     
-    public Empresa obtenerEmpresaPorEmail(String email) {
+    @Nullable
+    public Empresa obtenerEmpresaPorEmail(@NonNull String email) {
         return empresaRepository.findByEmail(email);
     }
     

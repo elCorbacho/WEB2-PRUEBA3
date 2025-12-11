@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.lang.NonNull;
 import jakarta.servlet.http.HttpSession;
 import cl.web2.prueba3.prueba3.models.*;
 import cl.web2.prueba3.prueba3.services.*;
@@ -38,7 +39,9 @@ public class ProfesorPracticaController {
         // Obtener solo estudiantes sin práctica asociada
         List<Estudiante> estudiantesSinPractica = estudianteService.obtenerTodosLosEstudiantes();
         estudiantesSinPractica.removeIf(e -> {
-            List<Practica> practicas = practicaService.obtenerPracticasPorEstudiante(e.getId());
+            Long eId = e.getId();
+            if (eId == null) return true;
+            List<Practica> practicas = practicaService.obtenerPracticasPorEstudiante(eId);
             return !practicas.isEmpty();
         });
         
@@ -52,8 +55,8 @@ public class ProfesorPracticaController {
     @PostMapping("/guardar")
     public String guardarPractica(
             @ModelAttribute Practica practica,
-            @RequestParam Long estudianteId,
-            @RequestParam Long empresaId,
+            @RequestParam @NonNull Long estudianteId,
+            @RequestParam @NonNull Long empresaId,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
         
@@ -93,7 +96,7 @@ public class ProfesorPracticaController {
     
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(
-            @PathVariable Long id,
+            @NonNull @PathVariable Long id,
             HttpSession session,
             Model model,
             RedirectAttributes redirectAttributes) {
@@ -118,11 +121,11 @@ public class ProfesorPracticaController {
     
     @PostMapping("/actualizar/{id}")
     public String actualizarPractica(
-            @PathVariable Long id,
+            @NonNull @PathVariable Long id,
             @ModelAttribute Practica practicaActualizada,
-            @RequestParam Long estudianteId,
-            @RequestParam Long empresaId,
-            @RequestParam Long profesorId,
+            @RequestParam @NonNull Long estudianteId,
+            @RequestParam @NonNull Long empresaId,
+            @RequestParam @NonNull Long profesorId,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
         
@@ -179,7 +182,7 @@ public class ProfesorPracticaController {
     
     @GetMapping("/eliminar/{id}")
     public String eliminarPractica(
-            @PathVariable Long id,
+            @NonNull @PathVariable Long id,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
         

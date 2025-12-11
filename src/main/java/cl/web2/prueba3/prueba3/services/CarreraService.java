@@ -2,6 +2,8 @@ package cl.web2.prueba3.prueba3.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import cl.web2.prueba3.prueba3.models.Carrera;
 import cl.web2.prueba3.prueba3.repository.CarreraRepository;
 import java.util.List;
@@ -13,11 +15,11 @@ public class CarreraService {
     @Autowired
     private CarreraRepository carreraRepository;
     
-    public Carrera crearCarrera(Carrera carrera) {
+    public Carrera crearCarrera(@NonNull Carrera carrera) {
         return carreraRepository.save(carrera);
     }
     
-    public Optional<Carrera> obtenerCarrera(Long id) {
+    public Optional<Carrera> obtenerCarrera(@NonNull Long id) {
         return carreraRepository.findById(id);
     }
     
@@ -25,7 +27,7 @@ public class CarreraService {
         return (List<Carrera>) carreraRepository.findAll();
     }
     
-    public Carrera actualizarCarrera(Long id, Carrera carreraActualizada) {
+    public Carrera actualizarCarrera(@NonNull Long id, @NonNull Carrera carreraActualizada) {
         Optional<Carrera> carreraExistente = carreraRepository.findById(id);
         if (carreraExistente.isPresent()) {
             Carrera carrera = carreraExistente.get();
@@ -35,7 +37,7 @@ public class CarreraService {
         return null;
     }
     
-    public boolean eliminarCarrera(Long id) {
+    public boolean eliminarCarrera(@NonNull Long id) {
         if (carreraRepository.existsById(id)) {
             carreraRepository.deleteById(id);
             return true;
@@ -43,7 +45,8 @@ public class CarreraService {
         return false;
     }
     
-    public Carrera obtenerCarreraPorNombre(String nombreCarrera) {
+    @Nullable
+    public Carrera obtenerCarreraPorNombre(@NonNull String nombreCarrera) {
         return carreraRepository.findByNombreCarrera(nombreCarrera);
     }
 }

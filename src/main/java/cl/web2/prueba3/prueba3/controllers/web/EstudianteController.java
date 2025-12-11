@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.lang.NonNull;
 import cl.web2.prueba3.prueba3.models.Estudiante;
 import cl.web2.prueba3.prueba3.services.EstudianteService;
 import cl.web2.prueba3.prueba3.services.CarreraService;
@@ -33,13 +34,13 @@ public class EstudianteController {
     }
     
     @PostMapping("/guardar")
-    public String guardar(@ModelAttribute Estudiante estudiante) {
+    public String guardar(@NonNull @ModelAttribute Estudiante estudiante) {
         estudianteService.crearEstudiante(estudiante);
         return "redirect:/estudiantes";
     }
     
     @GetMapping("/editar/{id}")
-    public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
+    public String mostrarFormularioEditar(@NonNull @PathVariable Long id, Model model) {
         Optional<Estudiante> estudiante = estudianteService.obtenerEstudiante(id);
         if (estudiante.isPresent()) {
             model.addAttribute("estudiante", estudiante.get());
@@ -50,13 +51,13 @@ public class EstudianteController {
     }
     
     @PostMapping("/actualizar/{id}")
-    public String actualizar(@PathVariable Long id, @ModelAttribute Estudiante estudiante) {
+    public String actualizar(@NonNull @PathVariable Long id, @NonNull @ModelAttribute Estudiante estudiante) {
         estudianteService.actualizarEstudiante(id, estudiante);
         return "redirect:/estudiantes";
     }
     
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Long id) {
+    public String eliminar(@NonNull @PathVariable Long id) {
         estudianteService.eliminarEstudiante(id);
         return "redirect:/estudiantes";
     }

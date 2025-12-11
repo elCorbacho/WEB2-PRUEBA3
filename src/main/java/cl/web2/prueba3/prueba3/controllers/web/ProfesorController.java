@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.lang.NonNull;
 import cl.web2.prueba3.prueba3.models.Profesor;
 import cl.web2.prueba3.prueba3.services.ProfesorService;
 import java.util.Optional;
@@ -28,13 +29,13 @@ public class ProfesorController {
     }
     
     @PostMapping("/guardar")
-    public String guardar(@ModelAttribute Profesor profesor) {
+    public String guardar(@NonNull @ModelAttribute Profesor profesor) {
         profesorService.crearProfesor(profesor);
         return "redirect:/profesores";
     }
     
     @GetMapping("/editar/{id}")
-    public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
+    public String mostrarFormularioEditar(@NonNull @PathVariable Long id, Model model) {
         Optional<Profesor> profesor = profesorService.obtenerProfesor(id);
         if (profesor.isPresent()) {
             model.addAttribute("profesor", profesor.get());
@@ -44,13 +45,13 @@ public class ProfesorController {
     }
     
     @PostMapping("/actualizar/{id}")
-    public String actualizar(@PathVariable Long id, @ModelAttribute Profesor profesor) {
+    public String actualizar(@NonNull @PathVariable Long id, @NonNull @ModelAttribute Profesor profesor) {
         profesorService.actualizarProfesor(id, profesor);
         return "redirect:/profesores";
     }
     
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Long id) {
+    public String eliminar(@NonNull @PathVariable Long id) {
         profesorService.eliminarProfesor(id);
         return "redirect:/profesores";
     }
