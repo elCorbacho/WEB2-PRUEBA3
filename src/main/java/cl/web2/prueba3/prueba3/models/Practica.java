@@ -23,7 +23,8 @@ public class Practica {
     @JsonIgnore
     private Estudiante estudiante;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)  //eager permite cargar la empresa junto con la práctica
+
     @JoinColumn(name = "empresa_id", nullable = false)
     @JsonIgnore
     private Empresa empresa;
@@ -37,7 +38,7 @@ public class Practica {
     @Column(name = "actividades", columnDefinition = "TEXT")
     private String actividades;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)  // eager permite cargar el profesor junto con la práctica
     @JoinColumn(name = "profesor_id", nullable = false)
     @JsonIgnore
     private Profesor profesor;

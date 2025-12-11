@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.lang.NonNull;
 import cl.web2.prueba3.prueba3.models.Estudiante;
 import cl.web2.prueba3.prueba3.models.Practica;
+import cl.web2.prueba3.prueba3.dtos.PracticaDTO;
 import cl.web2.prueba3.prueba3.services.EstudianteService;
 import cl.web2.prueba3.prueba3.services.PracticaService;
 import cl.web2.prueba3.prueba3.responses.ApiResponse;
@@ -26,6 +27,7 @@ public class EstudianteApiController {
     @Autowired
     private PracticaService practicaService;
     
+    //--------------------------------------------------------------------------------
     //Obtener todos los estudiantes
     @GetMapping
     public ResponseEntity<ApiResponse<List<Estudiante>>> obtenerTodos() {
@@ -39,7 +41,9 @@ public class EstudianteApiController {
                 .build()
         );
     }
+     //--------------------------------------------------------------------------------
     
+      //--------------------------------------------------------------------------------
     // Obtener estudiante por ID
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Estudiante>> obtenerPorId(@NonNull @PathVariable Long id) {
@@ -63,31 +67,62 @@ public class EstudianteApiController {
             );
         }
     }
+     //--------------------------------------------------------------------------------
     
     
-    
+     //--------------------------------------------------------------------------------
     // Obtener prácticas de un estudiante
     @GetMapping("/{estudianteId}/practicas")
-    public ResponseEntity<ApiResponse<List<Practica>>> obtenerMisPracticas(@NonNull @PathVariable Long estudianteId) {
+    public ResponseEntity<ApiResponse<List<PracticaDTO>>> obtenerMisPracticas(@NonNull @PathVariable Long estudianteId) {
         if (estudianteId == null || estudianteId <= 0) {
             return ResponseEntity.badRequest().body(
-                ApiResponse.<List<Practica>>builder()
+                ApiResponse.<List<PracticaDTO>>builder()
                     .status(400)
                     .message("ID de estudiante inválido")
                     .timestamp(LocalDateTime.now())
                     .build()
             );
         }
-        List<Practica> practicas = practicaService.obtenerPracticasPorEstudiante(estudianteId);
-        return ResponseEntity.ok(
-            ApiResponse.<List<Practica>>builder()
-                .status(200)
-                .message("Prácticas obtenidas correctamente")
-                .data(practicas)
-                .timestamp(LocalDateTime.now())
-                .build()
-        );
+        
+        try {
+            List<Practica> practicas = practicaService.obtenerPracticasPorEstudiante(estudianteId);
+            
+            List<PracticaDTO> practicasDTO = practicas.stream()
+                .map(practica -> new PracticaDTO(
+                    practica.getId(),
+                    practica.getFechaInicio(),
+                    practica.getFechaFin(),
+                    practica.getActividades(),
+                    practica.getEmpresa().getNombre(),
+                    practica.getProfesor().getNombres(),
+                    practica.getProfesor().getApellidos(),
+                    practica.getEmpresa().getJefe().getNombre(),
+                    practica.getEmpresa().getJefe().getApellidos()
+                ))
+                .toList();
+            
+            return ResponseEntity.ok(
+                ApiResponse.<List<PracticaDTO>>builder()
+                    .status(200)
+                    .message("Prácticas obtenidas correctamente")
+                    .data(practicasDTO)
+                    .timestamp(LocalDateTime.now())
+                    .build()
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                ApiResponse.<List<PracticaDTO>>builder()
+                    .status(500)
+                    .message("Error al obtener prácticas")
+                    .error(e.getMessage())
+                    .timestamp(LocalDateTime.now())
+                    .build()
+            );
+        }
     }
+     //--------------------------------------------------------------------------------
+    
+
     
     //Crear práctica para un estudiante
     @PostMapping("/{estudianteId}/practicas")
