@@ -127,8 +127,14 @@ Todos los endpoints retornan el siguiente formato:
 
 ---
 
-## 📝 Notas
+## 📚 Documentación Interactiva (Swagger)
 
+```
+http://localhost:8080/swagger-ui.html
+```
+
+
+## 📝 Notas
 - CSRF deshabilitado para endpoints API
 - Todos los endpoints API (`/api/**`) están permitidos
 - Las respuestas incluyen timestamp para auditoría
