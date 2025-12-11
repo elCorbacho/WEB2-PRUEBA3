@@ -47,7 +47,11 @@ public class EstudianteService {
     }
     
     public Estudiante obtenerEstudiantePorEmail(String email) {
-        return estudianteRepository.findByEmail(email);
+        return estudianteRepository.findByEmail(email).orElse(null);
+    }
+    
+    public Estudiante obtenerPorEmail(String email) {
+        return estudianteRepository.findByEmail(email).orElse(null);
     }
     
     public List<Estudiante> obtenerEstudiantesPorCarrera(Long carreraId) {

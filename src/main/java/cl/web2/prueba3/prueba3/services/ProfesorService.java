@@ -48,4 +48,8 @@ public class ProfesorService {
     public Profesor obtenerProfesorPorCorreo(String correo) {
         return profesorRepository.findByCorreoElectronico(correo);
     }
+    
+    public Profesor obtenerPorEmail(String email) {
+        return profesorRepository.findByEmail(email).orElse(null);
+    }
 }

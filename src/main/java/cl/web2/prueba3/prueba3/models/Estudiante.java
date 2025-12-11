@@ -26,9 +26,19 @@ public class Estudiante {
     @Column(name = "mail_estudiante", length = 150, unique = true, nullable = false)
     private String email;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(nullable = false)
+    private String password;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "carrera_id", nullable = false)
     private Carrera carrera;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tipo_usuario_id", nullable = false)
+    private TipoUsuario tipoUsuario;
+    
+    @Column(nullable = false)
+    private boolean activo = true;
     
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Practica> practicas;

@@ -5,37 +5,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
-import cl.web2.prueba3.prueba3.models.Usuario;
-import cl.web2.prueba3.prueba3.services.UsuarioService;
+import cl.web2.prueba3.prueba3.models.Profesor;
 import cl.web2.prueba3.prueba3.services.PracticaService;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/profesor")
 public class ProfesorDashboardController {
     
     @Autowired
-    private UsuarioService usuarioService;
-    
-    @Autowired
     private PracticaService practicaService;
     
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {
-        Long usuarioId = (Long) session.getAttribute("usuarioId");
+        Profesor profesor = (Profesor) session.getAttribute("usuario");
         
-        if (usuarioId == null) {
+        if (profesor == null) {
+            System.out.println("No hay usuario en sesión, redirigiendo a /");
             return "redirect:/";
         }
         
-        Optional<Usuario> usuario = usuarioService.obtenerUsuario(usuarioId);
-        if (usuario.isPresent() && usuario.get().getProfesor() != null) {
-            model.addAttribute("profesor", usuario.get().getProfesor());
-            model.addAttribute("practicas", practicaService.obtenerPracticasPorProfesor(usuario.get().getProfesor().getId()));
-            model.addAttribute("todasLasPracticas", practicaService.obtenerTodasLasPracticas());
-            return "profesor/dashboard";
-        }
-        
-        return "redirect:/logout";
+        System.out.println("Acceso a dashboard de profesor: " + profesor.getNombres());
+        model.addAttribute("profesor", profesor);
+        model.addAttribute("practicas", practicaService.obtenerPracticasPorProfesor(profesor.getId()));
+        model.addAttribute("todasLasPracticas", practicaService.obtenerTodasLasPracticas());
+        return "profesor/dashboard";
     }
 }

@@ -25,36 +25,28 @@ public class ProfesorPracticaController {
     private EmpresaService empresaService;
     
     @Autowired
-    private UsuarioService usuarioService;
-    
-    @Autowired
     private ProfesorService profesorService;
     
     @GetMapping("/agregar")
     public String mostrarFormularioAgregar(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
-        Long usuarioId = (Long) session.getAttribute("usuarioId");
+        Profesor profesor = (Profesor) session.getAttribute("usuario");
         
-        if (usuarioId == null) {
+        if (profesor == null) {
             return "redirect:/";
         }
         
-        Optional<Usuario> usuario = usuarioService.obtenerUsuario(usuarioId);
-        if (usuario.isPresent() && usuario.get().getProfesor() != null) {
-            // Obtener solo estudiantes sin práctica asociada
-            List<Estudiante> estudiantesSinPractica = estudianteService.obtenerTodosLosEstudiantes();
-            estudiantesSinPractica.removeIf(e -> {
-                List<Practica> practicas = practicaService.obtenerPracticasPorEstudiante(e.getId());
-                return !practicas.isEmpty();
-            });
-            
-            model.addAttribute("practica", new Practica());
-            model.addAttribute("estudiantes", estudiantesSinPractica);
-            model.addAttribute("empresas", empresaService.obtenerTodasLasEmpresas());
-            model.addAttribute("profesor", usuario.get().getProfesor());
-            return "profesor/practicas/agregar";
-        }
+        // Obtener solo estudiantes sin práctica asociada
+        List<Estudiante> estudiantesSinPractica = estudianteService.obtenerTodosLosEstudiantes();
+        estudiantesSinPractica.removeIf(e -> {
+            List<Practica> practicas = practicaService.obtenerPracticasPorEstudiante(e.getId());
+            return !practicas.isEmpty();
+        });
         
-        return "redirect:/logout";
+        model.addAttribute("practica", new Practica());
+        model.addAttribute("estudiantes", estudiantesSinPractica);
+        model.addAttribute("empresas", empresaService.obtenerTodasLasEmpresas());
+        model.addAttribute("profesor", profesor);
+        return "profesor/practicas/agregar";
     }
     
     @PostMapping("/guardar")
@@ -65,43 +57,38 @@ public class ProfesorPracticaController {
             HttpSession session,
             RedirectAttributes redirectAttributes) {
         
-        Long usuarioId = (Long) session.getAttribute("usuarioId");
-        if (usuarioId == null) {
+        Profesor profesor = (Profesor) session.getAttribute("usuario");
+        if (profesor == null) {
             return "redirect:/";
         }
         
-        Optional<Usuario> usuario = usuarioService.obtenerUsuario(usuarioId);
-        if (usuario.isPresent() && usuario.get().getProfesor() != null) {
-            // Verificar que el estudiante existe
-            Optional<Estudiante> estudiante = estudianteService.obtenerEstudiante(estudianteId);
-            if (!estudiante.isPresent()) {
-                redirectAttributes.addFlashAttribute("error", "El estudiante no existe");
-                return "redirect:/profesor/practicas/agregar";
-            }
-            
-            // Verificar que la empresa existe
-            Optional<Empresa> empresa = empresaService.obtenerEmpresa(empresaId);
-            if (!empresa.isPresent()) {
-                redirectAttributes.addFlashAttribute("error", "La empresa no existe");
-                return "redirect:/profesor/practicas/agregar";
-            }
-            
-            // Validar fechas
-            if (practica.getFechaInicio().isAfter(practica.getFechaFin())) {
-                redirectAttributes.addFlashAttribute("error", "La fecha de inicio debe ser anterior a la fecha de fin");
-                return "redirect:/profesor/practicas/agregar";
-            }
-            
-            practica.setEstudiante(estudiante.get());
-            practica.setEmpresa(empresa.get());
-            practica.setProfesor(usuario.get().getProfesor());
-            
-            practicaService.crearPractica(practica);
-            redirectAttributes.addFlashAttribute("success", "Práctica agregada correctamente");
-            return "redirect:/profesor/dashboard";
+        // Verificar que el estudiante existe
+        Optional<Estudiante> estudiante = estudianteService.obtenerEstudiante(estudianteId);
+        if (!estudiante.isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "El estudiante no existe");
+            return "redirect:/profesor/practicas/agregar";
         }
         
-        return "redirect:/logout";
+        // Verificar que la empresa existe
+        Optional<Empresa> empresa = empresaService.obtenerEmpresa(empresaId);
+        if (!empresa.isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "La empresa no existe");
+            return "redirect:/profesor/practicas/agregar";
+        }
+        
+        // Validar fechas
+        if (practica.getFechaInicio().isAfter(practica.getFechaFin())) {
+            redirectAttributes.addFlashAttribute("error", "La fecha de inicio debe ser anterior a la fecha de fin");
+            return "redirect:/profesor/practicas/agregar";
+        }
+        
+        practica.setEstudiante(estudiante.get());
+        practica.setEmpresa(empresa.get());
+        practica.setProfesor(profesor);
+        
+        practicaService.crearPractica(practica);
+        redirectAttributes.addFlashAttribute("success", "Práctica agregada correctamente");
+        return "redirect:/profesor/dashboard";
     }
     
     @GetMapping("/editar/{id}")
@@ -111,8 +98,8 @@ public class ProfesorPracticaController {
             Model model,
             RedirectAttributes redirectAttributes) {
         
-        Long usuarioId = (Long) session.getAttribute("usuarioId");
-        if (usuarioId == null) {
+        Profesor profesor = (Profesor) session.getAttribute("usuario");
+        if (profesor == null) {
             return "redirect:/";
         }
         
@@ -122,16 +109,11 @@ public class ProfesorPracticaController {
             return "redirect:/profesor/dashboard";
         }
         
-        Optional<Usuario> usuario = usuarioService.obtenerUsuario(usuarioId);
-        if (usuario.isPresent() && usuario.get().getProfesor() != null) {
-            model.addAttribute("practica", practica.get());
-            model.addAttribute("estudiantes", estudianteService.obtenerTodosLosEstudiantes());
-            model.addAttribute("empresas", empresaService.obtenerTodasLasEmpresas());
-            model.addAttribute("profesores", profesorService.obtenerTodosLosProfesores());
-            return "profesor/practicas/editar";
-        }
-        
-        return "redirect:/logout";
+        model.addAttribute("practica", practica.get());
+        model.addAttribute("estudiantes", estudianteService.obtenerTodosLosEstudiantes());
+        model.addAttribute("empresas", empresaService.obtenerTodasLasEmpresas());
+        model.addAttribute("profesores", profesorService.obtenerTodosLosProfesores());
+        return "profesor/practicas/editar";
     }
     
     @PostMapping("/actualizar/{id}")
@@ -144,8 +126,8 @@ public class ProfesorPracticaController {
             HttpSession session,
             RedirectAttributes redirectAttributes) {
         
-        Long usuarioId = (Long) session.getAttribute("usuarioId");
-        if (usuarioId == null) {
+        Profesor profesor = (Profesor) session.getAttribute("usuario");
+        if (profesor == null) {
             return "redirect:/";
         }
         
@@ -155,49 +137,44 @@ public class ProfesorPracticaController {
             return "redirect:/profesor/dashboard";
         }
         
-        Optional<Usuario> usuario = usuarioService.obtenerUsuario(usuarioId);
-        if (usuario.isPresent() && usuario.get().getProfesor() != null) {
-            // Verificar que el estudiante existe
-            Optional<Estudiante> estudiante = estudianteService.obtenerEstudiante(estudianteId);
-            if (!estudiante.isPresent()) {
-                redirectAttributes.addFlashAttribute("error", "El estudiante no existe");
-                return "redirect:/profesor/practicas/editar/" + id;
-            }
-            
-            // Verificar que la empresa existe
-            Optional<Empresa> empresa = empresaService.obtenerEmpresa(empresaId);
-            if (!empresa.isPresent()) {
-                redirectAttributes.addFlashAttribute("error", "La empresa no existe");
-                return "redirect:/profesor/practicas/editar/" + id;
-            }
-            
-            // Verificar que el profesor existe
-            Optional<Profesor> profesor = profesorService.obtenerProfesor(profesorId);
-            if (!profesor.isPresent()) {
-                redirectAttributes.addFlashAttribute("error", "El profesor no existe");
-                return "redirect:/profesor/practicas/editar/" + id;
-            }
-            
-            // Validar fechas
-            if (practicaActualizada.getFechaInicio().isAfter(practicaActualizada.getFechaFin())) {
-                redirectAttributes.addFlashAttribute("error", "La fecha de inicio debe ser anterior a la fecha de fin");
-                return "redirect:/profesor/practicas/editar/" + id;
-            }
-            
-            Practica practica = practicaExistente.get();
-            practica.setEstudiante(estudiante.get());
-            practica.setEmpresa(empresa.get());
-            practica.setProfesor(profesor.get());
-            practica.setFechaInicio(practicaActualizada.getFechaInicio());
-            practica.setFechaFin(practicaActualizada.getFechaFin());
-            practica.setActividades(practicaActualizada.getActividades());
-            
-            practicaService.actualizarPractica(id, practica);
-            redirectAttributes.addFlashAttribute("success", "Práctica actualizada correctamente");
-            return "redirect:/profesor/dashboard";
+        // Verificar que el estudiante existe
+        Optional<Estudiante> estudiante = estudianteService.obtenerEstudiante(estudianteId);
+        if (!estudiante.isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "El estudiante no existe");
+            return "redirect:/profesor/practicas/editar/" + id;
         }
         
-        return "redirect:/logout";
+        // Verificar que la empresa existe
+        Optional<Empresa> empresa = empresaService.obtenerEmpresa(empresaId);
+        if (!empresa.isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "La empresa no existe");
+            return "redirect:/profesor/practicas/editar/" + id;
+        }
+        
+        // Verificar que el profesor existe
+        Optional<Profesor> profesorTemp = profesorService.obtenerProfesor(profesorId);
+        if (!profesorTemp.isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "El profesor no existe");
+            return "redirect:/profesor/practicas/editar/" + id;
+        }
+        
+        // Validar fechas
+        if (practicaActualizada.getFechaInicio().isAfter(practicaActualizada.getFechaFin())) {
+            redirectAttributes.addFlashAttribute("error", "La fecha de inicio debe ser anterior a la fecha de fin");
+            return "redirect:/profesor/practicas/editar/" + id;
+        }
+        
+        Practica practica = practicaExistente.get();
+        practica.setEstudiante(estudiante.get());
+        practica.setEmpresa(empresa.get());
+        practica.setProfesor(profesorTemp.get());
+        practica.setFechaInicio(practicaActualizada.getFechaInicio());
+        practica.setFechaFin(practicaActualizada.getFechaFin());
+        practica.setActividades(practicaActualizada.getActividades());
+        
+        practicaService.actualizarPractica(id, practica);
+        redirectAttributes.addFlashAttribute("success", "Práctica actualizada correctamente");
+        return "redirect:/profesor/dashboard";
     }
     
     @GetMapping("/eliminar/{id}")
@@ -206,8 +183,8 @@ public class ProfesorPracticaController {
             HttpSession session,
             RedirectAttributes redirectAttributes) {
         
-        Long usuarioId = (Long) session.getAttribute("usuarioId");
-        if (usuarioId == null) {
+        Profesor profesor = (Profesor) session.getAttribute("usuario");
+        if (profesor == null) {
             return "redirect:/";
         }
         
@@ -217,13 +194,8 @@ public class ProfesorPracticaController {
             return "redirect:/profesor/dashboard";
         }
         
-        Optional<Usuario> usuario = usuarioService.obtenerUsuario(usuarioId);
-        if (usuario.isPresent() && usuario.get().getProfesor() != null) {
-            practicaService.eliminarPractica(id);
-            redirectAttributes.addFlashAttribute("success", "Práctica eliminada correctamente");
-            return "redirect:/profesor/dashboard";
-        }
-        
-        return "redirect:/logout";
+        practicaService.eliminarPractica(id);
+        redirectAttributes.addFlashAttribute("success", "Práctica eliminada correctamente");
+        return "redirect:/profesor/dashboard";
     }
 }

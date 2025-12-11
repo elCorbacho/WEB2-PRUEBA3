@@ -5,38 +5,35 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
-import cl.web2.prueba3.prueba3.models.Usuario;
-import cl.web2.prueba3.prueba3.services.UsuarioService;
+import cl.web2.prueba3.prueba3.models.Estudiante;
+import cl.web2.prueba3.prueba3.services.EstudianteService;
 import cl.web2.prueba3.prueba3.services.PracticaService;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/estudiante")
 public class EstudianteDashboardController {
     
     @Autowired
-    private UsuarioService usuarioService;
+    private EstudianteService estudianteService;
     
     @Autowired
     private PracticaService practicaService;
     
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {
-        Long usuarioId = (Long) session.getAttribute("usuarioId");
+        Estudiante estudiante = (Estudiante) session.getAttribute("usuario");
         
-        if (usuarioId == null) {
+        if (estudiante == null) {
+            System.out.println("No hay usuario en sesión, redirigiendo a /");
             return "redirect:/";
         }
         
-        Optional<Usuario> usuario = usuarioService.obtenerUsuario(usuarioId);
-        if (usuario.isPresent() && usuario.get().getEstudiante() != null) {
-            Long estudianteId = usuario.get().getEstudiante().getId();
-            model.addAttribute("estudiante", usuario.get().getEstudiante());
-            model.addAttribute("practicas", practicaService.obtenerPracticasPorEstudiante(estudianteId));
-            model.addAttribute("tienePracticaEnCurso", practicaService.tienePracticaEnCurso(estudianteId));
-            return "estudiante/dashboard";
-        }
-        
-        return "redirect:/logout";
+        System.out.println("Acceso a dashboard de estudiante: " + estudiante.getNombre());
+        Long estudianteId = estudiante.getId();
+        model.addAttribute("estudiante", estudiante);
+        model.addAttribute("practicas", practicaService.obtenerPracticasPorEstudiante(estudianteId));
+        model.addAttribute("tienePracticaEnCurso", practicaService.tienePracticaEnCurso(estudianteId));
+        return "estudiante/dashboard";
     }
 }
+

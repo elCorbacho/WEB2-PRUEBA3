@@ -3,6 +3,7 @@ package cl.web2.prueba3.prueba3.config;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import cl.web2.prueba3.prueba3.models.*;
 import cl.web2.prueba3.prueba3.services.*;
 import java.time.LocalDate;
@@ -15,12 +16,24 @@ public class DataLoader {
             CarreraService carreraService,
             EstudianteService estudianteService,
             ProfesorService profesorService,
+            TipoUsuarioService tipoUsuarioService,
             JefeEmpresaService jefeEmpresaService,
             EmpresaService empresaService,
             PracticaService practicaService,
-            UsuarioService usuarioService) {
+            PasswordEncoder passwordEncoder) {
         
         return args -> {
+            // ============================================================
+            // 0. Crear Tipos de Usuario
+            // ============================================================
+            TipoUsuario tipoEstudiante = new TipoUsuario();
+            tipoEstudiante.setTipo("ESTUDIANTE");
+            tipoEstudiante = tipoUsuarioService.crear(tipoEstudiante);
+            
+            TipoUsuario tipoProfesor = new TipoUsuario();
+            tipoProfesor.setTipo("PROFESOR");
+            tipoProfesor = tipoUsuarioService.crear(tipoProfesor);
+            
             // ============================================================
             // 1. Crear Carreras
             // ============================================================
@@ -42,19 +55,31 @@ public class DataLoader {
             Profesor profesor1 = new Profesor();
             profesor1.setNombres("Juan");
             profesor1.setApellidos("García López");
+            profesor1.setEmail("juan.garcia@universidad.cl");
+            profesor1.setPassword(passwordEncoder.encode("password123"));
             profesor1.setCorreoElectronico("juan.garcia@universidad.cl");
+            profesor1.setTipoUsuario(tipoProfesor);
+            profesor1.setActivo(true);
             profesor1 = profesorService.crearProfesor(profesor1);
             
             Profesor profesor2 = new Profesor();
             profesor2.setNombres("María");
             profesor2.setApellidos("Rodríguez Martínez");
+            profesor2.setEmail("maria.rodriguez@universidad.cl");
+            profesor2.setPassword(passwordEncoder.encode("password123"));
             profesor2.setCorreoElectronico("maria.rodriguez@universidad.cl");
+            profesor2.setTipoUsuario(tipoProfesor);
+            profesor2.setActivo(true);
             profesor2 = profesorService.crearProfesor(profesor2);
             
             Profesor profesor3 = new Profesor();
             profesor3.setNombres("Carlos");
             profesor3.setApellidos("Fernández Silva");
+            profesor3.setEmail("carlos.fernandez@universidad.cl");
+            profesor3.setPassword(passwordEncoder.encode("password123"));
             profesor3.setCorreoElectronico("carlos.fernandez@universidad.cl");
+            profesor3.setTipoUsuario(tipoProfesor);
+            profesor3.setActivo(true);
             profesor3 = profesorService.crearProfesor(profesor3);
             
             // ============================================================
@@ -112,91 +137,45 @@ public class DataLoader {
             estudiante1.setNombre("Luis");
             estudiante1.setApellido("Morales Castillo");
             estudiante1.setEmail("luis.morales@estudiante.cl");
+            estudiante1.setPassword(passwordEncoder.encode("password123"));
             estudiante1.setCarrera(carrera1);
+            estudiante1.setTipoUsuario(tipoEstudiante);
+            estudiante1.setActivo(true);
             estudiante1 = estudianteService.crearEstudiante(estudiante1);
             
             Estudiante estudiante2 = new Estudiante();
             estudiante2.setNombre("Francisca");
             estudiante2.setApellido("Díaz Gutiérrez");
             estudiante2.setEmail("francisca.diaz@estudiante.cl");
+            estudiante2.setPassword(passwordEncoder.encode("password123"));
             estudiante2.setCarrera(carrera2);
+            estudiante2.setTipoUsuario(tipoEstudiante);
+            estudiante2.setActivo(true);
             estudiante2 = estudianteService.crearEstudiante(estudiante2);
             
             Estudiante estudiante3 = new Estudiante();
             estudiante3.setNombre("Diego");
             estudiante3.setApellido("Vargas Riquelme");
             estudiante3.setEmail("diego.vargas@estudiante.cl");
+            estudiante3.setPassword(passwordEncoder.encode("password123"));
             estudiante3.setCarrera(carrera3);
+            estudiante3.setTipoUsuario(tipoEstudiante);
+            estudiante3.setActivo(true);
             estudiante3 = estudianteService.crearEstudiante(estudiante3);
 
             Estudiante estudiante4 = new Estudiante();
             estudiante4.setNombre("Ulises");
             estudiante4.setApellido("Contreras Perez");
             estudiante4.setEmail("ulises.contreras@estudiante.cl");
+            estudiante4.setPassword(passwordEncoder.encode("password123"));
             estudiante4.setCarrera(carrera3);
+            estudiante4.setTipoUsuario(tipoEstudiante);
+            estudiante4.setActivo(true);
             estudiante4 = estudianteService.crearEstudiante(estudiante4);
             
-            // ============================================================
-            // 6. Crear Usuarios
-            // ============================================================
-            Usuario usuarioEstudiante1 = new Usuario();
-            usuarioEstudiante1.setEmail("luis.morales@estudiante.cl");
-            usuarioEstudiante1.setPassword("password123");
-            usuarioEstudiante1.setRol(Rol.ESTUDIANTE);
-            usuarioEstudiante1.setActivo(true);
-            usuarioEstudiante1.setEstudiante(estudiante1);
-            usuarioService.crearUsuario(usuarioEstudiante1);
-            
-            Usuario usuarioProfesor1 = new Usuario();
-            usuarioProfesor1.setEmail("juan.garcia@universidad.cl");
-            usuarioProfesor1.setPassword("password123");
-            usuarioProfesor1.setRol(Rol.PROFESOR);
-            usuarioProfesor1.setActivo(true);
-            usuarioProfesor1.setProfesor(profesor1);
-            usuarioService.crearUsuario(usuarioProfesor1);
-            
-            Usuario usuarioEstudiante2 = new Usuario();
-            usuarioEstudiante2.setEmail("francisca.diaz@estudiante.cl");
-            usuarioEstudiante2.setPassword("password123");
-            usuarioEstudiante2.setRol(Rol.ESTUDIANTE);
-            usuarioEstudiante2.setActivo(true);
-            usuarioEstudiante2.setEstudiante(estudiante2);
-            usuarioService.crearUsuario(usuarioEstudiante2);
-            
-            Usuario usuarioProfesor2 = new Usuario();
-            usuarioProfesor2.setEmail("maria.rodriguez@universidad.cl");
-            usuarioProfesor2.setPassword("password123");
-            usuarioProfesor2.setRol(Rol.PROFESOR);
-            usuarioProfesor2.setActivo(true);
-            usuarioProfesor2.setProfesor(profesor2);
-            usuarioService.crearUsuario(usuarioProfesor2);
-            
-            Usuario usuarioEstudiante3 = new Usuario();
-            usuarioEstudiante3.setEmail("diego.vargas@estudiante.cl");
-            usuarioEstudiante3.setPassword("password123");
-            usuarioEstudiante3.setRol(Rol.ESTUDIANTE);
-            usuarioEstudiante3.setActivo(true);
-            usuarioEstudiante3.setEstudiante(estudiante3);
-            usuarioService.crearUsuario(usuarioEstudiante3);
-            
-            Usuario usuarioProfesor3 = new Usuario();
-            usuarioProfesor3.setEmail("carlos.fernandez@universidad.cl");
-            usuarioProfesor3.setPassword("password123");
-            usuarioProfesor3.setRol(Rol.PROFESOR);
-            usuarioProfesor3.setActivo(true);
-            usuarioProfesor3.setProfesor(profesor3);
-            usuarioService.crearUsuario(usuarioProfesor3);
-
-            Usuario usuarioEstudiante4 = new Usuario();
-            usuarioEstudiante4.setEmail("ulises.contreras@estudiante.cl");
-            usuarioEstudiante4.setPassword("password123");
-            usuarioEstudiante4.setRol(Rol.ESTUDIANTE);
-            usuarioEstudiante4.setActivo(true);
-            usuarioEstudiante4.setEstudiante(estudiante4);
-            usuarioService.crearUsuario(usuarioEstudiante4);
             
             // ============================================================
-            // 7. Crear Prácticas Profesionales
+            // 6. Crear Prácticas Profesionales
             // ============================================================
             Practica practica1 = new Practica();
             practica1.setEstudiante(estudiante1);
@@ -225,7 +204,7 @@ public class DataLoader {
             practica3.setProfesor(profesor3);
             practicaService.crearPractica(practica3);
             
-            System.out.println("✅ Base de datos cargada correctamente con 3 registros en cada tabla");
+            System.out.println("✅ Base de datos cargada correctamente");
         };
     }
 }

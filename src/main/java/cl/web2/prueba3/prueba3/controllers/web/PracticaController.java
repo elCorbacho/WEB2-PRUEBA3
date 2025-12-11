@@ -8,7 +8,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpSession;
 import cl.web2.prueba3.prueba3.models.Practica;
 import cl.web2.prueba3.prueba3.models.Estudiante;
-import cl.web2.prueba3.prueba3.models.Rol;
 import cl.web2.prueba3.prueba3.services.PracticaService;
 import cl.web2.prueba3.prueba3.services.EstudianteService;
 import cl.web2.prueba3.prueba3.services.EmpresaService;
@@ -37,29 +36,19 @@ public class PracticaController {
     @GetMapping("/crear")
     public String mostrarFormularioCrear(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         // Validar que sea estudiante
-        if (session.getAttribute("usuarioId") == null) {
-            return "redirect:/seleccionar-perfil";
+        Estudiante estudiante = (Estudiante) session.getAttribute("usuario");
+        if (estudiante == null) {
+            return "redirect:/";
         }
         
-        // Obtener el rol de la sesión como Rol enum
-        Object rolObj = session.getAttribute("rol");
-        Rol rol = (rolObj instanceof Rol) ? (Rol) rolObj : Rol.valueOf(rolObj.toString());
-        
-        if (rol != Rol.ESTUDIANTE) {
+        String tipoUsuario = (String) session.getAttribute("tipoUsuario");
+        if (tipoUsuario == null || !tipoUsuario.equals("ESTUDIANTE")) {
             return "redirect:/profesor/dashboard";
         }
         
-        // Obtener el ID del estudiante desde la sesión
-        Long estudianteId = (Long) session.getAttribute("estudianteId");
-        Optional<Estudiante> estudiante = estudianteService.obtenerEstudiante(estudianteId);
-        
-        if (estudiante.isEmpty()) {
-            return "redirect:/estudiante/dashboard";
-        }
-        
         // Validar si el estudiante tiene una práctica en curso
-        if (practicaService.tienePracticaEnCurso(estudianteId)) {
-            Optional<Practica> practicaEnCurso = practicaService.obtenerPracticaEnCurso(estudianteId);
+        if (practicaService.tienePracticaEnCurso(estudiante.getId())) {
+            Optional<Practica> practicaEnCurso = practicaService.obtenerPracticaEnCurso(estudiante.getId());
             redirectAttributes.addFlashAttribute("mensaje", "No puedes crear una nueva práctica. Ya tienes una en curso en " + 
                                                  (practicaEnCurso.isPresent() ? practicaEnCurso.get().getEmpresa().getNombre() : "una empresa"));
             redirectAttributes.addFlashAttribute("tipo", "warning");
@@ -67,7 +56,7 @@ public class PracticaController {
         }
         
         model.addAttribute("practica", new Practica());
-        model.addAttribute("estudiante", estudiante.get());
+        model.addAttribute("estudiante", estudiante);
         model.addAttribute("empresas", empresaService.obtenerTodasLasEmpresas());
         model.addAttribute("profesores", profesorService.obtenerTodosLosProfesores());
         model.addAttribute("accion", "Crear");
@@ -84,24 +73,23 @@ public class PracticaController {
                          RedirectAttributes redirectAttributes) {
         try {
             // Obtener estudiante de la sesión
-            Long estudianteId = (Long) session.getAttribute("estudianteId");
-            Optional<Estudiante> estudiante = estudianteService.obtenerEstudiante(estudianteId);
+            Estudiante estudiante = (Estudiante) session.getAttribute("usuario");
             
-            if (estudiante.isEmpty()) {
+            if (estudiante == null) {
                 redirectAttributes.addFlashAttribute("mensaje", "Estudiante no encontrado");
                 redirectAttributes.addFlashAttribute("tipo", "danger");
                 return "redirect:/estudiante/dashboard";
             }
             
             // Validar nuevamente si hay práctica en curso
-            if (practicaService.tienePracticaEnCurso(estudianteId)) {
+            if (practicaService.tienePracticaEnCurso(estudiante.getId())) {
                 redirectAttributes.addFlashAttribute("mensaje", "No puedes crear una nueva práctica. Ya tienes una en curso");
                 redirectAttributes.addFlashAttribute("tipo", "warning");
                 return "redirect:/estudiante/dashboard";
             }
             
             // Asignar estudiante automáticamente
-            practica.setEstudiante(estudiante.get());
+            practica.setEstudiante(estudiante);
             
             // Validar fechas
             if (practica.getFechaInicio().isAfter(practica.getFechaFin())) {
@@ -127,30 +115,26 @@ public class PracticaController {
      */
     @GetMapping("/mis-practicas")
     public String misPracticas(Model model, HttpSession session) {
-        if (session.getAttribute("usuarioId") == null) {
-            return "redirect:/seleccionar-perfil";
+        Estudiante estudiante = (Estudiante) session.getAttribute("usuario");
+        if (estudiante == null) {
+            return "redirect:/";
         }
         
-        Long estudianteId = (Long) session.getAttribute("estudianteId");
-        Optional<Estudiante> estudiante = estudianteService.obtenerEstudiante(estudianteId);
-        
-        if (estudiante.isEmpty()) {
-            return "redirect:/estudiante/dashboard";
-        }
-        
-        model.addAttribute("practicas", practicaService.obtenerPracticasPorEstudiante(estudianteId));
-        model.addAttribute("estudiante", estudiante.get());
-        model.addAttribute("tienePracticaEnCurso", practicaService.tienePracticaEnCurso(estudianteId));
+        model.addAttribute("practicas", practicaService.obtenerPracticasPorEstudiante(estudiante.getId()));
+        model.addAttribute("estudiante", estudiante);
+        model.addAttribute("tienePracticaEnCurso", practicaService.tienePracticaEnCurso(estudiante.getId()));
         
         return "estudiante/practicas/lista";
     }
     
     @GetMapping
     public String listar(Model model, HttpSession session) {
-        if (session.getAttribute("usuarioId") == null) {
-            return "redirect:/seleccionar-perfil";
+        Object usuario = session.getAttribute("usuario");
+        if (usuario == null) {
+            return "redirect:/";
         }
         model.addAttribute("practicas", practicaService.obtenerTodasLasPracticas());
         return "practica/lista";
     }
 }
+
