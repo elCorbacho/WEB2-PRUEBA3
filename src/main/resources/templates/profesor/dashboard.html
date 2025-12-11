@@ -10,7 +10,7 @@
         <div class="row mb-3 mb-md-4">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header bg-success text-white">
+                    <div class="card-header">
                         <h5 class="mb-0">
                             <i class="fas fa-id-card me-2"></i>Información Personal
                         </h5>
@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header bg-info text-white">
+                    <div class="card-header">
                         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2">
                             <h5 class="mb-0">
                                 <i class="fas fa-list me-2"></i>Todas las Prácticas del Sistema
@@ -109,11 +109,11 @@
             <div class="modal fade" th:id="@{'viewModal' + ${practica.id}}" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-header bg-info text-white">
+                        <div class="modal-header" style="border-bottom: 2px solid #667eea;">
                             <h5 class="modal-title" id="viewModalLabel">
                                 <i class="fas fa-briefcase me-2"></i>Detalles de la Práctica
                             </h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="row mb-3">
@@ -177,11 +177,11 @@
             <div class="modal fade" th:id="@{'deleteModal' + ${practica.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-header bg-danger text-white">
+                        <div class="modal-header" style="border-bottom: 2px solid #dc3545;">
                             <h5 class="modal-title" id="deleteModalLabel">
                                 <i class="fas fa-exclamation-triangle me-2"></i>Confirmar Eliminación
                             </h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <p>¿Estás seguro de que deseas eliminar la práctica de <strong th:text="${practica.estudiante.nombre + ' ' + practica.estudiante.apellido}"></strong>?</p>

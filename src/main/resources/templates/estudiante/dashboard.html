@@ -10,7 +10,7 @@
         <div class="row mb-3 mb-md-4">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header bg-primary text-white">
+                    <div class="card-header">
                         <h5 class="mb-0">
                             <i class="fas fa-id-card me-2"></i>Información Personal
                         </h5>
@@ -35,12 +35,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header bg-success text-white">
+                    <div class="card-header">
                         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2">
                             <h5 class="mb-0">
                                 <i class="fas fa-briefcase me-2"></i>Mis Prácticas Profesionales
                             </h5>
-                            <a href="/practicas/crear" class="btn btn-light btn-sm" th:if="${!tienePracticaEnCurso}">
+                            <a href="/practicas/crear" class="btn btn-primary btn-sm" th:if="${!tienePracticaEnCurso}">
                                 <i class="fas fa-plus me-1"></i><span class="d-none d-md-inline">Crear Práctica</span><span class="d-md-none">Crear</span>
                             </a>
                             <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#practicaEnCursoModal" th:if="${tienePracticaEnCurso}">
@@ -92,97 +92,97 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal de Vista para la Práctica (solo una activa) -->
-    <div th:if="${!practicas.isEmpty()}" th:each="practica : ${practicas}">
-        <div class="modal fade" th:id="@{'viewModal' + ${practica.id}}" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <!-- Modal de Vista para la Práctica (solo una activa) -->
+        <div th:if="${!practicas.isEmpty()}" th:each="practica : ${practicas}">
+            <div class="modal fade" th:id="@{'viewModal' + ${practica.id}}" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header" style="border-bottom: 2px solid #667eea;">
+                            <h5 class="modal-title" id="viewModalLabel">
+                                <i class="fas fa-briefcase me-2"></i>Detalles de tu Práctica Profesional
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <p><strong><i class="fas fa-building me-2"></i>Empresa:</strong></p>
+                                    <p th:text="${practica.empresa.nombre}"></p>
+                                    <p class="text-muted" th:text="${practica.empresa.email}"></p>
+                                    <p class="text-muted" th:text="${practica.empresa.telefono}"></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong><i class="fas fa-chalkboard-user me-2"></i>Profesor Supervisor:</strong></p>
+                                    <p th:text="${practica.profesor.nombres + ' ' + practica.profesor.apellidos}"></p>
+                                    <p class="text-muted" th:text="${practica.profesor.correoElectronico}"></p>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <p><strong><i class="fas fa-calendar-alt me-2"></i>Fecha de Inicio:</strong></p>
+                                    <p th:text="${#temporals.format(practica.fechaInicio, 'dd/MM/yyyy')}"></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong><i class="fas fa-calendar-alt me-2"></i>Fecha de Fin:</strong></p>
+                                    <p th:text="${#temporals.format(practica.fechaFin, 'dd/MM/yyyy')}"></p>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="mb-3">
+                                <p><strong><i class="fas fa-tasks me-2"></i>Actividades a Realizar:</strong></p>
+                                <p th:text="${practica.actividades}" class="bg-light p-3 rounded"></p>
+                            </div>
+
+                            <hr>
+
+                            <div class="alert alert-info mb-0">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Estado:</strong> Práctica en Curso
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                <i class="fas fa-times me-2"></i>Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Práctica en Curso -->
+        <div class="modal fade" id="practicaEnCursoModal" tabindex="-1" aria-labelledby="practicaEnCursoLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header bg-info text-white">
-                        <h5 class="modal-title" id="viewModalLabel">
-                            <i class="fas fa-briefcase me-2"></i>Detalles de tu Práctica Profesional
+                    <div class="modal-header" style="border-bottom: 2px solid #ffc107;">
+                        <h5 class="modal-title" id="practicaEnCursoLabel">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Práctica en Curso
                         </h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <p><strong><i class="fas fa-building me-2"></i>Empresa:</strong></p>
-                                <p th:text="${practica.empresa.nombre}"></p>
-                                <p class="text-muted" th:text="${practica.empresa.email}"></p>
-                                <p class="text-muted" th:text="${practica.empresa.telefono}"></p>
-                            </div>
-                            <div class="col-md-6">
-                                <p><strong><i class="fas fa-chalkboard-user me-2"></i>Profesor Supervisor:</strong></p>
-                                <p th:text="${practica.profesor.nombres + ' ' + practica.profesor.apellidos}"></p>
-                                <p class="text-muted" th:text="${practica.profesor.correoElectronico}"></p>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <p><strong><i class="fas fa-calendar-alt me-2"></i>Fecha de Inicio:</strong></p>
-                                <p th:text="${#temporals.format(practica.fechaInicio, 'dd/MM/yyyy')}"></p>
-                            </div>
-                            <div class="col-md-6">
-                                <p><strong><i class="fas fa-calendar-alt me-2"></i>Fecha de Fin:</strong></p>
-                                <p th:text="${#temporals.format(practica.fechaFin, 'dd/MM/yyyy')}"></p>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="mb-3">
-                            <p><strong><i class="fas fa-tasks me-2"></i>Actividades a Realizar:</strong></p>
-                            <p th:text="${practica.actividades}" class="bg-light p-3 rounded"></p>
-                        </div>
-
-                        <hr>
-
-                        <div class="alert alert-info">
+                        <div class="alert alert-warning mb-3">
                             <i class="fas fa-info-circle me-2"></i>
-                            <strong>Estado:</strong> Práctica en Curso
+                            <strong>No puedes crear una nueva práctica en este momento.</strong>
                         </div>
+                        <p class="text-muted mb-3">
+                            Ya tienes una práctica en curso. Solo puedes tener una práctica activa a la vez.
+                        </p>
+                        <p class="text-muted mb-0">
+                            Completa tu práctica actual antes de iniciar una nueva.
+                        </p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             <i class="fas fa-times me-2"></i>Cerrar
                         </button>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Práctica en Curso -->
-    <div class="modal fade" id="practicaEnCursoModal" tabindex="-1" aria-labelledby="practicaEnCursoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-warning text-dark border-warning">
-                    <h5 class="modal-title" id="practicaEnCursoLabel">
-                        <i class="fas fa-exclamation-triangle me-2"></i>Práctica en Curso
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-warning mb-3">
-                        <i class="fas fa-info-circle me-2"></i>
-                        <strong>No puedes crear una nueva práctica en este momento.</strong>
-                    </div>
-                    <p class="text-muted mb-3">
-                        Ya tienes una práctica en curso. Solo puedes tener una práctica activa a la vez.
-                    </p>
-                    <p class="text-muted mb-0">
-                        Completa tu práctica actual antes de iniciar una nueva.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        <i class="fas fa-times me-2"></i>Cerrar
-                    </button>
                 </div>
             </div>
         </div>
