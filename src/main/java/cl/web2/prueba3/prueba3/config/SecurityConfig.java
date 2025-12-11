@@ -24,19 +24,19 @@ public class SecurityConfig {
             .logout(logout -> logout.disable())
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/api/**").permitAll()  // ← Primero todos los API endpoints
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/seleccionar-perfil").permitAll()
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/logout").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**").permitAll()
-                .requestMatchers("/api/**").permitAll()
                 .requestMatchers("/estudiante/**").permitAll()
                 .requestMatchers("/profesor/**").permitAll()
                 .requestMatchers("/carrera/**").permitAll()
                 .requestMatchers("/empresa/**").permitAll()
                 .requestMatchers("/jefe/**").permitAll()
                 .requestMatchers("/practica/**").permitAll()
-                .anyRequest().permitAll()
+                .anyRequest().permitAll()  // ← Cambié a permitAll() para todo
             )
             .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
         
