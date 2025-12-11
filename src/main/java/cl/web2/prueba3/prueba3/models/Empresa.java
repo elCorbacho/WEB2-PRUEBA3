@@ -29,7 +29,7 @@ public class Empresa {
     @Column(name = "email", length = 150, unique = true)
     private String email;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "jefe_id", nullable = false)
     private Jefe_empresa jefe;
     
