@@ -1,4 +1,4 @@
-# Prueba3 - Sistema de Gestión de Prácticas Profesionales.
+# Prueba3 - Sistema de Gestión de Prácticas Profesionales..
 
 ## 🚀 Ejecución del Programa
 
