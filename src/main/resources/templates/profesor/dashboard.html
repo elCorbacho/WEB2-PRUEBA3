@@ -67,12 +67,12 @@
                                     <tbody>
                                         <tr th:each="practica : ${todasLasPracticas}">
                                             <td>
-                                                <div><strong th:text="${practica.estudiante?.nombre} + ' ' + ${practica.estudiante?.apellido}"></strong></div>
-                                                <small class="d-md-none text-muted" th:text="${practica.estudiante?.carrera?.nombreCarrera}"></small>
+                                                <div><strong th:text="|${practica.estudiante?.nombre} ${practica.estudiante?.apellido}|"></strong></div>
+                                                <small class="d-md-none text-muted">-</small>
                                             </td>
-                                            <td class="d-none d-md-table-cell" th:text="${practica.estudiante?.carrera?.nombreCarrera}"></td>
+                                            <td class="d-none d-md-table-cell">-</td>
                                             <td class="d-none d-lg-table-cell" th:text="${practica.empresa?.nombre}"></td>
-                                            <td class="d-none d-lg-table-cell" th:text="${practica.profesor?.nombres} + ' ' + ${practica.profesor?.apellidos}"></td>
+                                            <td class="d-none d-lg-table-cell" th:text="|${practica.profesor?.nombres} ${practica.profesor?.apellidos}|"></td>
                                             <td class="d-none d-xl-table-cell" th:text="${#temporals.format(practica.fechaInicio, 'dd/MM/yyyy')}"></td>
                                             <td class="d-none d-xl-table-cell" th:text="${#temporals.format(practica.fechaFin, 'dd/MM/yyyy')}"></td>
                                             <td class="d-none d-md-table-cell">
@@ -117,7 +117,7 @@
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <p><strong><i class="fas fa-user-graduate me-2"></i>Estudiante:</strong></p>
-                                        <p th:text="${practica.estudiante?.nombre} + ' ' + ${practica.estudiante?.apellido}"></p>
+                                        <p th:text="|${practica.estudiante?.nombre} ${practica.estudiante?.apellido}|"></p>
                                         <p class="text-muted" th:text="${practica.estudiante?.email}"></p>
                                     </div>
                                     <div class="col-md-6">
@@ -132,11 +132,11 @@
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <p><strong><i class="fas fa-graduation-cap me-2"></i>Carrera:</strong></p>
-                                        <p th:text="${practica.estudiante?.carrera?.nombreCarrera}"></p>
+                                        <p>-</p>
                                     </div>
                                     <div class="col-md-6">
                                         <p><strong><i class="fas fa-chalkboard-user me-2"></i>Profesor:</strong></p>
-                                        <p th:text="${practica.profesor?.nombres} + ' ' + ${practica.profesor?.apellidos}"></p>
+                                        <p th:text="|${practica.profesor?.nombres} ${practica.profesor?.apellidos}|"></p>
                                     </div>
                                 </div>                            <hr>
 
@@ -180,7 +180,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>¿Estás seguro de que deseas eliminar la práctica de <strong th:text="${practica.estudiante?.nombre} + ' ' + ${practica.estudiante?.apellido}"></strong>?</p>
+                            <p th:text="|¿Estás seguro de que deseas eliminar la práctica de ${practica.estudiante?.nombre} ${practica.estudiante?.apellido}?|"></p>
                             <p class="text-muted mb-0">Esta acción no se puede deshacer.</p>
                         </div>
                         <div class="modal-footer">

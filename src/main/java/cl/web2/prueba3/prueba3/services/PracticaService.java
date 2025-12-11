@@ -2,6 +2,7 @@ package cl.web2.prueba3.prueba3.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.lang.NonNull;
 import cl.web2.prueba3.prueba3.models.Practica;
 import cl.web2.prueba3.prueba3.repository.PracticaRepository;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 public class PracticaService {
     
     @Autowired
@@ -39,6 +41,7 @@ public class PracticaService {
         ).findFirst();
     }
     
+    @Transactional
     public Practica crearPractica(@NonNull Practica practica) {
         return practicaRepository.save(practica);
     }
@@ -55,6 +58,7 @@ public class PracticaService {
         return practicaRepository.findByEstudianteId(estudianteId);
     }
     
+    @Transactional
     public Practica actualizarPractica(@NonNull Long id, @NonNull Practica practicaActualizada) {
         Optional<Practica> practicaExistente = practicaRepository.findById(id);
         if (practicaExistente.isPresent()) {
@@ -70,6 +74,7 @@ public class PracticaService {
         return null;
     }
     
+    @Transactional
     public boolean eliminarPractica(@NonNull Long id) {
         if (practicaRepository.existsById(id)) {
             practicaRepository.deleteById(id);

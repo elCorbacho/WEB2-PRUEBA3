@@ -3,6 +3,7 @@ package cl.web2.prueba3.prueba3.controllers.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.lang.NonNull;
 import cl.web2.prueba3.prueba3.models.Profesor;
@@ -23,6 +24,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/profesores")
 @CrossOrigin(origins = "*", maxAge = 3600)
+@Transactional(readOnly = true)
 public class ProfesorApiController {
     
     @Autowired

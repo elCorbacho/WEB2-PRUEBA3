@@ -57,3 +57,46 @@ example {
     }
   }
 }
+
+example {
+  name: example (1)
+  
+  request: {
+    url: http://localhost:8080/api/profesores/1/practicas/3
+    method: DELETE
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Thu, 11 Dec 2025 04:43:43 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 200,
+          "message": "Práctica eliminada correctamente",
+          "data": "ID: 3",
+          "timestamp": "2025-12-11T01:43:43.3552601"
+        }
+      '''
+    }
+  }
+}
