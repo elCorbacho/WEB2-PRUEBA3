@@ -93,6 +93,20 @@
             color: white;
         }
 
+        .breadcrumb-custom {
+            background-color: transparent;
+            padding-left: 0;
+        }
+
+        .breadcrumb-custom a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .breadcrumb-custom a:hover {
+            text-decoration: underline;
+        }
+
         .breadcrumb {
             background-color: transparent;
         }
@@ -113,12 +127,11 @@
 </head>
 <body>
     <div class="container" style="max-width: 700px;">
-        <!-- Breadcrumbs -->
+        <!-- Breadcrumb -->
         <nav aria-label="breadcrumb" class="mb-4">
-            <ol class="breadcrumb" style="background-color: transparent;">
-                <li class="breadcrumb-item"><a href="/estudiante/dashboard" class="text-white">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="/practicas/mis-practicas" class="text-white">Mis Prácticas</a></li>
-                <li class="breadcrumb-item active text-white">Crear Práctica</li>
+            <ol class="breadcrumb breadcrumb-custom">
+                <li class="breadcrumb-item"><a href="/estudiante/dashboard" class="text-black text-decoration-none"><i class="fas fa-home me-2"></i>Dashboard</a></li>
+                <li class="breadcrumb-item active text-black">Crear Práctica</li>
             </ol>
         </nav>
 
