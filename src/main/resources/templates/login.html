@@ -219,9 +219,10 @@
             <!-- Header -->
             <div class="login-header">
                 <div class="header-content">
-                    <i class="fas fa-sign-in-alt"></i>
-                    <h2>Iniciar Sesión</h2>
-                    <p>Ingresa tus credenciales</p>
+                    <i th:if="${perfil == 'estudiante'}" class="fas fa-user-graduate"></i>
+                    <i th:if="${perfil == 'profesor'}" class="fas fa-chalkboard-user"></i>
+                    <h2 th:text="${perfil == 'estudiante'} ? 'Estudiante' : 'Profesor'"></h2>
+                    <p>Inicia sesión en tu cuenta</p>
                 </div>
             </div>
 
@@ -236,22 +237,24 @@
                 <!-- Info Alert with Credentials -->
                 <div class="alert alert-info">
                     <i class="fas fa-info-circle"></i>
-                    <span>Contraseña: <strong>password123</strong></span>
+                    <span>Usa las credenciales de prueba si lo necesitas</span>
                 </div>
 
                 <!-- Login Form -->
                 <form method="post" th:action="@{/login}" id="loginForm">
+                    <input type="hidden" name="perfil" th:value="${perfil}">
+                    
                     <!-- Email Field -->
                     <div class="form-group">
                         <label for="email">
                             <i class="fas fa-envelope"></i> Email
                         </label>
                         <input type="email" class="form-control" id="email" name="email" 
-                               placeholder="usuario@ejemplo.cl" 
+                               th:placeholder="${perfil == 'estudiante'} ? 'ulises.contreras@estudiante.cl' : 'carlos.fernandez@universidad.cl'"
                                required autofocus>
                         <small class="help-text">
                             <i class="fas fa-lightbulb"></i>
-                            <span>Ej: luis.morales@estudiante.cl o juan.garcia@universidad.cl</span>
+                            <span th:text="${perfil == 'estudiante'} ? 'ulises.contreras@estudiante.cl' : 'carlos.fernandez@universidad.cl'"></span>
                         </small>
                     </div>
 
