@@ -41,13 +41,14 @@ public class EstudianteController {
     
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(@NonNull @PathVariable Long id, Model model) {
-        Optional<Estudiante> estudiante = estudianteService.obtenerEstudiante(id);
-        if (estudiante.isPresent()) {
-            model.addAttribute("estudiante", estudiante.get());
+        try {
+            Estudiante estudiante = estudianteService.obtenerEstudiante(id);
+            model.addAttribute("estudiante", estudiante);
             model.addAttribute("carreras", carreraService.obtenerTodasLasCarreras());
             return "estudiante/editar";
+        } catch (Exception e) {
+            return "redirect:/estudiantes";
         }
-        return "redirect:/estudiantes";
     }
     
     @PostMapping("/actualizar/{id}")

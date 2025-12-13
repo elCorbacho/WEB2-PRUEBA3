@@ -1,68 +1,59 @@
 package cl.web2.prueba3.prueba3.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import cl.web2.prueba3.prueba3.models.Estudiante;
 import cl.web2.prueba3.prueba3.repository.EstudianteRepository;
+import cl.web2.prueba3.prueba3.exceptions.ResourceNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class EstudianteService {
     
-    @Autowired
-    private EstudianteRepository estudianteRepository;
+    private final EstudianteRepository estudianteRepository;
     
     @Transactional
     public Estudiante crearEstudiante(@NonNull Estudiante estudiante) {
         return estudianteRepository.save(estudiante);
     }
     
-    public Optional<Estudiante> obtenerEstudiante(@NonNull Long id) {
-        return estudianteRepository.findById(id);
+    public Estudiante obtenerEstudiante(@NonNull Long id) {
+        return estudianteRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Estudiante", "id", id));
     }
     
     public List<Estudiante> obtenerTodosLosEstudiantes() {
-        return (List<Estudiante>) estudianteRepository.findAll();
+        return estudianteRepository.findAll();
     }
     
     @Transactional
     public Estudiante actualizarEstudiante(@NonNull Long id, @NonNull Estudiante estudianteActualizado) {
-        Optional<Estudiante> estudianteExistente = estudianteRepository.findById(id);
-        if (estudianteExistente.isPresent()) {
-            Estudiante estudiante = estudianteExistente.get();
-            estudiante.setNombre(estudianteActualizado.getNombre());
-            estudiante.setApellido(estudianteActualizado.getApellido());
-            estudiante.setEmail(estudianteActualizado.getEmail());
-            estudiante.setCarrera(estudianteActualizado.getCarrera());
-            return estudianteRepository.save(estudiante);
-        }
-        return null;
+        Estudiante estudiante = obtenerEstudiante(id);
+        estudiante.setNombre(estudianteActualizado.getNombre());
+        estudiante.setApellido(estudianteActualizado.getApellido());
+        estudiante.setEmail(estudianteActualizado.getEmail());
+        estudiante.setCarrera(estudianteActualizado.getCarrera());
+        return estudianteRepository.save(estudiante);
     }
     
     @Transactional
-    public boolean eliminarEstudiante(@NonNull Long id) {
-        if (estudianteRepository.existsById(id)) {
-            estudianteRepository.deleteById(id);
-            return true;
+    public void eliminarEstudiante(@NonNull Long id) {
+        if (!estudianteRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Estudiante", "id", id);
         }
-        return false;
+        estudianteRepository.deleteById(id);
     }
     
-    @Nullable
-    public Estudiante obtenerEstudiantePorEmail(@NonNull String email) {
-        return estudianteRepository.findByEmail(email).orElse(null);
+    public Estudiante obtenerPorEmail(@NonNull String email) {
+        return estudianteRepository.findByEmail(email)
+            .orElseThrow(() -> new ResourceNotFoundException("Estudiante", "email", email));
     }
     
-    public Estudiante obtenerPorEmail(String email) {
-        return estudianteRepository.findByEmail(email).orElse(null);
-    }
-    
-    public List<Estudiante> obtenerEstudiantesPorCarrera(Long carreraId) {
+    public List<Estudiante> obtenerEstudiantesPorCarrera(@NonNull Long carreraId) {
         return estudianteRepository.findByCarreraId(carreraId);
     }
 }

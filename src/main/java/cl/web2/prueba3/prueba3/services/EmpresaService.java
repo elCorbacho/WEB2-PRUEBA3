@@ -1,65 +1,63 @@
 package cl.web2.prueba3.prueba3.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import cl.web2.prueba3.prueba3.models.Empresa;
 import cl.web2.prueba3.prueba3.repository.EmpresaRepository;
+import cl.web2.prueba3.prueba3.exceptions.ResourceNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class EmpresaService {
     
-    @Autowired
-    private EmpresaRepository empresaRepository;
+    private final EmpresaRepository empresaRepository;
     
     @Transactional
     public Empresa crearEmpresa(@NonNull Empresa empresa) {
         return empresaRepository.save(empresa);
     }
     
-    public Optional<Empresa> obtenerEmpresa(@NonNull Long id) {
-        return empresaRepository.findById(id);
+    public Empresa obtenerEmpresa(@NonNull Long id) {
+        return empresaRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Empresa", "id", id));
     }
     
     public List<Empresa> obtenerTodasLasEmpresas() {
-        return (List<Empresa>) empresaRepository.findAll();
+        return empresaRepository.findAll();
     }
     
     @Transactional
     public Empresa actualizarEmpresa(@NonNull Long id, @NonNull Empresa empresaActualizada) {
-        Optional<Empresa> empresaExistente = empresaRepository.findById(id);
-        if (empresaExistente.isPresent()) {
-            Empresa empresa = empresaExistente.get();
-            empresa.setNombre(empresaActualizada.getNombre());
-            empresa.setDireccion(empresaActualizada.getDireccion());
-            empresa.setTelefono(empresaActualizada.getTelefono());
-            empresa.setEmail(empresaActualizada.getEmail());
-            empresa.setJefe(empresaActualizada.getJefe());
-            return empresaRepository.save(empresa);
-        }
-        return null;
+        Empresa empresa = obtenerEmpresa(id);
+        empresa.setNombre(empresaActualizada.getNombre());
+        empresa.setDireccion(empresaActualizada.getDireccion());
+        empresa.setTelefono(empresaActualizada.getTelefono());
+        empresa.setEmail(empresaActualizada.getEmail());
+        empresa.setJefe(empresaActualizada.getJefe());
+        return empresaRepository.save(empresa);
     }
     
     @Transactional
-    public boolean eliminarEmpresa(@NonNull Long id) {
-        if (empresaRepository.existsById(id)) {
-            empresaRepository.deleteById(id);
-            return true;
+    public void eliminarEmpresa(@NonNull Long id) {
+        if (!empresaRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Empresa", "id", id);
         }
-        return false;
+        empresaRepository.deleteById(id);
     }
     
-    @Nullable
     public Empresa obtenerEmpresaPorEmail(@NonNull String email) {
-        return empresaRepository.findByEmail(email);
+        Empresa empresa = empresaRepository.findByEmail(email);
+        if (empresa == null) {
+            throw new ResourceNotFoundException("Empresa", "email", email);
+        }
+        return empresa;
     }
     
-    public List<Empresa> obtenerEmpresasPorJefe(Long jefeId) {
+    public List<Empresa> obtenerEmpresasPorJefe(@NonNull Long jefeId) {
         return empresaRepository.findByJefeId(jefeId);
     }
 }

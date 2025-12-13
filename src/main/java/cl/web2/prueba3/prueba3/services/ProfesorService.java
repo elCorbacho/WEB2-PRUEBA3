@@ -1,63 +1,62 @@
 package cl.web2.prueba3.prueba3.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import cl.web2.prueba3.prueba3.models.Profesor;
 import cl.web2.prueba3.prueba3.repository.ProfesorRepository;
+import cl.web2.prueba3.prueba3.exceptions.ResourceNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class ProfesorService {
     
-    @Autowired
-    private ProfesorRepository profesorRepository;
+    private final ProfesorRepository profesorRepository;
     
     @Transactional
     public Profesor crearProfesor(@NonNull Profesor profesor) {
         return profesorRepository.save(profesor);
     }
     
-    public Optional<Profesor> obtenerProfesor(@NonNull Long id) {
-        return profesorRepository.findById(id);
+    public Profesor obtenerProfesor(@NonNull Long id) {
+        return profesorRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Profesor", "id", id));
     }
     
     public List<Profesor> obtenerTodosLosProfesores() {
-        return (List<Profesor>) profesorRepository.findAll();
+        return profesorRepository.findAll();
     }
     
     @Transactional
     public Profesor actualizarProfesor(@NonNull Long id, @NonNull Profesor profesorActualizado) {
-        Optional<Profesor> profesorExistente = profesorRepository.findById(id);
-        if (profesorExistente.isPresent()) {
-            Profesor profesor = profesorExistente.get();
-            profesor.setNombres(profesorActualizado.getNombres());
-            profesor.setApellidos(profesorActualizado.getApellidos());
-            profesor.setCorreoElectronico(profesorActualizado.getCorreoElectronico());
-            return profesorRepository.save(profesor);
-        }
-        return null;
+        Profesor profesor = obtenerProfesor(id);
+        profesor.setNombres(profesorActualizado.getNombres());
+        profesor.setApellidos(profesorActualizado.getApellidos());
+        profesor.setCorreoElectronico(profesorActualizado.getCorreoElectronico());
+        return profesorRepository.save(profesor);
     }
     
     @Transactional
-    public boolean eliminarProfesor(@NonNull Long id) {
-        if (profesorRepository.existsById(id)) {
-            profesorRepository.deleteById(id);
-            return true;
+    public void eliminarProfesor(@NonNull Long id) {
+        if (!profesorRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Profesor", "id", id);
         }
-        return false;
+        profesorRepository.deleteById(id);
     }
     
-    @Nullable
     public Profesor obtenerProfesorPorCorreo(@NonNull String correo) {
-        return profesorRepository.findByCorreoElectronico(correo);
+        Profesor profesor = profesorRepository.findByCorreoElectronico(correo);
+        if (profesor == null) {
+            throw new ResourceNotFoundException("Profesor", "correo", correo);
+        }
+        return profesor;
     }
     
-    public Profesor obtenerPorEmail(String email) {
-        return profesorRepository.findByEmail(email).orElse(null);
+    public Profesor obtenerPorEmail(@NonNull String email) {
+        return profesorRepository.findByEmail(email)
+            .orElseThrow(() -> new ResourceNotFoundException("Profesor", "email", email));
     }
 }

@@ -8,7 +8,6 @@ import org.springframework.lang.NonNull;
 import cl.web2.prueba3.prueba3.models.Empresa;
 import cl.web2.prueba3.prueba3.services.EmpresaService;
 import cl.web2.prueba3.prueba3.services.JefeEmpresaService;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/empresas")
@@ -43,13 +42,14 @@ public class EmpresaController {
     
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
-        Optional<Empresa> empresa = empresaService.obtenerEmpresa(id);
-        if (empresa.isPresent()) {
-            model.addAttribute("empresa", empresa.get());
+        try {
+            Empresa empresa = empresaService.obtenerEmpresa(id);
+            model.addAttribute("empresa", empresa);
             model.addAttribute("jefes", jefeEmpresaService.obtenerTodosLosJefes());
             return "empresa/editar";
+        } catch (Exception e) {
+            return "redirect:/empresas";
         }
-        return "redirect:/empresas";
     }
     
     @PostMapping("/actualizar/{id}")

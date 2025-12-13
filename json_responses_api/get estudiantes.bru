@@ -166,3 +166,79 @@ example {
     }
   }
 }
+
+example {
+  name: example (2)
+  
+  request: {
+    url: http://localhost:8080/api/estudiantes
+    method: GET
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Sat, 13 Dec 2025 20:44:02 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 200,
+          "message": "Estudiantes obtenidos correctamente",
+          "data": [
+            {
+              "id": 1,
+              "nombre": "Luis",
+              "apellido": "Morales Castillo",
+              "email": "luis.morales@estudiante.cl",
+              "carreraNombre": "Ingeniería en Informática",
+              "carreraId": 1
+            },
+            {
+              "id": 2,
+              "nombre": "Francisca",
+              "apellido": "Díaz Gutiérrez",
+              "email": "francisca.diaz@estudiante.cl",
+              "carreraNombre": "Ingeniería en Sistemas",
+              "carreraId": 2
+            },
+            {
+              "id": 3,
+              "nombre": "Diego",
+              "apellido": "Vargas Riquelme",
+              "email": "diego.vargas@estudiante.cl",
+              "carreraNombre": "Administración de Empresas",
+              "carreraId": 3
+            },
+            {
+              "id": 4,
+              "nombre": "Ulises",
+              "apellido": "Contreras Perez",
+              "email": "ulises.contreras@estudiante.cl",
+              "carreraNombre": "Administración de Empresas",
+              "carreraId": 3
+            }
+          ],
+          "timestamp": "2025-12-13T17:44:02.1988152"
+        }
+      '''
+    }
+  }
+}

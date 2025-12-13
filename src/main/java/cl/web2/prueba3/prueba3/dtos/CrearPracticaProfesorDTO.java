@@ -10,8 +10,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PracticaDTO {
-    private Long id;
+public class CrearPracticaProfesorDTO {
     
     @NotNull(message = "La fecha de inicio es obligatoria")
     private LocalDate fechaInicio;
@@ -22,11 +21,9 @@ public class PracticaDTO {
     @NotBlank(message = "Las actividades son obligatorias")
     private String actividades;
     
-    private String empresaNombre;
-    private String profesorNombres;
-    private String profesorApellidos;
-    private String jefeNombre;
-    private String jefeApellidos;
-    private String estudianteNombre;
-    private String estudianteApellido;
+    @NotNull(message = "El ID del estudiante es obligatorio")
+    private Long estudianteId;
+    
+    @NotNull(message = "El ID de la empresa es obligatorio")
+    private Long empresaId;
 }

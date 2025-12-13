@@ -1,6 +1,6 @@
 package cl.web2.prueba3.prueba3.controllers.api;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +17,9 @@ import cl.web2.prueba3.prueba3.services.EmpresaService;
 import cl.web2.prueba3.prueba3.responses.ApiResponse;
 import cl.web2.prueba3.prueba3.dtos.PracticaDTO;
 import cl.web2.prueba3.prueba3.dtos.ProfesorDTO;
+import cl.web2.prueba3.prueba3.dtos.CrearPracticaProfesorDTO;
 import cl.web2.prueba3.prueba3.mappers.PracticaMapper;
 import cl.web2.prueba3.prueba3.mappers.ProfesorMapper;
-import cl.web2.prueba3.prueba3.exceptions.ResourceNotFoundException;
 import cl.web2.prueba3.prueba3.exceptions.BadRequestException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,53 +28,32 @@ import java.util.List;
 @RequestMapping("/api/profesores")
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class ProfesorApiController {
     
-    @Autowired
-    private ProfesorService profesorService;
-    
-    @Autowired
-    private PracticaService practicaService;
-    
-    @Autowired
-    private EstudianteService estudianteService;
-    
-    @Autowired
-    private EmpresaService empresaService;
-    
-    @Autowired
-    private PracticaMapper practicaMapper;
-    
-    @Autowired
-    private ProfesorMapper profesorMapper;
+    private final ProfesorService profesorService;
+    private final PracticaService practicaService;
+    private final EstudianteService estudianteService;
+    private final EmpresaService empresaService;
+    private final PracticaMapper practicaMapper;
+    private final ProfesorMapper profesorMapper;
     
     // get profesores - MEJORADO CON DTO
     @GetMapping
     public ResponseEntity<ApiResponse<List<ProfesorDTO>>> obtenerTodos() {
-        try {
-            List<ProfesorDTO> profesoresDTO = profesorService.obtenerTodosLosProfesores()
-                .stream()
-                .map(profesorMapper::toProfesorDTO)
-                .toList();
-            
-            return ResponseEntity.ok(
-                ApiResponse.<List<ProfesorDTO>>builder()
-                    .status(200)
-                    .message("Profesores obtenidos correctamente")
-                    .data(profesoresDTO)
-                    .timestamp(LocalDateTime.now())
-                    .build()
-            );
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(
-                ApiResponse.<List<ProfesorDTO>>builder()
-                    .status(500)
-                    .message("Error al obtener profesores")
-                    .error(e.getMessage())
-                    .timestamp(LocalDateTime.now())
-                    .build()
-            );
-        }
+        List<ProfesorDTO> profesoresDTO = profesorService.obtenerTodosLosProfesores()
+            .stream()
+            .map(profesorMapper::toProfesorDTO)
+            .toList();
+        
+        return ResponseEntity.ok(
+            ApiResponse.<List<ProfesorDTO>>builder()
+                .status(200)
+                .message("Profesores obtenidos correctamente")
+                .data(profesoresDTO)
+                .timestamp(LocalDateTime.now())
+                .build()
+        );
     }
     //
     //
@@ -83,8 +62,7 @@ public class ProfesorApiController {
     //get profesor por id - MEJORADO CON DTO
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<ProfesorDTO>> obtenerPorId(@PathVariable Long id) {
-        Profesor profesor = profesorService.obtenerProfesor(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Profesor", "id", id));
+        Profesor profesor = profesorService.obtenerProfesor(id);
         
         return ResponseEntity.ok(
             ApiResponse.<ProfesorDTO>builder()
@@ -102,8 +80,7 @@ public class ProfesorApiController {
     // get practicas por profesor - MEJORADO
     @GetMapping("/{profesorId}/practicas")
     public ResponseEntity<ApiResponse<List<PracticaDTO>>> obtenerMisPracticas(@PathVariable Long profesorId) {
-        profesorService.obtenerProfesor(profesorId)
-            .orElseThrow(() -> new ResourceNotFoundException("Profesor", "id", profesorId));
+        profesorService.obtenerProfesor(profesorId);
         
         List<PracticaDTO> practicasDTO = practicaService
             .obtenerPracticasPorProfesor(profesorId)
@@ -129,25 +106,24 @@ public class ProfesorApiController {
     @Transactional
     public ResponseEntity<ApiResponse<PracticaDTO>> crearPractica(
             @PathVariable Long profesorId,
-            @Valid @RequestBody Practica practica) {
+            @Valid @RequestBody CrearPracticaProfesorDTO dto) {
         
-        Profesor profesor = profesorService.obtenerProfesor(profesorId)
-            .orElseThrow(() -> new ResourceNotFoundException("Profesor", "id", profesorId));
-        
-        Estudiante estudiante = estudianteService.obtenerEstudiante(practica.getEstudiante().getId())
-            .orElseThrow(() -> new ResourceNotFoundException("Estudiante", "id", practica.getEstudiante().getId()));
-        
-        Empresa empresa = empresaService.obtenerEmpresa(practica.getEmpresa().getId())
-            .orElseThrow(() -> new ResourceNotFoundException("Empresa", "id", practica.getEmpresa().getId()));
+        Profesor profesor = profesorService.obtenerProfesor(profesorId);
+        Estudiante estudiante = estudianteService.obtenerEstudiante(dto.getEstudianteId());
+        Empresa empresa = empresaService.obtenerEmpresa(dto.getEmpresaId());
         
         // Validar fechas
-        if (practica.getFechaInicio().isAfter(practica.getFechaFin())) {
+        if (dto.getFechaInicio().isAfter(dto.getFechaFin())) {
             throw new BadRequestException("La fecha de inicio debe ser anterior a la fecha de fin");
         }
         
+        Practica practica = new Practica();
         practica.setProfesor(profesor);
         practica.setEstudiante(estudiante);
         practica.setEmpresa(empresa);
+        practica.setFechaInicio(dto.getFechaInicio());
+        practica.setFechaFin(dto.getFechaFin());
+        practica.setActividades(dto.getActividades());
         
         Practica nuevaPractica = practicaService.crearPractica(practica);
         
@@ -172,9 +148,7 @@ public class ProfesorApiController {
             @PathVariable Long practicaId,
             @Valid @RequestBody Practica practica) {
         
-        practicaService.obtenerPractica(practicaId)
-            .orElseThrow(() -> new ResourceNotFoundException("Práctica", "id", practicaId));
-        
+        practicaService.obtenerPractica(practicaId);
         Practica practicaActualizada = practicaService.actualizarPractica(practicaId, practica);
         
         return ResponseEntity.ok(
@@ -197,9 +171,7 @@ public class ProfesorApiController {
             @PathVariable Long profesorId,
             @PathVariable Long practicaId) {
         
-        practicaService.obtenerPractica(practicaId)
-            .orElseThrow(() -> new ResourceNotFoundException("Práctica", "id", practicaId));
-        
+        practicaService.obtenerPractica(practicaId);
         practicaService.eliminarPractica(practicaId);
         
         return ResponseEntity.ok(

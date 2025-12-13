@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.lang.NonNull;
 import cl.web2.prueba3.prueba3.models.Profesor;
 import cl.web2.prueba3.prueba3.services.ProfesorService;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/profesores")
@@ -36,12 +35,13 @@ public class ProfesorController {
     
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(@NonNull @PathVariable Long id, Model model) {
-        Optional<Profesor> profesor = profesorService.obtenerProfesor(id);
-        if (profesor.isPresent()) {
-            model.addAttribute("profesor", profesor.get());
+        try {
+            Profesor profesor = profesorService.obtenerProfesor(id);
+            model.addAttribute("profesor", profesor);
             return "profesor/editar";
+        } catch (Exception e) {
+            return "redirect:/profesores";
         }
-        return "redirect:/profesores";
     }
     
     @PostMapping("/actualizar/{id}")

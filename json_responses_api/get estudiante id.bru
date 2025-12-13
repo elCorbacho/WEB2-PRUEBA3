@@ -114,3 +114,53 @@ example {
     }
   }
 }
+
+example {
+  name: example (2)
+  
+  request: {
+    url: http://localhost:8080/api/estudiantes/1
+    method: GET
+    mode: none
+  }
+  
+  response: {
+    headers: {
+      vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+      x-content-type-options: nosniff
+      x-xss-protection: 0
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      expires: 0
+      content-type: application/json
+      transfer-encoding: chunked
+      date: Sat, 13 Dec 2025 20:43:56 GMT
+      keep-alive: timeout=60
+      connection: keep-alive
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": 200,
+          "message": "Estudiante encontrado",
+          "data": {
+            "id": 1,
+            "nombre": "Luis",
+            "apellido": "Morales Castillo",
+            "email": "luis.morales@estudiante.cl",
+            "carreraNombre": "Ingeniería en Informática",
+            "carreraId": 1
+          },
+          "timestamp": "2025-12-13T17:43:56.0442358"
+        }
+      '''
+    }
+  }
+}
