@@ -139,3 +139,106 @@ http://localhost:8080/swagger-ui.html
 - Todos los endpoints API (`/api/**`) están permitidos
 - Las respuestas incluyen timestamp para auditoría
 - Los errores retornan mensajes descriptivos en el campo `error`
+
+---
+
+## 📸 Evidencias de Funcionamiento de la Aplicación
+
+### Interfaz Web - Pantallas Principales
+
+<div align="center">
+
+| Inicio y Autenticación | Dashboard Estudiante | Dashboard Profesor |
+|:---:|:---:|:---:|
+| ![Inicio](screenshots/Captura%20de%20pantalla%202025-12-13%20165644.png) | ![Dashboard Estudiante](screenshots/Captura%20de%20pantalla%202025-12-13%20165652.png) | ![Dashboard Profesor](screenshots/Captura%20de%20pantalla%202025-12-13%20165658.png) |
+
+</div>
+
+### Gestión de Prácticas - Estudiante
+
+<div align="center">
+
+| Lista de Prácticas | Crear Práctica | Detalle de Práctica |
+|:---:|:---:|:---:|
+| ![Lista](screenshots/Captura%20de%20pantalla%202025-12-13%20165705.png) | ![Crear](screenshots/Captura%20de%20pantalla%202025-12-13%20165711.png) | ![Detalle](screenshots/Captura%20de%20pantalla%202025-12-13%20165716.png) |
+
+</div>
+
+### Gestión de Prácticas - Profesor
+
+<div align="center">
+
+| Agregar Práctica | Editar Práctica | Lista de Prácticas |
+|:---:|:---:|:---:|
+| ![Agregar](screenshots/Captura%20de%20pantalla%202025-12-13%20165720.png) | ![Editar](screenshots/Captura%20de%20pantalla%202025-12-13%20165725.png) | ![Lista Profesor](screenshots/Captura%20de%20pantalla%202025-12-13%20165730.png) |
+
+</div>
+
+### API REST - Endpoints de Estudiantes
+
+<div align="center">
+
+| GET Estudiantes | GET Estudiante por ID | GET Prácticas del Estudiante |
+|:---:|:---:|:---:|
+| ![GET All](screenshots/Captura%20de%20pantalla%202025-12-13%20165736.png) | ![GET By ID](screenshots/Captura%20de%20pantalla%202025-12-13%20165747.png) | ![GET Prácticas](screenshots/Captura%20de%20pantalla%202025-12-13%20165753.png) |
+
+</div>
+
+### API REST - Endpoints de Profesores
+
+<div align="center">
+
+| GET Profesores | GET Profesor por ID | GET Prácticas del Profesor |
+|:---:|:---:|:---:|
+| ![GET All](screenshots/Captura%20de%20pantalla%202025-12-13%20165813.png) | ![GET By ID](screenshots/Captura%20de%20pantalla%202025-12-13%20165817.png) | ![GET Prácticas](screenshots/Captura%20de%20pantalla%202025-12-13%20165821.png) |
+
+</div>
+
+### API REST - Operaciones CRUD
+
+<div align="center">
+
+| POST Práctica (Estudiante) | POST Práctica (Profesor) | DELETE Práctica |
+|:---:|:---:|:---:|
+| ![POST Est](screenshots/Captura%20de%20pantalla%202025-12-13%20165848.png) | ![POST Prof](screenshots/Captura%20de%20pantalla%202025-12-13%20165852.png) | ![DELETE](screenshots/Captura%20de%20pantalla%202025-12-13%20165904.png) |
+
+</div>
+
+### Respuestas y Validaciones de API
+
+<div align="center">
+
+| Respuesta Exitosa | Validación de Datos | Estructura de Respuesta |
+|:---:|:---:|:---:|
+| ![Success](screenshots/Captura%20de%20pantalla%202025-12-13%20165910.png) | ![Validation](screenshots/Captura%20de%20pantalla%202025-12-13%20165925.png) | ![Response](screenshots/Captura%20de%20pantalla%202025-12-13%20165930.png) |
+
+</div>
+
+### Pruebas Adicionales
+
+<div align="center">
+
+| Prueba de Integración | Logs del Sistema | Ejecución Completa |
+|:---:|:---:|:---:|
+| ![Test](screenshots/Captura%20de%20pantalla%202025-12-13%20165935.png) | ![Logs](screenshots/Captura%20de%20pantalla%202025-12-13%20165946.png) | ![Run](screenshots/Captura%20de%20pantalla%202025-12-13%20165953.png) |
+
+</div>
+
+---
+
+## ✅ Funcionalidades Demostradas
+
+- ✔️ Autenticación y gestión de perfiles (Estudiante/Profesor)
+- ✔️ Dashboard personalizado por rol
+- ✔️ CRUD completo de prácticas profesionales
+- ✔️ API REST con endpoints documentados
+- ✔️ Respuestas estandarizadas con códigos HTTP correctos
+- ✔️ Validación de datos en formularios y API
+- ✔️ Integración con base de datos H2
+- ✔️ Logs y trazabilidad de operaciones
+
+---
+
+## 👨‍💻 Autor
+
+Sistema desarrollado con Spring Boot para la gestión de prácticas profesionales.
