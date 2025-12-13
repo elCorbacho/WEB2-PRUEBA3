@@ -118,38 +118,31 @@
     <!-- ===== TU APLICACIÓN ===== -->
     <logger name="cl.web2.prueba3.prueba3" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="ASYNC_FILE"/>
-        <appender-ref ref="ASYNC_ERROR_FILE"/>
     </logger>
     
     <!-- Controladores API REST -->
     <logger name="cl.web2.prueba3.prueba3.controllers.api" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="ASYNC_FILE"/>
     </logger>
     
     <!-- Controladores Web MVC -->
     <logger name="cl.web2.prueba3.prueba3.controllers.web" level="INFO" additivity="false">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="ASYNC_FILE"/>
     </logger>
     
     <!-- Servicios de negocio -->
     <logger name="cl.web2.prueba3.prueba3.services" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="ASYNC_FILE"/>
     </logger>
     
     <!-- Manejo global de excepciones -->
     <logger name="cl.web2.prueba3.prueba3.config.GlobalExceptionHandler" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="ASYNC_ERROR_FILE"/>
     </logger>
     
     <!-- Seguridad -->
     <logger name="cl.web2.prueba3.prueba3.config.SecurityConfig" level="INFO" additivity="false">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="ASYNC_FILE"/>
     </logger>
 
     <!-- ===== SPRING FRAMEWORK ===== -->
@@ -234,8 +227,9 @@
          ======================================== -->
     <root level="${LOG_LEVEL}">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="ASYNC_FILE"/>
-        <appender-ref ref="ASYNC_ERROR_FILE"/>
+        <!-- Archivos de log desactivados -->
+        <!-- <appender-ref ref="ASYNC_FILE"/> -->
+        <!-- <appender-ref ref="ASYNC_ERROR_FILE"/> -->
     </root>
 
 </configuration>
