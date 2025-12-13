@@ -52,15 +52,15 @@ La aplicación estará disponible en: **http://localhost:8080**
 **Body de POST (ejemplo):**
 ```json
 {
+  "fechaInicio": "2025-02-01",
+  "fechaFin": "2025-04-30",
+  "actividades": "Desarrollo backend, pruebas, documentación",
   "empresa": {
     "id": 1
   },
   "profesor": {
     "id": 1
-  },
-  "fechaInicio": "2025-01-15",
-  "fechaFin": "2025-06-30",
-  "actividades": "Desarrollo de aplicaciones web"
+  }
 }
 ```
 
@@ -80,14 +80,14 @@ La aplicación estará disponible en: **http://localhost:8080**
 ```json
 {
   "estudiante": {
-    "id": 1
+    "id": 2
   },
   "empresa": {
-    "id": 1
+    "id": 3
   },
   "fechaInicio": "2025-01-15",
-  "fechaFin": "2025-06-30",
-  "actividades": "Desarrollo de aplicaciones web"
+  "fechaFin": "2025-06-15",
+  "actividades": "Desarrollo de aplicaciones web con Spring Boot y React"
 }
 ```
 
