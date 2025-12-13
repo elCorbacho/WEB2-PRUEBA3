@@ -117,74 +117,74 @@
          ======================================== -->
     
     <!-- ===== TU APLICACIÓN ===== -->
-    <logger name="cl.web2.prueba3.prueba3" level="ERROR" additivity="false">
+    <logger name="cl.web2.prueba3.prueba3" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
     
     <!-- Controladores API REST -->
-    <logger name="cl.web2.prueba3.prueba3.controllers.api" level="ERROR" additivity="false">
+    <logger name="cl.web2.prueba3.prueba3.controllers.api" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
     
     <!-- Controladores Web MVC -->
-    <logger name="cl.web2.prueba3.prueba3.controllers.web" level="ERROR" additivity="false">
+    <logger name="cl.web2.prueba3.prueba3.controllers.web" level="INFO" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
     
     <!-- Servicios de negocio -->
-    <logger name="cl.web2.prueba3.prueba3.services" level="ERROR" additivity="false">
+    <logger name="cl.web2.prueba3.prueba3.services" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
     
     <!-- Manejo global de excepciones -->
-    <logger name="cl.web2.prueba3.prueba3.config.GlobalExceptionHandler" level="ERROR" additivity="false">
+    <logger name="cl.web2.prueba3.prueba3.config.GlobalExceptionHandler" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
     
     <!-- Seguridad -->
-    <logger name="cl.web2.prueba3.prueba3.config.SecurityConfig" level="ERROR" additivity="false">
+    <logger name="cl.web2.prueba3.prueba3.config.SecurityConfig" level="INFO" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
 
     <!-- ===== SPRING FRAMEWORK ===== -->
-    <logger name="org.springframework" level="ERROR"/>
-    <logger name="org.springframework.web" level="ERROR"/>
-    <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="ERROR"/>
-    <logger name="org.springframework.security" level="ERROR"/>
-    <logger name="org.springframework.boot" level="ERROR"/>
-    <logger name="org.springframework.boot.autoconfigure" level="ERROR"/>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.springframework.web" level="INFO"/>
+    <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="INFO"/>
+    <logger name="org.springframework.security" level="INFO"/>
+    <logger name="org.springframework.boot" level="INFO"/>
+    <logger name="org.springframework.boot.autoconfigure" level="INFO"/>
     
     <!-- ===== PERSISTENCIA ===== -->
     
     <!-- Hibernate SQL -->
-    <logger name="org.hibernate.SQL" level="ERROR"/>
+    <logger name="org.hibernate.SQL" level="DEBUG"/>
     
     <!-- Parámetros de SQL (valores) -->
-    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="ERROR"/>
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
     
     <!-- Transacciones -->
-    <logger name="org.hibernate.engine.transaction" level="ERROR"/>
+    <logger name="org.hibernate.engine.transaction" level="DEBUG"/>
     
     <!-- Caché de segundo nivel (si se usa) -->
-    <logger name="org.hibernate.cache" level="ERROR"/>
+    <logger name="org.hibernate.cache" level="INFO"/>
     
     <!-- HikariCP - Connection Pool -->
-    <logger name="com.zaxxer.hikari.HikariConfig" level="ERROR"/>
-    <logger name="com.zaxxer.hikari.HikariDataSource" level="ERROR"/>
+    <logger name="com.zaxxer.hikari.HikariConfig" level="INFO"/>
+    <logger name="com.zaxxer.hikari.HikariDataSource" level="INFO"/>
     
     <!-- ===== BASE DE DATOS ===== -->
-    <logger name="org.h2.server.web" level="ERROR"/>
+    <logger name="org.h2.server.web" level="INFO"/>
     
     <!-- ===== THYMELEAF ===== -->
-    <logger name="org.thymeleaf" level="ERROR"/>
-    <logger name="org.thymeleaf.TemplateEngine" level="ERROR"/>
+    <logger name="org.thymeleaf" level="INFO"/>
+    <logger name="org.thymeleaf.TemplateEngine" level="INFO"/>
     
     <!-- ===== JACKSON (JSON) ===== -->
-    <logger name="com.fasterxml.jackson" level="ERROR"/>
+    <logger name="com.fasterxml.jackson" level="INFO"/>
     
     <!-- ===== TOMCAT ===== -->
-    <logger name="org.apache.catalina" level="ERROR"/>
-    <logger name="org.apache.tomcat" level="ERROR"/>
+    <logger name="org.apache.catalina" level="INFO"/>
+    <logger name="org.apache.tomcat" level="INFO"/>
 
     <!-- ========================================
          PERFILES (Ambientes)
@@ -192,11 +192,11 @@
     
     <!-- DESARROLLO -->
     <springProfile name="dev,local">
-        <logger name="cl.web2.prueba3.prueba3" level="ERROR"/>
-        <logger name="org.hibernate.SQL" level="ERROR"/>
-        <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="ERROR"/>
+        <logger name="cl.web2.prueba3.prueba3" level="DEBUG"/>
+        <logger name="org.hibernate.SQL" level="DEBUG"/>
+        <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
         
-        <root level="ERROR">
+        <root level="DEBUG">
             <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
@@ -226,7 +226,7 @@
     <!-- ========================================
          ROOT LOGGER (Por defecto)
          ======================================== -->
-    <root level="ERROR">
+    <root level="${LOG_LEVEL}">
         <appender-ref ref="CONSOLE"/>
         <!-- Archivos de log desactivados -->
         <!-- <appender-ref ref="ASYNC_FILE"/> -->
