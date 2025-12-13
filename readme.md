@@ -144,24 +144,67 @@ http://localhost:8080/swagger-ui.html
 
 ## 📸 Evidencias de Funcionamiento de la Aplicación
 
+<details>
+<summary><b>📱 Ver Capturas de Pantalla (Click para expandir)</b></summary>
+
+<br>
+
 <div align="center">
 
-| | |
-|:---:|:---:|
-| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165644.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165652.png) |
-| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165658.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165705.png) |
-| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165711.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165716.png) |
-| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165720.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165725.png) |
-| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165730.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165736.png) |
-| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165747.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165753.png) |
-| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165813.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165817.png) |
-| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165821.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165848.png) |
-| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165852.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165904.png) |
-| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165910.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165925.png) |
-| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165930.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165935.png) |
-| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165946.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165953.png) |
+<table>
+<tr>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165644.png" width="100%"></td>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165652.png" width="100%"></td>
+</tr>
+<tr>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165658.png" width="100%"></td>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165705.png" width="100%"></td>
+</tr>
+<tr>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165711.png" width="100%"></td>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165716.png" width="100%"></td>
+</tr>
+<tr>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165720.png" width="100%"></td>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165725.png" width="100%"></td>
+</tr>
+<tr>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165730.png" width="100%"></td>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165736.png" width="100%"></td>
+</tr>
+<tr>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165747.png" width="100%"></td>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165753.png" width="100%"></td>
+</tr>
+<tr>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165813.png" width="100%"></td>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165817.png" width="100%"></td>
+</tr>
+<tr>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165821.png" width="100%"></td>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165848.png" width="100%"></td>
+</tr>
+<tr>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165852.png" width="100%"></td>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165904.png" width="100%"></td>
+</tr>
+<tr>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165910.png" width="100%"></td>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165925.png" width="100%"></td>
+</tr>
+<tr>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165930.png" width="100%"></td>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165935.png" width="100%"></td>
+</tr>
+<tr>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165946.png" width="100%"></td>
+<td><img src="screenshots/Captura%20de%20pantalla%202025-12-13%20165953.png" width="100%"></td>
+</tr>
+</table>
 
 </div>
+
+</details>
 
 ---
 
