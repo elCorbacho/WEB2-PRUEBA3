@@ -1,0 +1,10 @@
+
+   ____                 _         _____
+  |  _ \ _ __ _   _  __| |__   __|___ /
+  | |_) | '__| | | |/ _` |\ \ / /  |_ \
+  |  __/| |  | |_| | (_| | \ V /  ___) |
+  |_|   |_|   \__,_|\__,_|  \_/  |____/
+
+  :: Sistema de Gestión de Prácticas Profesionales ::
+  :: Spring Boot ${spring-boot.version} ::
+  :: Powered by Spring Framework ::

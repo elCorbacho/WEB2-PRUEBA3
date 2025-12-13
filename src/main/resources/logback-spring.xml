@@ -18,18 +18,19 @@
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
     <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
     <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="highlight" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
 
     <!-- ========================================
          PATRONES DE LOG (LAYOUTS)
          ======================================== -->
     
-    <!-- Patrón para CONSOLA (desarrollo) - Con colores -->
+    <!-- Patrón para CONSOLA (desarrollo) - Con colores, MDC context y highlight -->
     <property name="CONSOLE_LOG_PATTERN" 
-              value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"/>
+              value="%clr(%d{HH:mm:ss.SSS}){faint} %highlight(%5p) %clr([%X{requestId:---------}]){yellow} %clr([%X{method:-SYS}]){blue} %clr([%X{clientIp:-localhost}]){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%clr(%ex){red}"/>
     
     <!-- Patrón para ARCHIVO (producción) - Sin colores, formato estructurado -->
     <property name="FILE_LOG_PATTERN" 
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } --- [%t] %-40.40logger{39} : %m%n%wEx"/>
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } [%X{requestId}] [%X{method}] [%X{clientIp}] --- [%t] %-40.40logger{39} : %m%n%wEx"/>
 
     <!-- ========================================
          APPENDER: CONSOLA (Desarrollo)
