@@ -144,83 +144,22 @@ http://localhost:8080/swagger-ui.html
 
 ## 📸 Evidencias de Funcionamiento de la Aplicación
 
-### Interfaz Web - Pantallas Principales
-
 <div align="center">
 
-| Inicio y Autenticación | Dashboard Estudiante | Dashboard Profesor |
-|:---:|:---:|:---:|
-| ![Inicio](screenshots/Captura%20de%20pantalla%202025-12-13%20165644.png) | ![Dashboard Estudiante](screenshots/Captura%20de%20pantalla%202025-12-13%20165652.png) | ![Dashboard Profesor](screenshots/Captura%20de%20pantalla%202025-12-13%20165658.png) |
-
-</div>
-
-### Gestión de Prácticas - Estudiante
-
-<div align="center">
-
-| Lista de Prácticas | Crear Práctica | Detalle de Práctica |
-|:---:|:---:|:---:|
-| ![Lista](screenshots/Captura%20de%20pantalla%202025-12-13%20165705.png) | ![Crear](screenshots/Captura%20de%20pantalla%202025-12-13%20165711.png) | ![Detalle](screenshots/Captura%20de%20pantalla%202025-12-13%20165716.png) |
-
-</div>
-
-### Gestión de Prácticas - Profesor
-
-<div align="center">
-
-| Agregar Práctica | Editar Práctica | Lista de Prácticas |
-|:---:|:---:|:---:|
-| ![Agregar](screenshots/Captura%20de%20pantalla%202025-12-13%20165720.png) | ![Editar](screenshots/Captura%20de%20pantalla%202025-12-13%20165725.png) | ![Lista Profesor](screenshots/Captura%20de%20pantalla%202025-12-13%20165730.png) |
-
-</div>
-
-### API REST - Endpoints de Estudiantes
-
-<div align="center">
-
-| GET Estudiantes | GET Estudiante por ID | GET Prácticas del Estudiante |
-|:---:|:---:|:---:|
-| ![GET All](screenshots/Captura%20de%20pantalla%202025-12-13%20165736.png) | ![GET By ID](screenshots/Captura%20de%20pantalla%202025-12-13%20165747.png) | ![GET Prácticas](screenshots/Captura%20de%20pantalla%202025-12-13%20165753.png) |
-
-</div>
-
-### API REST - Endpoints de Profesores
-
-<div align="center">
-
-| GET Profesores | GET Profesor por ID | GET Prácticas del Profesor |
-|:---:|:---:|:---:|
-| ![GET All](screenshots/Captura%20de%20pantalla%202025-12-13%20165813.png) | ![GET By ID](screenshots/Captura%20de%20pantalla%202025-12-13%20165817.png) | ![GET Prácticas](screenshots/Captura%20de%20pantalla%202025-12-13%20165821.png) |
-
-</div>
-
-### API REST - Operaciones CRUD
-
-<div align="center">
-
-| POST Práctica (Estudiante) | POST Práctica (Profesor) | DELETE Práctica |
-|:---:|:---:|:---:|
-| ![POST Est](screenshots/Captura%20de%20pantalla%202025-12-13%20165848.png) | ![POST Prof](screenshots/Captura%20de%20pantalla%202025-12-13%20165852.png) | ![DELETE](screenshots/Captura%20de%20pantalla%202025-12-13%20165904.png) |
-
-</div>
-
-### Respuestas y Validaciones de API
-
-<div align="center">
-
-| Respuesta Exitosa | Validación de Datos | Estructura de Respuesta |
-|:---:|:---:|:---:|
-| ![Success](screenshots/Captura%20de%20pantalla%202025-12-13%20165910.png) | ![Validation](screenshots/Captura%20de%20pantalla%202025-12-13%20165925.png) | ![Response](screenshots/Captura%20de%20pantalla%202025-12-13%20165930.png) |
-
-</div>
-
-### Pruebas Adicionales
-
-<div align="center">
-
-| Prueba de Integración | Logs del Sistema | Ejecución Completa |
-|:---:|:---:|:---:|
-| ![Test](screenshots/Captura%20de%20pantalla%202025-12-13%20165935.png) | ![Logs](screenshots/Captura%20de%20pantalla%202025-12-13%20165946.png) | ![Run](screenshots/Captura%20de%20pantalla%202025-12-13%20165953.png) |
+| | |
+|:---:|:---:|
+| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165644.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165652.png) |
+| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165658.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165705.png) |
+| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165711.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165716.png) |
+| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165720.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165725.png) |
+| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165730.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165736.png) |
+| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165747.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165753.png) |
+| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165813.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165817.png) |
+| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165821.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165848.png) |
+| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165852.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165904.png) |
+| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165910.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165925.png) |
+| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165930.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165935.png) |
+| ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165946.png) | ![](screenshots/Captura%20de%20pantalla%202025-12-13%20165953.png) |
 
 </div>
 
