@@ -207,6 +207,15 @@ http://localhost:8080/swagger-ui.html
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Equipo de Trabajo
 
-Sistema desarrollado con Spring Boot para la gestión de prácticas profesionales.
+| Nombre | Rol |
+|--------|-----|
+| Andres Corbacho | Desarrollador Backend |
+| Ethan Jurger | QA Tester |
+| Jesus Flores | QA Tester |
+| Ignacio Riveros | QA Tester + Documentador |
+
+---
+
+
