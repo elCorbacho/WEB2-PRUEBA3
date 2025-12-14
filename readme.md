@@ -194,17 +194,6 @@ http://localhost:8080/swagger-ui.html
 
 ---
 
-## ✅ Funcionalidades Demostradas
-
-- ✔️ Autenticación y gestión de perfiles (Estudiante/Profesor)
-- ✔️ Dashboard personalizado por rol
-- ✔️ CRUD completo de prácticas profesionales
-- ✔️ API REST con endpoints documentados
-- ✔️ Respuestas estandarizadas con códigos HTTP correctos
-- ✔️ Validación de datos en formularios y API
-- ✔️ Integración con base de datos H2
-- ✔️ Logs y trazabilidad de operaciones
-
 ---
 
 ## 👨‍💻 Equipo de Trabajo
