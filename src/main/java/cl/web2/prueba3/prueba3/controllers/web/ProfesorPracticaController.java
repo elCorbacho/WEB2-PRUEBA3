@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpSession;
 import cl.web2.prueba3.prueba3.models.*;
 import cl.web2.prueba3.prueba3.services.*;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/profesor/practicas")
